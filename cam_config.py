@@ -1,4 +1,7 @@
-import configparser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 import os, sys, inspect
 
 # realpath() will make your script run, even if you symlink it :)
