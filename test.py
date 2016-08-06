@@ -12,8 +12,9 @@ if __name__ == "__main__":
     listener = listener_start()
     pics = glob.glob('test_data/*.png')
 
-    for pic in pics:
-        publish_image(pic)
-        time.sleep(1)
-
-    listener.stop()
+    try:
+        for pic in pics:
+            publish_image(pic)
+            time.sleep(1)
+    finally:
+        listener.stop()

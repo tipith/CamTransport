@@ -23,6 +23,9 @@ def listener_start():
 
 if __name__ == "__main__":
     listener = listener_start()
-    while True:
-        time.sleep(1)
-    listener.stop()
+
+    try:
+        while True:
+            time.sleep(1)
+    finally:
+        listener.stop()
