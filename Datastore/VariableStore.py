@@ -10,7 +10,7 @@ def set_variable(src, name, value):
     try:
         with open(os.path.join(file), 'r') as f:
             data = json.loads(f.read())
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
+    except (IOError, json.decoder.JSONDecodeError):
         data = {}
         pass
 
