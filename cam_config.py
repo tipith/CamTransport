@@ -14,8 +14,10 @@ cmd_subfolder = os.path.realpath(os.path.abspath(os.path.join(os.path.split(insp
 if cmd_subfolder not in sys.path:
     sys.path.insert(0, cmd_subfolder)
 
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 config = configparser.RawConfigParser()
-config.read('cam_transport.cfg')
+config.read(os.path.join(__location__, 'cam_transport.cfg'))
 
 image_path = config.get('SUBSCRIBER', 'path_images')
 variable_path = config.get('SUBSCRIBER', 'path_variables')
