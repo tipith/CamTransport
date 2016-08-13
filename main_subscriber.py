@@ -4,12 +4,12 @@ import Datastore
 
 
 def on_image_received(msg):
-    print('on_image_received: from', msg['src'], msg['time'])
+    print('%s: image %s' % (msg['src'], msg['time']))
     Datastore.add_image(msg['src'], msg['time'], msg['data'])
 
 
 def on_variable_received(msg):
-    print('on_variable_received: from', msg['src'], msg['name'], ':', msg['value'])
+    print('%s: variable %s -> %s' % (msg['src'], msg['name'], str(msg['value'])))
     Datastore.set_variable(msg['src'], msg['name'], msg['value'])
 
 
