@@ -36,7 +36,7 @@ if __name__ == "__main__":
         while True:
             msg = local_messaging.wait()
             if Messaging.Message.verify(msg):
-                main_logger.info('forwarding ' + str(msg))
+                main_logger.info('forwarding %s' % Messaging.Message.msg_info(msg))
                 server_messaging.send(msg)
     finally:
         server_messaging.stop()

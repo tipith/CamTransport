@@ -67,3 +67,12 @@ class Message:
                 'id': Message.Command,
                 'command': command,
                 'parameter': parameter}
+
+    @staticmethod
+    def msg_info(msg):
+        if msg['id'] == Message.Image:
+            return 'Message.Image, %s, data length %i' % (msg['time'], len(msg['data']))
+        if msg['id'] == Message.Variable:
+            return 'Message.Variable, %s, %s -> %s' % (msg['time'], msg['name'], msg['value'])
+        if msg['id'] == Message.Command:
+            return 'Message.Command, %s, %s -> %s' % (msg['time'], msg['command'], msg['parameter'])

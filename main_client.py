@@ -56,7 +56,7 @@ if __name__ == "__main__":
         while True:
             msg = local_messaging.wait()
             if Messaging.Message.verify(msg):
-                main_logger.info('forwarding id %i with timestamp %s' % (msg['id'], msg['timestamp']))
+                main_logger.info('forwarding %s' % Messaging.Message.msg_info(msg))
                 client_messaging.send(msg)
                 client_messaging.send(Messaging.Message.msg_variable('uptime', get_uptime()))
     finally:
