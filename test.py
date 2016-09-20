@@ -5,18 +5,29 @@
 import glob
 import time
 
-from main_subscriber import listener_start
-from main_publisher import publish_image
+from main_server import messaging_start as server_messaging
+from main_client import messaging_start as client_messaging
+import Messaging
+
 import cam_config
 
 if __name__ == "__main__":
-    listener = listener_start()
-    pics = glob.glob('test_data/*.png')
     cam_config.upload_ip = 'localhost'
+
+    client = client_messaging()
+    server = server_messaging()
+
+    pics = glob.glob('test_data/*.png')
 
     try:
         for pic in pics:
-            publish_image(pic)
+            client.send(Messaging.image_message(pic))
+            client.send(Messaging.variable_message('uptime', 'test uptime'))
             time.sleep(1)
+
+        server.send(Messaging.command_message('lights', 'on'))
+        server.send(Messaging.command_message('lights', 'off'))
+        time.sleep(1)
     finally:
-        listener.stop()
+        client.stop()
+        server.stop()

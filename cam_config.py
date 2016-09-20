@@ -2,7 +2,22 @@ try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
-import os, sys, inspect
+import os, sys, inspect, logging
+
+def setup_logging():
+    fmt = logging.Formatter('%(asctime)s %(name)10s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+
+    rootlog = logging.getLogger()
+    rootlog.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setFormatter(fmt)
+    rootlog.addHandler(ch)
+
+    fh = logging.FileHandler('log.txt')
+    fh.setFormatter(fmt)
+    rootlog.addHandler(fh)
+
 
 # realpath() will make your script run, even if you symlink it :)
 cmd_folder = os.path.realpath(os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0]))
@@ -25,5 +40,10 @@ variable_path = config.get('SUBSCRIBER', 'path_variables')
 cam_name = config.get('PUBLISHER', 'cam_name')
 upload_ip = config.get('PUBLISHER', 'upload_ip')
 upload_port = config.getint('PUBLISHER', 'upload_port')
+msg_port = config.getint('PUBLISHER', 'msg_port')
 
-print("configuration loaded")
+gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')
+gpio_detector = config.getint('LIGHTCONTROL', 'gpio_detector')
+lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
+
+setup_logging()

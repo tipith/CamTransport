@@ -1,7 +1,5 @@
-__all__ = ['ImagePublisher', 'ImageSubscriber', 'MessageListener', 'Message', 'AlhoMessageException']
+__all__ = ['BaseMessaging', 'ClientMessaging', 'ServerMessaging', 'Message', 'AlhoMessageException']
 
 # deprecated to keep older scripts who import this from breaking
-from Messaging.MessagePublisher import MessagePublisher
-from Messaging.MessageSubscriber import MessageSubscriber
-from Messaging.MessageListener import MessageListener
-from Messaging.Message import Message, image_message, variable_message, AlhoMessageException
+from . Messaging import BaseMessaging, ClientMessaging, ServerMessaging, LocalServerMessaging, LocalClientMessaging
+from . Message import Message, AlhoMessageException
