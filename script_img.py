@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import Messaging
 import sys
 import logging
