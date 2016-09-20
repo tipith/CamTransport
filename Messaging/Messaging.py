@@ -73,7 +73,7 @@ class ServerMessaging(BaseMessaging):
         uplink = self.context.socket(zmq.PUSH)
         uplink.bind(outgoing)
 
-        module_logger.info('ServerMessaging: listening to incoming %s, outgoing %s' % (incoming, outgoing))
+        module_logger.info('listening to incoming %s, outgoing %s (Server)' % (incoming, outgoing))
         super(ServerMessaging, self).__init__(uplink, downlink)
 
 
@@ -91,7 +91,7 @@ class ClientMessaging(BaseMessaging):
         downlink.connect(incoming)
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
-        module_logger.info('ClientMessaging: connecting to outgoing %s, incoming %s' % (outgoing, incoming))
+        module_logger.info('connecting to outgoing %s, incoming %s (Client)' % (outgoing, incoming))
         super(ClientMessaging, self).__init__(uplink, downlink)
 
 
@@ -105,7 +105,7 @@ class LocalServerMessaging(BaseMessaging):
         downlink.bind(incoming)
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
-        module_logger.info('LocalServerMessaging: listening to %s' % incoming)
+        module_logger.info('listening to %s (LocalServer)' % incoming)
         super(LocalServerMessaging, self).__init__(None, downlink)
 
 
@@ -118,5 +118,5 @@ class LocalClientMessaging(BaseMessaging):
         uplink = self.context.socket(zmq.PUSH)
         uplink.connect(outgoing)
 
-        module_logger.info('LocalClientMessaging: connecting to %s' % outgoing)
+        module_logger.info('connecting to %s (LocalClient)' % outgoing)
         super(LocalClientMessaging, self).__init__(uplink, None)
