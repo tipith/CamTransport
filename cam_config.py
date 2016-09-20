@@ -51,4 +51,3 @@ lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
 
 setup_logging()
 
-conf_logger.info('starting up %s' % cam_name)

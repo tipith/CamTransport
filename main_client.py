@@ -2,6 +2,7 @@ import Messaging
 import LightControl
 from datetime import timedelta
 import logging
+import cam_config
 
 main_logger = logging.getLogger('Main')
 lights = None
@@ -47,6 +48,8 @@ def local_messaging_start():
 
 
 if __name__ == "__main__":
+    main_logger.info('starting up %s' % cam_config.cam_name)
+
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     lights = LightControl.LightControl()
