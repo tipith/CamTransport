@@ -55,7 +55,7 @@ class Message:
     @staticmethod
     def msg_variable(name, value):
         return {'src': cam_config.cam_name,
-                'time': datetime.now(),
+                'time': datetime.now().replace(microsecond=0),
                 'id': Message.Variable,
                 'name': name,
                 'value': value}
@@ -63,7 +63,7 @@ class Message:
     @staticmethod
     def msg_command(command, parameter):
         return {'src': 'server',
-                'time': datetime.now(),
+                'time': datetime.now().replace(microsecond=0),
                 'id': Message.Command,
                 'command': command,
                 'parameter': parameter}
@@ -71,8 +71,8 @@ class Message:
     @staticmethod
     def msg_info(msg):
         if msg['id'] == Message.Image:
-            return 'Message.Image, from %s, %s, data length %i' % (msg['time'], msg['src'], len(msg['data']))
+            return 'Message.Image, from %s, %s, data length %i' % (msg['src'], msg['time'], len(msg['data']))
         if msg['id'] == Message.Variable:
-            return 'Message.Variable, from %s %s, %s -> %s' % (msg['time'], msg['src'], msg['name'], msg['value'])
+            return 'Message.Variable, from %s %s, %s -> %s' % (msg['src'], msg['time'], msg['name'], msg['value'])
         if msg['id'] == Message.Command:
-            return 'Message.Command, from %s %s, %s -> %s' % (msg['time'], msg['src'], msg['command'], msg['parameter'])
+            return 'Message.Command, from %s %s, %s -> %s' % (msg['src'], msg['time'], msg['command'], msg['parameter'])
