@@ -7,21 +7,6 @@ import os, sys, inspect, logging
 conf_logger = logging.getLogger('Config')
 
 
-def setup_logging():
-    fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
-
-    rootlog = logging.getLogger()
-    rootlog.setLevel(logging.DEBUG)
-
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setFormatter(fmt)
-    rootlog.addHandler(ch)
-
-    fh = logging.FileHandler('log.txt')
-    fh.setFormatter(fmt)
-    rootlog.addHandler(fh)
-
-
 # realpath() will make your script run, even if you symlink it :)
 cmd_folder = os.path.realpath(os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0]))
 if cmd_folder not in sys.path:
@@ -33,6 +18,22 @@ if cmd_subfolder not in sys.path:
     sys.path.insert(0, cmd_subfolder)
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+
+def setup_logging():
+    fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+
+    rootlog = logging.getLogger()
+    rootlog.setLevel(logging.DEBUG)
+
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setFormatter(fmt)
+    rootlog.addHandler(ch)
+
+    fh = logging.FileHandler(os.path.join(__location__, 'log.txt'))
+    fh.setFormatter(fmt)
+    rootlog.addHandler(fh)
+
 
 config = configparser.RawConfigParser()
 config.read(os.path.join(__location__, 'cam_transport.cfg'))
