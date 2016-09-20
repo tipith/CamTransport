@@ -13,11 +13,16 @@ def on_variable_received(msg):
     Datastore.set_variable(msg['src'], msg['name'], msg['value'])
 
 
+def on_movement_received(msg):
+    pass
+
+
 def server_messaging_start():
     _messaging = Messaging.ServerMessaging()
     _messaging.start()
     _messaging.install(Messaging.Message.Image, on_image_received)
     _messaging.install(Messaging.Message.Variable, on_variable_received)
+    _messaging.install(Messaging.Message.Movement, on_movement_received)
     return _messaging
 
 
