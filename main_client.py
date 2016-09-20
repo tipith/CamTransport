@@ -3,7 +3,7 @@ import LightControl
 from datetime import timedelta
 import logging
 
-main_logger = logging.getLogger('main')
+main_logger = logging.getLogger('Main')
 lights = None
 
 

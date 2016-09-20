@@ -2,7 +2,7 @@ import Messaging
 import sys
 import logging
 
-img_logger = logging.getLogger('img_sender')
+img_logger = logging.getLogger('ImgSender')
 
 
 if __name__ == "__main__":

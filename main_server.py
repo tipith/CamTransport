@@ -2,7 +2,7 @@ import Messaging
 import Datastore
 import logging
 
-main_logger = logging.getLogger('main')
+main_logger = logging.getLogger('Main')
 
 
 def on_image_received(msg):

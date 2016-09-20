@@ -4,8 +4,11 @@ except ImportError:
     import ConfigParser as configparser
 import os, sys, inspect, logging
 
+conf_logger = logging.getLogger('Config')
+
+
 def setup_logging():
-    fmt = logging.Formatter('%(asctime)s %(name)10s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+    fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
     rootlog = logging.getLogger()
     rootlog.setLevel(logging.DEBUG)
@@ -47,3 +50,5 @@ gpio_detector = config.getint('LIGHTCONTROL', 'gpio_detector')
 lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
 
 setup_logging()
+
+conf_logger.info('starting up %s' % cam_name)

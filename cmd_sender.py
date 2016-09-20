@@ -4,7 +4,7 @@ import Messaging
 import sys
 import logging
 
-cmd_logger = logging.getLogger('cmd_sender')
+cmd_logger = logging.getLogger('CmdSender')
 
 
 if __name__ == "__main__":

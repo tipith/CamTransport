@@ -23,13 +23,13 @@ class Relay:
 
     def activate(self):
         if not self.enabled:
-            relay_logger.info("Relay: activate")
+            relay_logger.info("activate")
             GPIO.output(self.pin, GPIO.HIGH)
             self.enabled = True
 
     def deactivate(self):
         if self.enabled:
-            relay_logger.info("Relay: deactivate")
+            relay_logger.info("deactivate")
             GPIO.output(self.pin, GPIO.LOW)
             self.enabled = False
 
@@ -49,7 +49,7 @@ class Detector:
         GPIO.wait_for_edge(self.pin, GPIO.RISING)
 
     def arm(self, cb):
-        detector_logger.info("Detector: adding callback")
+        detector_logger.info("adding callback")
         GPIO.add_event_detect(self.pin, GPIO.RISING, callback=cb, bouncetime=300)
 
 
@@ -64,7 +64,7 @@ class LightControl(threading.Thread):
         self.is_running = True
 
     def run(self):
-        light_logger.info("LightControl: started")
+        light_logger.info("started")
 
         self.detector.arm(self._detected)
         while self.is_running:
@@ -73,15 +73,15 @@ class LightControl(threading.Thread):
             time.sleep(1.0)
 
         GPIO.cleanup()
-        light_logger.info("LightControl: stopped")
+        light_logger.info("stopped")
 
     def turn_on(self):
-        light_logger.info('LightControl: lights on')
+        light_logger.info('lights on')
         self.last_detected = calendar.timegm(time.gmtime())
         self.relay.activate()
 
     def turn_off(self):
-        light_logger.info('LightControl: lights off')
+        light_logger.info('lights off')
         self.last_detected = 0
         self.relay.deactivate()
 
