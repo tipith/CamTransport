@@ -55,10 +55,7 @@ def on_movement_detected(state):
 
 
 if __name__ == "__main__":
-    global client_messaging, lights
-
     main_logger.info('starting up %s' % cam_config.cam_name)
-
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     lights = LightControl.LightControl(on_movement_detected)
