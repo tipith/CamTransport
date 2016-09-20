@@ -55,13 +55,15 @@ class Detector:
 
 class LightControl(threading.Thread):
 
-    def __init__(self):
+    def __init__(self, movement_callback):
         threading.Thread.__init__(self)
         self.detector = Detector(cam_config.gpio_detector)
         self.relay = Relay(cam_config.gpio_relay)
         self.light_on_time = cam_config.lights_on_time
         self.last_detected = 0
         self.is_running = True
+        self.cb = movement_callback
+        self.is_detected = False
 
     def run(self):
         light_logger.info("started")
@@ -70,6 +72,8 @@ class LightControl(threading.Thread):
         while self.is_running:
             if self._timeout():
                 self.relay.deactivate()
+                self.cb('off')
+                self.is_detected = False
             time.sleep(1.0)
 
         GPIO.cleanup()
@@ -92,6 +96,8 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (self.last_detected + self.light_on_time)
 
     def _detected(self, channel):
+        if not self.is_detected:
+            self.cb('on')
         self.last_detected = calendar.timegm(time.gmtime())
+        self.is_detected = True
         self.relay.activate()
-

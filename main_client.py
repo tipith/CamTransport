@@ -6,6 +6,7 @@ import cam_config
 
 main_logger = logging.getLogger('Main')
 lights = None
+client_messaging = None
 
 
 def strfdelta(tdelta, fmt):
@@ -27,6 +28,7 @@ def get_uptime():
 
 
 def on_cmd_received(msg):
+    global lights
     if lights is not None and msg['command'] == 'lights':
         if msg['parameter'] == 'on':
             lights.turn_on()
@@ -46,12 +48,20 @@ def local_messaging_start():
     return _messaging
 
 
+def on_movement_detected(state):
+    global client_messaging
+    if client_messaging is not None:
+        client_messaging.send(Messaging.Message.msg_movement(state))
+
+
 if __name__ == "__main__":
+    global client_messaging, lights
+
     main_logger.info('starting up %s' % cam_config.cam_name)
 
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
-    lights = LightControl.LightControl()
+    lights = LightControl.LightControl(on_movement_detected)
     lights.start()
 
     try:

@@ -16,8 +16,9 @@ class Message:
     Image = 1
     Variable = 2
     Command = 3
+    Movement = 4
 
-    known_messages = [Image, Variable, Command]
+    known_messages = [Image, Variable, Command, Movement]
 
     @staticmethod
     def verify(msg):
@@ -69,6 +70,13 @@ class Message:
                 'parameter': parameter}
 
     @staticmethod
+    def msg_movement(state):
+        return {'src': cam_config.cam_name,
+                'time': datetime.now().replace(microsecond=0),
+                'id': Message.Movement,
+                'state': state}
+
+    @staticmethod
     def msg_info(msg):
         if msg['id'] == Message.Image:
             return 'Message.Image,    from %s, %s, length %i B' % (msg['src'], msg['time'], len(msg['data']))
@@ -76,3 +84,5 @@ class Message:
             return 'Message.Variable, from %s, %s, %s -> %s' % (msg['src'], msg['time'], msg['name'], msg['value'])
         if msg['id'] == Message.Command:
             return 'Message.Command,  from %s, %s, %s -> %s' % (msg['src'], msg['time'], msg['command'], msg['parameter'])
+        if msg['id'] == Message.Movement:
+            return 'Message.Movement, from %s, %s, %s' % (msg['src'], msg['time'], msg['state'])
