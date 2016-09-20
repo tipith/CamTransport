@@ -27,7 +27,6 @@ def get_uptime():
 
 
 def on_cmd_received(msg):
-    main_logger.info('%s: command %s -> %s' % (msg['src'], msg['command'], msg['parameter']))
     if lights is not None and msg['command'] == 'lights':
         if msg['parameter'] == 'on':
             lights.turn_on()

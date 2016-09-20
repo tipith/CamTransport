@@ -6,12 +6,10 @@ main_logger = logging.getLogger('Main')
 
 
 def on_image_received(msg):
-    main_logger.info('%s: image %s' % (msg['src'], msg['time']))
     Datastore.add_image(msg['src'], msg['time'], msg['data'])
 
 
 def on_variable_received(msg):
-    main_logger.info('%s: variable %s -> %s' % (msg['src'], msg['name'], str(msg['value'])))
     Datastore.set_variable(msg['src'], msg['name'], msg['value'])
 
 

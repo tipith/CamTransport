@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Messaging/Messaging.py" afterPath="$PROJECT_DIR$/Messaging/Messaging.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_client.py" afterPath="$PROJECT_DIR$/main_client.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_server.py" afterPath="$PROJECT_DIR$/main_server.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Messaging.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Messaging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Messaging/Messaging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="902">
-              <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
+            <state relative-caret-position="459">
+              <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -71,8 +72,8 @@
       <file leaf-file-name="main_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="83" />
+            <state relative-caret-position="357">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -83,8 +84,8 @@
       <file leaf-file-name="DataStore.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="28" column="51" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
+            <state relative-caret-position="493">
+              <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -116,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_client.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main_client.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+            <state relative-caret-position="278">
+              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -201,10 +202,10 @@
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
         <option value="$PROJECT_DIR$/cmd_sender.py" />
         <option value="$PROJECT_DIR$/img_sender.py" />
-        <option value="$PROJECT_DIR$/Messaging/Messaging.py" />
         <option value="$PROJECT_DIR$/Messaging/Message.py" />
-        <option value="$PROJECT_DIR$/main_server.py" />
         <option value="$PROJECT_DIR$/cam_config.py" />
+        <option value="$PROJECT_DIR$/Messaging/Messaging.py" />
+        <option value="$PROJECT_DIR$/main_server.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
       </list>
     </option>
@@ -636,7 +637,14 @@
       <option name="project" value="LOCAL" />
       <updated>1474388328172</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="More refactoring">
+      <created>1474388410707</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1474388410707</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -954,16 +962,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="28" column="51" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cam_transport_template.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -992,32 +990,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Messaging/Messaging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="902">
-          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Messaging/Message.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="817">
           <caret line="71" column="16" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="16" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1030,12 +1008,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_client.py">
+    <entry file="file://$PROJECT_DIR$/main_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+        <state relative-caret-position="357">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Messaging/Messaging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

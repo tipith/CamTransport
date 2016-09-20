@@ -24,6 +24,7 @@ class BaseMessaging(threading.Thread):
                 msg = self.wait()
                 if Message.verify(msg):
                     if msg['id'] in self.handlers:
+                        module_logger.info('received %s' & Message.msg_info(msg))
                         self.handlers[msg['id']](msg)
                     else:
                         module_logger.info('no handler found for frame %i' % (msg['id']))
