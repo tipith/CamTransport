@@ -73,20 +73,18 @@ class LightControl(threading.Thread):
             if self._timeout():
                 if self.is_detected:
                     self.is_detected = False
-                    self.relay.deactivate()
                     self.cb('off')
+                self.turn_off()
             time.sleep(1.0)
 
         GPIO.cleanup()
         light_logger.info("stopped")
 
     def turn_on(self):
-        light_logger.info('lights on')
         self.last_detected = calendar.timegm(time.gmtime())
         self.relay.activate()
 
     def turn_off(self):
-        light_logger.info('lights off')
         self.last_detected = 0
         self.relay.deactivate()
 
@@ -99,6 +97,5 @@ class LightControl(threading.Thread):
     def _detected(self, channel):
         if not self.is_detected:
             self.is_detected = True
-            self.last_detected = calendar.timegm(time.gmtime())
-            self.relay.activate()
             self.cb('on')
+        self.turn_on()

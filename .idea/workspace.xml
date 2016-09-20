@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_client.py" afterPath="$PROJECT_DIR$/main_client.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LightControl/LightControl.py" afterPath="$PROJECT_DIR$/LightControl/LightControl.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -105,7 +105,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_client.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main_client.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_client.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="686">
@@ -117,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="953">
-              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="494">
+              <caret line="74" column="35" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="35" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -188,13 +188,13 @@
         <option value="$PROJECT_DIR$/cmd_sender.py" />
         <option value="$PROJECT_DIR$/Messaging/Message.py" />
         <option value="$PROJECT_DIR$/main_server.py" />
-        <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
         <option value="$PROJECT_DIR$/img_sender.py" />
         <option value="$PROJECT_DIR$/script_cmd.py" />
         <option value="$PROJECT_DIR$/script_img.py" />
         <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/Messaging/Messaging.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
+        <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
       </list>
     </option>
   </component>
@@ -244,6 +244,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="CamTransport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CamTransport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CamTransport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LightControl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -682,7 +696,14 @@
       <option name="project" value="LOCAL" />
       <updated>1474397265292</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="More refactoring">
+      <created>1474397310737</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1474397310737</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1007,16 +1028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="953">
-          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testing/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1087,6 +1098,16 @@
           <caret line="61" column="18" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="74" column="35" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
