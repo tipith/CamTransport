@@ -10,10 +10,12 @@ light_logger = logging.getLogger('LightControl')
 relay_logger = logging.getLogger('Relay')
 detector_logger = logging.getLogger('Detector')
 
+
 class Relay:
 
     def __init__(self, pin):
         self.pin = pin
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.OUT, initial=GPIO.LOW)
         GPIO.output(self.pin, GPIO.LOW)
@@ -36,6 +38,7 @@ class Detector:
 
     def __init__(self, pin):
         self.pin = pin
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
