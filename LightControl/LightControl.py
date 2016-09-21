@@ -115,8 +115,10 @@ class LightControl(threading.Thread):
         threading.Thread.__init__(self)
         self.detector = Detector(cam_config.gpio_detector)
         self.relay = Relay(cam_config.gpio_relay)
-        self.light_on_time = cam_config.lights_on_time
-        self.last_detected = 0
+        self.duration_lights = cam_config.lights_on_time
+        self.duration_movement = 30
+        self.time_movement = 0
+        self.time_lights = 0
         self.is_running = True
         self.cb = movement_callback
         self.is_detected = False
@@ -127,35 +129,48 @@ class LightControl(threading.Thread):
 
         self.detector.arm(self._detected)
         while self.is_running:
-            if self._timeout():
-                if self.is_detected:
-                    self.is_detected = False
-                    self.cb('off')
+            if self.detector.state():
+                self._detected()
+            if self.lights_timeout():
                 self.turn_off()
+            if self.movement_timeout():
+                self.detection_off()
             time.sleep(1.0)
 
         GPIO.cleanup()
         light_logger.info("stopped")
 
+    def detection_on(self):
+        self.time_movement = calendar.timegm(time.gmtime())
+        if not self.is_detected:
+            self.is_detected = True
+            self.cb('on')
+
+    def detection_off(self):
+        if self.is_detected:
+            self.time_movement = 0
+            self.is_detected = False
+            self.cb('off')
+
     def turn_on(self):
-        self.last_detected = calendar.timegm(time.gmtime())
+        self.time_lights = calendar.timegm(time.gmtime())
         self.relay.activate()
 
     def turn_off(self):
-        self.last_detected = 0
+        self.time_lights = 0
         self.relay.deactivate()
 
     def stop(self):
         self.is_running = False
 
-    def _timeout(self):
-        return calendar.timegm(time.gmtime()) > (self.last_detected + self.light_on_time)
+    def lights_timeout(self):
+        return calendar.timegm(time.gmtime()) > (self.time_lights + self.duration_lights)
+
+    def movement_timeout(self):
+        return calendar.timegm(time.gmtime()) > (self.time_movement + self.duration_movement)
 
     def _detected(self, channel):
-        if not self.is_detected:
-            self.is_detected = True
-            self.cb('on')
-        # only enable light if it is dark
+        self.detection_on()
         if self.timer.twilight_ongoing():
             self.turn_on()
 
