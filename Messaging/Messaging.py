@@ -35,11 +35,12 @@ class BaseMessaging(threading.Thread):
 
     def wait(self):
         try:
-            try:
-                return self.down.recv_pyobj()
-            except zmq.ZMQError:
-                return None
-        except pickle.UnpicklingError:
+            return self.down.recv_pyobj()
+        except pickle.UnpicklingError as e:
+            return None
+        except (AttributeError, EOFError, ImportError, IndexError) as e:
+            return None
+        except Exception as e:
             return None
 
     def send(self, msg):

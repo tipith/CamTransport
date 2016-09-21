@@ -130,7 +130,7 @@ class LightControl(threading.Thread):
         self.detector.arm(self._detected)
         while self.is_running:
             if self.detector.state():
-                self._detected()
+                self._detected(0)
             if self.lights_timeout():
                 self.turn_off()
             if self.movement_timeout():
@@ -177,7 +177,6 @@ class LightControl(threading.Thread):
 
 if __name__ == "__main__":
     timer = AlarmTimer()
-
 
     test_logger.info('current               %s' % timer.update_date())
     test_logger.info('start twilight prev   %s' % timer.twilight_start_prev())
