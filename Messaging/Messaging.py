@@ -37,10 +37,13 @@ class BaseMessaging(threading.Thread):
         try:
             return self.down.recv_pyobj()
         except pickle.UnpicklingError as e:
+            module_logger.info('UnpicklingError')
             return None
         except (AttributeError, EOFError, ImportError, IndexError) as e:
+            module_logger.info('Other error')
             return None
         except Exception as e:
+            module_logger.info('Generic error')
             return None
 
     def send(self, msg):
