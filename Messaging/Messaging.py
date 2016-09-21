@@ -43,7 +43,6 @@ class BaseMessaging(threading.Thread):
             module_logger.info('Other error')
             return None
         except Exception as e:
-            module_logger.info('Generic error')
             return None
 
     def send(self, msg):
