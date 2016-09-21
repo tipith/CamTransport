@@ -157,10 +157,7 @@ class LightControl(threading.Thread):
             self.cb('on')
         # only enable light if it is dark
         if self.timer.twilight_ongoing():
-            light_logger.info("night time, turning on lights")
             self.turn_on()
-        else:
-            light_logger.info("day time, not turning on lights")
 
 
 if __name__ == "__main__":
