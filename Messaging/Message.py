@@ -29,13 +29,13 @@ class Message:
                         if 'time' in msg:
                             return True
                         else:
-                            message_logger.warn('Messaging: message does not contain time field')
+                            message_logger.warn('Error: message does not contain time field')
                     else:
-                        message_logger.warn('Messaging: message does not contain source field')
+                        message_logger.warn('Error: message does not contain source field')
                 else:
-                    message_logger.warn('Messaging: message id is not known: %i' % (msg['id']))
+                    message_logger.warn('Error: message id is not known: %i' % (msg['id']))
             else:
-                message_logger.warn('Messaging: message does not contain frame id field')
+                message_logger.warn('Error: message does not contain frame id field')
         return False
 
     @staticmethod
@@ -50,7 +50,7 @@ class Message:
                         'id': Message.Image,
                         'data': f.read()}
             else:
-                message_logger.warn('image_message: invalid image name')
+                message_logger.warn('Error: invalid image name')
                 raise AlhoMessageException()
 
     @staticmethod
