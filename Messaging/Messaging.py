@@ -50,6 +50,7 @@ class BaseMessaging(threading.Thread):
             try:
                 return self.up.send_pyobj(msg, protocol=2)
             except zmq.ZMQError:
+                module_logger.info('Error: unable to send msg')
                 return None
         else:
             module_logger.info('no uplink socket given. unable to send message')
