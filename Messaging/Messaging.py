@@ -75,7 +75,7 @@ class ServerMessaging(BaseMessaging):
         downlink.bind(incoming)
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
-        uplink = self.context.socket(zmq.PUSH)
+        uplink = self.context.socket(zmq.PUB)
         uplink.bind(outgoing)
 
         module_logger.info('listening to incoming %s, outgoing %s (Server)' % (incoming, outgoing))
@@ -92,7 +92,7 @@ class ClientMessaging(BaseMessaging):
         uplink = self.context.socket(zmq.PUSH)
         uplink.connect(outgoing)
 
-        downlink = self.context.socket(zmq.PULL)
+        downlink = self.context.socket(zmq.SUB)
         downlink.connect(incoming)
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
