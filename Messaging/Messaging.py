@@ -94,6 +94,7 @@ class ClientMessaging(BaseMessaging):
 
         downlink = self.context.socket(zmq.SUB)
         downlink.connect(incoming)
+        downlink.setsockopt(zmq.SUBSCRIBE, b'')
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
         module_logger.info('connecting to outgoing %s, incoming %s (Client)' % (outgoing, incoming))
