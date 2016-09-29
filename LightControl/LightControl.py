@@ -119,7 +119,7 @@ class LightControl(threading.Thread):
         self.duration_movement = 30
         self.time_movement = 0
         self.time_lights_on = 0
-        self.time_lights_off = 0
+        self.time_lights_activity = 0
         self.is_running = True
         self.cb = movement_callback
         self.is_detected = False
@@ -154,19 +154,19 @@ class LightControl(threading.Thread):
             self.cb('off')
 
     def turn_on(self):
+        self.time_lights_activity = calendar.timegm(time.gmtime())
         self.time_lights_on = calendar.timegm(time.gmtime())
         self.relay.activate()
 
     def turn_off(self):
-        self.time_lights_off = calendar.timegm(time.gmtime())
+        self.time_lights_activity = calendar.timegm(time.gmtime())
         self.relay.deactivate()
 
     def stop(self):
         self.is_running = False
 
-    def lights_off_grace_period(self):
-        light_logger.info("movement ignored during lights off grace period")
-        return calendar.timegm(time.gmtime()) > (self.time_lights_off + 3.0)
+    def lights_grace_period(self):
+        return calendar.timegm(time.gmtime()) > (self.time_lights_activity + 2.0)
 
     def lights_on_timeout(self):
         return calendar.timegm(time.gmtime()) > (self.time_lights_on + self.duration_lights)
@@ -175,11 +175,13 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (self.time_movement + self.duration_movement)
 
     def _detected(self, channel):
-        # movement detector gives false alarms when lights are turned off
-        if self.lights_off_grace_period():
+        # movement detector gives false alarms when lights are turned on/off
+        if self.lights_grace_period():
             self.detection_on()
             if self.timer.twilight_ongoing():
                 self.turn_on()
+        else:
+            light_logger.info("movement ignored during grace period")
 
 
 if __name__ == "__main__":
