@@ -97,10 +97,10 @@ class Relay:
         return max(self.time_activated, self.time_deactivated)
 
     def activated_time(self):
-        return self.time_change
+        return self.time_activated
 
     def deactivated_time(self):
-        return self.time_change
+        return self.time_deactivated
 
 
 class Detector:
