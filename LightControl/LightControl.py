@@ -76,18 +76,31 @@ class Relay:
         GPIO.setup(self.pin, GPIO.OUT, initial=GPIO.LOW)
         GPIO.output(self.pin, GPIO.LOW)
         self.enabled = False
+        self.time_activated = 0
+        self.time_deactivated = 0
 
     def activate(self):
         if not self.enabled:
             relay_logger.info("activate")
             GPIO.output(self.pin, GPIO.HIGH)
             self.enabled = True
+            self.time_activated = calendar.timegm(time.gmtime())
 
     def deactivate(self):
         if self.enabled:
             relay_logger.info("deactivate")
             GPIO.output(self.pin, GPIO.LOW)
             self.enabled = False
+            self.time_deactivated = calendar.timegm(time.gmtime())
+
+    def change_time(self):
+        return max(self.time_activated, self.time_deactivated)
+
+    def activated_time(self):
+        return self.time_change
+
+    def deactivated_time(self):
+        return self.time_change
 
 
 class Detector:
@@ -118,68 +131,61 @@ class LightControl(threading.Thread):
         self.duration_lights = cam_config.lights_on_time
         self.duration_movement = 30
         self.time_movement = 0
-        self.time_lights_on = 0
-        self.time_lights_activity = 0
-        self.is_running = True
         self.cb = movement_callback
+        self.is_running = True
         self.is_detected = False
         self.timer = AlarmTimer()
+        self.twilight_prev = self.timer.twilight_ongoing()
 
     def run(self):
         light_logger.info("started")
-
         self.detector.arm(self._detected)
         while self.is_running:
             if self.detector.state():
                 self._detected(0)
-            if self.lights_on_timeout():
-                self.turn_off()
-            if self.movement_timeout():
-                self.detection_off()
-            time.sleep(1.0)
-
+            if self._lights_on_timeout():
+                self.relay.deactivate()
+            if self._movement_timeout():
+                self._detection_off()
+            if self.twilight_prev is not self.timer.twilight_ongoing():
+                if self.timer.twilight_ongoing():
+                    light_logger.info("night has fallen")
+                else:
+                    light_logger.info("morning has broken")
+                self.twilight_prev = self.timer.twilight_ongoing()
+            time.sleep(2.0)
         GPIO.cleanup()
         light_logger.info("stopped")
 
-    def detection_on(self):
+    def stop(self):
+        self.is_running = False
+
+    def _detection_on(self):
         self.time_movement = calendar.timegm(time.gmtime())
         if not self.is_detected:
             self.is_detected = True
             self.cb('on')
 
-    def detection_off(self):
+    def _detection_off(self):
         if self.is_detected:
-            self.time_movement = 0
             self.is_detected = False
             self.cb('off')
 
-    def turn_on(self):
-        self.time_lights_activity = calendar.timegm(time.gmtime())
-        self.time_lights_on = calendar.timegm(time.gmtime())
-        self.relay.activate()
+    def _lights_grace_period(self):
+        return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
 
-    def turn_off(self):
-        self.time_lights_activity = calendar.timegm(time.gmtime())
-        self.relay.deactivate()
+    def _lights_on_timeout(self):
+        return calendar.timegm(time.gmtime()) > (self.relay.activated_time() + self.duration_lights)
 
-    def stop(self):
-        self.is_running = False
-
-    def lights_grace_period(self):
-        return calendar.timegm(time.gmtime()) > (self.time_lights_activity + 2.0)
-
-    def lights_on_timeout(self):
-        return calendar.timegm(time.gmtime()) > (self.time_lights_on + self.duration_lights)
-
-    def movement_timeout(self):
+    def _movement_timeout(self):
         return calendar.timegm(time.gmtime()) > (self.time_movement + self.duration_movement)
 
     def _detected(self, channel):
         # movement detector gives false alarms when lights are turned on/off
-        if self.lights_grace_period():
-            self.detection_on()
+        if self._lights_grace_period():
+            self._detection_on()
             if self.timer.twilight_ongoing():
-                self.turn_on()
+                self.relay.activate()
         else:
             light_logger.info("movement ignored during grace period")
 
