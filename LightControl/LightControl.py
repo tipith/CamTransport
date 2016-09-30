@@ -157,6 +157,12 @@ class LightControl(threading.Thread):
         GPIO.cleanup()
         light_logger.info("stopped")
 
+    def turn_on(self):
+        self.relay.activate()
+
+    def turn_off(self):
+        self.relay.deactivate()
+
     def stop(self):
         self.is_running = False
 
