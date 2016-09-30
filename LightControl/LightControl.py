@@ -131,6 +131,7 @@ class LightControl(threading.Thread):
         self.duration_lights = cam_config.lights_on_time
         self.duration_movement = 30
         self.time_movement = 0
+        self.time_control = 0
         self.cb = movement_callback
         self.is_running = True
         self.is_detected = False
@@ -158,6 +159,8 @@ class LightControl(threading.Thread):
         light_logger.info("stopped")
 
     def turn_on(self):
+        light_logger.info("previous control was %u s ago" % (calendar.timegm(time.gmtime()) - self.time_control))
+        self.time_control = calendar.timegm(time.gmtime())
         self.relay.activate()
 
     def turn_off(self):
@@ -181,7 +184,8 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
 
     def _lights_on_timeout(self):
-        return calendar.timegm(time.gmtime()) > (self.relay.activated_time() + self.duration_lights)
+        control_or_movement_time = max(self.relay.activated_time(), self.time_movement, self.time_control)
+        return calendar.timegm(time.gmtime()) > (control_or_movement_time + self.duration_lights)
 
     def _movement_timeout(self):
         return calendar.timegm(time.gmtime()) > (self.time_movement + self.duration_movement)
