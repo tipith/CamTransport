@@ -4,15 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="Fix LightControl grace period">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testing/db_test.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testing/db_test2.py" />
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Datastore/DataStore.py" afterPath="$PROJECT_DIR$/Datastore/DataStore.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Datastore/__init__.py" afterPath="$PROJECT_DIR$/Datastore/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_transport_template.cfg" afterPath="$PROJECT_DIR$/cam_transport_template.cfg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Datastore/DataBaseStore.py" afterPath="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testing/db_test2.py" afterPath="$PROJECT_DIR$/testing/db_test2.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,18 +30,18 @@
       <file leaf-file-name="cam_transport.cfg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+            <state relative-caret-position="51">
+              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cam_transport_template.cfg" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cam_transport_template.cfg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cam_transport_template.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="51">
+              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -80,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/testing/db_test2.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+              <caret line="5" column="61" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -88,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataBaseStore.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataBaseStore.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Datastore/DataBaseStore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="114" />
+            <state relative-caret-position="476">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -125,9 +120,11 @@
       <file leaf-file-name="DataStore.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="17" />
-              <folding />
+            <state relative-caret-position="493">
+              <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -204,10 +201,10 @@
         <option value="$PROJECT_DIR$/cam_transport_template.cfg" />
         <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/Datastore/__init__.py" />
-        <option value="$PROJECT_DIR$/testing/db_test2.py" />
-        <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
         <option value="$PROJECT_DIR$/Datastore/DataStore.py" />
         <option value="$PROJECT_DIR$/testing/db_test.py" />
+        <option value="$PROJECT_DIR$/testing/db_test2.py" />
+        <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
       </list>
     </option>
   </component>
@@ -352,7 +349,7 @@
       <recent name="C:\Stuff_backup\Projects (VM)\git_projects\AlhoCamTransport\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.db_test">
+  <component name="RunManager" selected="Python.db_test2">
     <configuration default="false" name="test (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -584,8 +581,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.db_test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.db_test2" />
+        <item index="0" class="java.lang.String" itemvalue="Python.db_test2" />
+        <item index="1" class="java.lang.String" itemvalue="Python.db_test" />
         <item index="2" class="java.lang.String" itemvalue="Python.LightControl" />
         <item index="3" class="java.lang.String" itemvalue="Python.main_server" />
         <item index="4" class="java.lang.String" itemvalue="Python.test (2)" />
@@ -907,7 +904,14 @@
       <option name="project" value="LOCAL" />
       <updated>1475265875248</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Store image meta information to MySQL database">
+      <created>1478038309645</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1478038309645</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -919,7 +923,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18089887" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35741088" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35741088" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -954,11 +958,19 @@
     <MESSAGE value="Fix LightControl grace period again" />
     <MESSAGE value="Fix LightControl again" />
     <MESSAGE value="Fix LightControl" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix LightControl" />
+    <MESSAGE value="Store image meta information to MySQL database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Store image meta information to MySQL database" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/Datastore/DataBaseStore.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1180,14 +1192,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cam_config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
@@ -1224,34 +1228,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Datastore/DataBaseStore.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="114" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testing/db_test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testing/db_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1264,9 +1240,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cam_transport_template.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        <state relative-caret-position="51">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing/db_test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="61" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Datastore/DataBaseStore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
