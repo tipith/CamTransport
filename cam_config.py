@@ -38,8 +38,11 @@ def setup_logging():
 config = configparser.RawConfigParser()
 config.read(os.path.join(__location__, 'cam_transport.cfg'))
 
-image_path = config.get('SUBSCRIBER', 'path_images')
-variable_path = config.get('SUBSCRIBER', 'path_variables')
+image_path = config.get('SERVER', 'path_images')
+variable_path = config.get('SERVER', 'path_variables')
+db_host = config.get('SERVER', 'db_host')
+db_user = config.get('SERVER', 'db_user')
+db_pass = config.get('SERVER', 'db_pass')
 
 cam_name = config.get('PUBLISHER', 'cam_name')
 upload_ip = config.get('PUBLISHER', 'upload_ip')
