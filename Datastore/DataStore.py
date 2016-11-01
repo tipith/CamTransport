@@ -3,6 +3,7 @@ import json
 import time
 import logging
 
+import Datastore
 import cam_config
 
 
@@ -28,6 +29,8 @@ def add_image(src, time, data):
 
     with open(os.path.join(path, file), 'wb') as f:
         f.write(data)
+
+    Datastore.store_image_meta(time, src, os.path.join(path, file), len(data))
 
 
 def set_variable(src, name, value):
