@@ -41,7 +41,7 @@ class Camera:
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
     def picture(self):
-        self.cam.capture('img.jpg', quality=50)
+        self.cam.capture('img.jpg', quality=40)
         #camera_logger.info('Captured %s (%u B) with exposure %i ms' %
         #                   (filename, os.path.getsize(filename), self.cam.exposure_speed / 1000))
         #return filename
