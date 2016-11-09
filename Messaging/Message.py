@@ -43,7 +43,7 @@ class Message:
         with open(filename, 'rb') as f:
             #timestamp = datetime.strptime(m.group(1), '%Y%m%d_%H%M%S')
             return {'src': cam_config.cam_name,
-                    'time': datetime.datetime.now().time(),
+                    'time': datetime.now().time(),
                     'id': Message.Image,
                     'data': f.read()}
             # /var/www/html/media/im_2436_20160806_191001.jpg
