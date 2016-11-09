@@ -21,6 +21,7 @@ class Camera:
         self.timer = timer
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
 
+
         if self.timer.twilight_ongoing():
             self._night()
         else:
