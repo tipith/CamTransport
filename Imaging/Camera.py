@@ -15,7 +15,7 @@ import cam_config
 camera_logger = logging.getLogger('Camera')
 
 
-class PiCamera:
+class Camera:
 
     def __init__(self, timer):
         self.timer = timer
