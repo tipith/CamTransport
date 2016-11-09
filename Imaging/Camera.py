@@ -54,8 +54,9 @@ class Camera:
             self._day()
 
     def _cron_job(self):
+        self.picture()
         local_messaging = Messaging.LocalClientMessaging()
-        local_messaging.send(Messaging.Message.msg_image(self.picture()))
+        local_messaging.send(Messaging.Message.msg_image('img.jpg'))
         local_messaging.stop()
 
     def _night(self):
