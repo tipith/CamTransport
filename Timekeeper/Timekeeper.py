@@ -72,9 +72,9 @@ class Timekeeper:
 
     def _schedule_next_twilight_event(self):
         if self.twilight_ongoing():
-            self.scheduler.add_job(self._twilight_event, 'date', ['start'], next_run_time=self.twilight_end_next())
+            self.scheduler.add_job(self._twilight_event, 'date', ['start'], next_run_time=self.twilight_end_next() + datetime.timedelta(seconds=30))
         else:
-            self.scheduler.add_job(self._twilight_event, 'date', ['end'], next_run_time=self.twilight_start_next())
+            self.scheduler.add_job(self._twilight_event, 'date', ['end'], next_run_time=self.twilight_start_next() + datetime.timedelta(seconds=30))
 
     def add_cron_job(self, cb, args, time):
         self.scheduler.add_job(cb, 'cron', args, minute=time)
