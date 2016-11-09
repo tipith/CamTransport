@@ -61,7 +61,7 @@ class Camera:
 
     def _night(self):
         self.cam.exposure_mode = 'off'
-        self.cam.shutter_speed = 5000000
+        self.cam.shutter_speed = 6000000
         self.cam.iso = 800
 
     def _day(self):
