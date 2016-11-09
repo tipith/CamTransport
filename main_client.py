@@ -1,5 +1,8 @@
 import Messaging
 import LightControl
+import Timekeeper
+import Imaging
+
 from datetime import timedelta
 import logging
 import cam_config
@@ -59,7 +62,9 @@ if __name__ == "__main__":
     main_logger.info('starting up %s' % cam_config.cam_name)
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
-    lights = LightControl.LightControl(on_movement_detected)
+    timer = Timekeeper.Timekeeper()
+    lights = LightControl.LightControl(on_movement_detected, timer)
+    camera = Imaging.Camera(timer)
     lights.start()
 
     try:

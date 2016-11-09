@@ -10,7 +10,6 @@ import cam_config
 data_logger = logging.getLogger('DataStore')
 
 
-
 def add_image(src, time, data):
     '''This function adds JPG image contents to a directory structure
     <src>/year/month/day/ with an example file name 2016-12-24_1200.jpg.
