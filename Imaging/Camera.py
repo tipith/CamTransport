@@ -43,8 +43,11 @@ class Camera:
 
     def picture(self):
         stream = BytesIO()
+        camera_logger.info("annotating")
         self.cam.annotate_text = 'Alho %d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        camera_logger.info("picturing")
         self.cam.capture(stream, quality=20)
+        camera_logger.info("end")
         return stream.read()
 
     def _twilight_event(self, event):
