@@ -24,11 +24,10 @@ def store_image_meta(timestamp, cam_id, location, size):
     db = open_db()
     cur = db.cursor()
 
-    db_logger.info('add picture from %i at %s, size %u, upload time %u s' % (cam_id, timestamp_str, size, upload_time))
-
     try:
         cur.execute("INSERT INTO Picture (Timestamp, idCamera, FileLocation, FileSize, UploadTime) \
                     VALUES (%s, %s, %s, %s, %s)", (timestamp_str, cam_id, location, size, upload_time))
     except MySQLdb.IntegrityError:
         db_logger.warn('unable to add entry')
+
     close_db(db)
