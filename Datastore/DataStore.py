@@ -19,17 +19,17 @@ def add_image(cam_id, timestamp, data):
     :param data: JPG image contents as bytes
     :return:
     '''
-    file = time.strftime('%Y-%m-%d_%H%M') + '.jpg'
+    filename = timestamp.strftime('%Y-%m-%d_%H%M') + '.jpg'
     path = os.path.join(cam_config.image_path, 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
 
     if not os.path.exists(path):
         data_logger.info("add_image: creating path %s" % path)
         os.makedirs(path)
 
-    with open(os.path.join(path, file), 'wb') as f:
+    with open(os.path.join(path, filename), 'wb') as f:
         f.write(data)
 
-    Datastore.store_image_meta(time, cam_id, os.path.join(path, file), len(data))
+    Datastore.store_image_meta(timestamp, cam_id, os.path.join(path, filename), len(data))
 
 
 def set_variable(cam_id, name, value):

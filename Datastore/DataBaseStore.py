@@ -19,9 +19,8 @@ def close_db(db):
 
 
 def store_image_meta(timestamp, cam_id, location, size):
-    now = datetime.datetime.now()
     timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S')
-    upload_time = (now - timestamp).total_seconds()
+    upload_time = (datetime.datetime.now() - timestamp).total_seconds()
     db = open_db()
     cur = db.cursor()
 
