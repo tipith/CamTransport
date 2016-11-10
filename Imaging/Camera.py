@@ -49,8 +49,18 @@ class Camera:
         stream.seek(0)
         return stream.read()
 
+    def light_control(self, state):
+        camera_logger.info('light control event: ' + state)
+        if self.timer.twilight_ongoing():
+            if state == 'on':
+                self._day()
+            else:
+                self._night()
+        else:
+            camera_logger.info('day time. ignoring light events')
+
     def _twilight_event(self, event):
-        camera_logger.info("twilight event: " + event)
+        camera_logger.info('twilight event: ' + event)
         if event == 'start':
             self._night()
         else:
@@ -62,11 +72,13 @@ class Camera:
         local_messaging.stop()
 
     def _night(self):
+        camera_logger.info('night parameters')
         self.cam.exposure_mode = 'off'
         self.cam.shutter_speed = 6000000
         self.cam.iso = 800
 
     def _day(self):
+        camera_logger.info('day parameters')
         self.cam.exposure_mode = 'auto'
         self.cam.shutter_speed = 0
         self.cam.iso = 0

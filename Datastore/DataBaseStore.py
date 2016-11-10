@@ -18,7 +18,7 @@ def close_db(db):
     db.close()
 
 
-def store_image_meta(timestamp, cam_id, location, size):
+def db_store_image(cam_id, timestamp, location, size):
     timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S')
     upload_time = (datetime.datetime.now() - timestamp).total_seconds()
     db = open_db()
@@ -33,9 +33,9 @@ def store_image_meta(timestamp, cam_id, location, size):
     close_db(db)
 
 
-def store_movement(cam_id, start, end):
+def db_store_movement(cam_id, timetamp, event):
     pass
 
 
-def store_lightcontrol(cam_id, start, end):
+def db_store_light_control(cam_id, timetamp, event):
     pass

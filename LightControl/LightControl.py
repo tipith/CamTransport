@@ -17,7 +17,7 @@ detector_logger = logging.getLogger('Detector')
 
 class Relay:
 
-    def __init__(self, pin):
+    def __init__(self, pin, relay_callback):
         self.pin = pin
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
@@ -26,20 +26,25 @@ class Relay:
         self.enabled = False
         self.time_activated = 0
         self.time_deactivated = 0
+        self.relay_cb = relay_callback
 
     def activate(self):
         if not self.enabled:
-            relay_logger.info("activate")
+            relay_logger.info('activate')
             GPIO.output(self.pin, GPIO.HIGH)
             self.enabled = True
             self.time_activated = calendar.timegm(time.gmtime())
+            if self.relay_cb is not None:
+                self.relay_cb('on')
 
     def deactivate(self):
         if self.enabled:
-            relay_logger.info("deactivate")
+            relay_logger.info('deactivate')
             GPIO.output(self.pin, GPIO.LOW)
             self.enabled = False
             self.time_deactivated = calendar.timegm(time.gmtime())
+            if self.relay_cb is not None:
+                self.relay_cb('on')
 
     def change_time(self):
         return max(self.time_activated, self.time_deactivated)
@@ -66,27 +71,26 @@ class Detector:
         GPIO.wait_for_edge(self.pin, GPIO.RISING)
 
     def arm(self, cb):
-        detector_logger.info("adding callback")
         GPIO.add_event_detect(self.pin, GPIO.RISING, callback=cb, bouncetime=300)
 
 
 class LightControl(threading.Thread):
 
-    def __init__(self, movement_callback, timer):
+    def __init__(self, movement_callback, lights_callback, timer):
         threading.Thread.__init__(self)
         self.detector = Detector(cam_config.gpio_detector)
-        self.relay = Relay(cam_config.gpio_relay)
+        self.relay = Relay(cam_config.gpio_relay, lights_callback)
         self.duration_lights = cam_config.lights_on_time
         self.duration_movement = 30
         self.time_movement = 0
         self.time_control = 0
-        self.cb = movement_callback
+        self.movement_cb = movement_callback
         self.is_running = True
         self.is_detected = False
         self.timer = timer
 
     def run(self):
-        light_logger.info("started")
+        light_logger.info('started')
         self.detector.arm(self._detected)
         while self.is_running:
             if self.detector.state():
@@ -97,10 +101,10 @@ class LightControl(threading.Thread):
                 self._detection_off()
             time.sleep(2.0)
         GPIO.cleanup()
-        light_logger.info("stopped")
+        light_logger.info('stopped')
 
     def turn_on(self):
-        light_logger.info("previous control was %u s ago" % (calendar.timegm(time.gmtime()) - self.time_control))
+        light_logger.info('previous control was %u s ago' % (calendar.timegm(time.gmtime()) - self.time_control))
         self.time_control = calendar.timegm(time.gmtime())
         self.relay.activate()
 
@@ -114,12 +118,14 @@ class LightControl(threading.Thread):
         self.time_movement = calendar.timegm(time.gmtime())
         if not self.is_detected:
             self.is_detected = True
-            self.cb('on')
+            if self.movement_cb is not None:
+                self.movement_cb('on')
 
     def _detection_off(self):
         if self.is_detected:
             self.is_detected = False
-            self.cb('off')
+            if self.movement_cb is not None:
+                self.movement_cb('off')
 
     def _lights_grace_period(self):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
@@ -138,5 +144,5 @@ class LightControl(threading.Thread):
             if self.timer.twilight_ongoing():
                 self.relay.activate()
         else:
-            light_logger.info("movement ignored during grace period")
+            light_logger.info('movement ignored during grace period')
 
