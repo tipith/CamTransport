@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Messaging/Message.py" afterPath="$PROJECT_DIR$/Messaging/Message.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cam_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+            <state relative-caret-position="493">
+              <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
               <folding>
                 <element signature="e#89#98#0" expanded="true" />
               </folding>
@@ -124,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Message.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Message.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Messaging/Message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+            <state relative-caret-position="329">
+              <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -202,8 +202,8 @@
         <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
         <option value="$PROJECT_DIR$/testing/db_test2.py" />
         <option value="$PROJECT_DIR$/Datastore/DataStore.py" />
-        <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/Messaging/Message.py" />
+        <option value="$PROJECT_DIR$/cam_config.py" />
       </list>
     </option>
   </component>
@@ -616,13 +616,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00014" summary="More refactoring">
-      <created>1474389785228</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1474389785228</updated>
-    </task>
     <task id="LOCAL-00015" summary="More refactoring">
       <created>1474389965803</created>
       <option name="number" value="00015" />
@@ -959,7 +952,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478799324215</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
+      <created>1478799709048</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1478799709048</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1322,22 +1322,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam_config.py">
+    <entry file="file://$PROJECT_DIR$/Messaging/Message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+        <state relative-caret-position="329">
+          <caret line="68" column="39" selection-start-line="68" selection-start-column="39" selection-end-line="68" selection-end-column="39" />
           <folding>
-            <element signature="e#89#98#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Messaging/Message.py">
+    <entry file="file://$PROJECT_DIR$/cam_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+        <state relative-caret-position="493">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#89#98#0" expanded="true" />
           </folding>
         </state>
       </provider>

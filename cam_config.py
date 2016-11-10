@@ -42,7 +42,7 @@ def setup_logging():
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 
-    sys.excepthook = except_logger
+    #sys.excepthook = except_logger
 
 
 config = configparser.RawConfigParser()
