@@ -55,6 +55,7 @@ class Camera:
             self._day()
 
     def _cron_job(self):
+        camera_logger.info("picture event")
         local_messaging = Messaging.LocalClientMessaging()
         local_messaging.send(Messaging.Message.msg_image(self.picture()))
         local_messaging.stop()
