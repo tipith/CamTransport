@@ -17,12 +17,17 @@ def on_movement_received(msg):
     pass
 
 
+def on_text_received(msg):
+    pass
+
+
 def server_messaging_start():
     _messaging = Messaging.ServerMessaging()
     _messaging.start()
     _messaging.install(Messaging.Message.Image, on_image_received)
     _messaging.install(Messaging.Message.Variable, on_variable_received)
     _messaging.install(Messaging.Message.Movement, on_movement_received)
+    _messaging.install(Messaging.Message.Text, on_text_received)
     return _messaging
 
 
@@ -39,7 +44,7 @@ if __name__ == "__main__":
         while True:
             msg = local_messaging.wait()
             if Messaging.Message.verify(msg):
-                main_logger.info('forwarding %s' % Messaging.Message.msg_info(msg))
+                main_logger.info('forward %s' % Messaging.Message.msg_info(msg))
                 server_messaging.send(msg)
     finally:
         server_messaging.stop()

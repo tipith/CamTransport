@@ -67,11 +67,13 @@ if __name__ == "__main__":
     camera = Imaging.Camera(timer)
     lights.start()
 
+    client_messaging.send(Messaging.Message.msg_text('start'))
+
     try:
         while True:
             msg = local_messaging.wait()
             if Messaging.Message.verify(msg):
-                main_logger.info('forwarding %s' % Messaging.Message.msg_info(msg))
+                main_logger.info('forward %s' % Messaging.Message.msg_info(msg))
                 client_messaging.send(msg)
                 client_messaging.send(Messaging.Message.msg_variable('uptime', get_uptime()))
     finally:
