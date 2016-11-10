@@ -44,7 +44,7 @@ class Relay:
             self.enabled = False
             self.time_deactivated = calendar.timegm(time.gmtime())
             if self.relay_cb is not None:
-                self.relay_cb('on')
+                self.relay_cb('off')
 
     def change_time(self):
         return max(self.time_activated, self.time_deactivated)
