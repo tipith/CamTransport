@@ -61,9 +61,11 @@ if __name__ == "__main__":
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = Timekeeper.Timekeeper()
-    lights = LightControl.LightControl(on_movement, on_light_control, timer)
     camera = Imaging.Camera(timer)
-    lights.start()
+
+    if cam_config.lights_enabled == 1:
+        lights = LightControl.LightControl(on_movement, on_light_control, timer)
+        lights.start()
 
     client_messaging.send(Messaging.Message.msg_text('start'))
 

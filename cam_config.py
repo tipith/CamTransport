@@ -59,6 +59,7 @@ upload_ip = config.get('CAMERA', 'upload_ip')
 upload_port = config.getint('CAMERA', 'upload_port')
 msg_port = config.getint('CAMERA', 'msg_port')
 
+lights_enabled = config.getint('LIGHTCONTROL', 'lights_enabled')
 gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')
 gpio_detector = config.getint('LIGHTCONTROL', 'gpio_detector')
 lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
