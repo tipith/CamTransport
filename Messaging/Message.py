@@ -1,6 +1,4 @@
 from datetime import datetime
-import ntpath
-import re
 import logging
 
 import cam_config
@@ -40,12 +38,11 @@ class Message:
         return False
 
     @staticmethod
-    def msg_image(filename):
-        with open(filename, 'rb') as f:
-            return {'src': cam_config.cam_id,
-                    'time': datetime.now(),
-                    'id': Message.Image,
-                    'data': f.read()}
+    def msg_image(data):
+        return {'src': cam_config.cam_id,
+                'time': datetime.now(),
+                'id': Message.Image,
+                'data': data}
 
     @staticmethod
     def msg_variable(name, value):

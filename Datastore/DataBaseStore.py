@@ -31,3 +31,11 @@ def store_image_meta(timestamp, cam_id, location, size):
         db_logger.warn('unable to add entry')
 
     close_db(db)
+
+
+def store_movement(cam_id, start, end):
+    pass
+
+
+def store_lightcontrol(cam_id, start, end):
+    pass

@@ -1,6 +1,7 @@
 from fractions import Fraction
+from io import BytesIO
 import time
-import os
+import datetime
 import logging
 
 import Messaging
@@ -20,6 +21,7 @@ class Camera:
     def __init__(self, timer):
         self.timer = timer
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
+        self.cam.annotate_background = picamera.Color('black')
 
         if self.timer.twilight_ongoing():
             self._night()
@@ -40,10 +42,10 @@ class Camera:
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
     def picture(self):
-        self.cam.capture('img.jpg', quality=20)
-        #camera_logger.info('Captured %s (%u B) with exposure %i ms' %
-        #                   (filename, os.path.getsize(filename), self.cam.exposure_speed / 1000))
-        #return filename
+        stream = BytesIO()
+        self.cam.annotate_text = 'Alho %d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.cam.capture(stream, quality=20)
+        return stream.read()
 
     def _twilight_event(self, event):
         camera_logger.info("twilight event: " + event)
@@ -53,9 +55,8 @@ class Camera:
             self._day()
 
     def _cron_job(self):
-        self.picture()
         local_messaging = Messaging.LocalClientMessaging()
-        local_messaging.send(Messaging.Message.msg_image('img.jpg'))
+        local_messaging.send(Messaging.Message.msg_image(self.picture()))
         local_messaging.stop()
 
     def _night(self):
