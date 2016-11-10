@@ -85,8 +85,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="45" column="59" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="59" />
+            <state relative-caret-position="323">
+              <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -622,13 +622,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00028" summary="More refactoring">
-      <created>1474479165982</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1474479165982</updated>
-    </task>
     <task id="LOCAL-00029" summary="More refactoring">
       <created>1474479209802</created>
       <option name="number" value="00029" />
@@ -965,7 +958,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478807273595</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="seek stream before reading">
+      <created>1478807585864</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1478807585864</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1343,8 +1343,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="45" column="59" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="59" />
+        <state relative-caret-position="323">
+          <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>

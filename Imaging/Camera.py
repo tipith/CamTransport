@@ -43,10 +43,8 @@ class Camera:
 
     def picture(self):
         pic_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        camera_logger.info("annotating with: %s" % pic_text)
         self.cam.annotate_text = pic_text
         stream = io.BytesIO()
-        #self.cam.annotate_text = 'alho'
         camera_logger.info("picturing")
         self.cam.capture(stream, 'jpeg', quality=20)
         camera_logger.info("end")
