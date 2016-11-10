@@ -54,7 +54,7 @@ db_host = config.get('SERVER', 'db_host')
 db_user = config.get('SERVER', 'db_user')
 db_pass = config.get('SERVER', 'db_pass')
 
-cam_id = config.get('CAMERA', 'cam_id')
+cam_id = config.getint('CAMERA', 'cam_id')
 upload_ip = config.get('CAMERA', 'upload_ip')
 upload_port = config.getint('CAMERA', 'upload_port')
 msg_port = config.getint('CAMERA', 'msg_port')
