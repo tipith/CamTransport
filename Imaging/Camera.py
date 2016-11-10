@@ -22,6 +22,7 @@ class Camera:
         self.timer = timer
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
         self.cam.annotate_background = picamera.Color('black')
+        self.cam.annotate_text_size = 50
 
         if self.timer.twilight_ongoing():
             self._night()
@@ -42,12 +43,9 @@ class Camera:
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
     def picture(self):
-        pic_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        self.cam.annotate_text = pic_text
+        self.cam.annotate_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         stream = io.BytesIO()
-        camera_logger.info("picturing")
         self.cam.capture(stream, 'jpeg', quality=20)
-        camera_logger.info("end")
         stream.seek(0)
         return stream.read()
 
@@ -59,7 +57,6 @@ class Camera:
             self._day()
 
     def _cron_job(self):
-        camera_logger.info("picture event")
         local_messaging = Messaging.LocalClientMessaging()
         local_messaging.send(Messaging.Message.msg_image(self.picture()))
         local_messaging.stop()
