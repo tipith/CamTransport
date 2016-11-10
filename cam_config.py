@@ -2,7 +2,11 @@ try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
-import os, sys, inspect, logging
+import os
+import sys
+import inspect
+import logging
+import logging.handlers
 
 conf_logger = logging.getLogger('Config')
 
@@ -30,7 +34,7 @@ def setup_logging():
     ch.setFormatter(fmt)
     rootlog.addHandler(ch)
 
-    fh = logging.FileHandler(os.path.join(__location__, 'log.txt'))
+    fh = logging.handlers.RotatingFileHandler(os.path.join(__location__, 'log.txt'), maxBytes=100*1024, backupCount=10)
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 

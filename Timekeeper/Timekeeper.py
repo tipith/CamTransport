@@ -10,6 +10,14 @@ time_logger = logging.getLogger('Timekeeper')
 test_logger = logging.getLogger('test')
 
 
+class SchedulerLogFilter(logging.Filter):
+    def filter(self, record):
+        return False
+
+logging.getLogger("apscheduler.scheduler").addFilter(SchedulerLogFilter())
+logging.getLogger("apscheduler.executors.default").addFilter(SchedulerLogFilter())
+
+
 class Timekeeper:
 
     def __init__(self):
@@ -65,6 +73,9 @@ class Timekeeper:
     def add_twilight_observer(self, cb):
         self.twilight_observers.append(cb)
 
+    def add_cron_job(self, cb, args, time):
+        self.scheduler.add_job(cb, 'cron', args, minute=time)
+
     def _twilight_event(self, event):
         for observer in self.twilight_observers:
             observer(event)
@@ -72,12 +83,9 @@ class Timekeeper:
 
     def _schedule_next_twilight_event(self):
         if self.twilight_ongoing():
-            self.scheduler.add_job(self._twilight_event, 'date', ['start'], next_run_time=self.twilight_end_next() + datetime.timedelta(seconds=30))
+            self.scheduler.add_job(self._twilight_event, 'date', ['end'], next_run_time=self.twilight_end_next() + datetime.timedelta(seconds=30))
         else:
-            self.scheduler.add_job(self._twilight_event, 'date', ['end'], next_run_time=self.twilight_start_next() + datetime.timedelta(seconds=30))
-
-    def add_cron_job(self, cb, args, time):
-        self.scheduler.add_job(cb, 'cron', args, minute=time)
+            self.scheduler.add_job(self._twilight_event, 'date', ['start'], next_run_time=self.twilight_start_next() + datetime.timedelta(seconds=30))
 
 
 def twilight_observer_test(event):
@@ -99,7 +107,7 @@ if __name__ == "__main__":
     test_logger.info('twilight ongoing      %s' % timer.twilight_ongoing())
 
     timer.add_twilight_observer(twilight_observer_test)
-    timer.add_cron_job(cron_job_test, ['test param'], '*/60')
+    timer.add_cron_job(cron_job_test, ['test param'], '*/1')
 
     while True:
         time.sleep(100)
