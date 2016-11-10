@@ -71,11 +71,13 @@ class Message:
 
     @staticmethod
     def msg_info(msg):
+        timestamp = msg['time'].strftime("%Y-%m-%d %H:%M:%S")
+
         if msg['id'] == Message.Image:
-            return 'Message.Image,    from %s, %s, length %i B' % (msg['src'], msg['time'], len(msg['data']))
+            return 'Message.Image, from %s, %s, length %i B' % (msg['src'], timestamp, len(msg['data']))
         if msg['id'] == Message.Variable:
-            return 'Message.Variable, from %s, %s, %s -> %s' % (msg['src'], msg['time'], msg['name'], msg['value'])
+            return 'Message.Variable, from %s, %s, %s -> %s' % (msg['src'], timestamp, msg['name'], msg['value'])
         if msg['id'] == Message.Command:
-            return 'Message.Command,  from %s, %s, %s -> %s' % (msg['src'], msg['time'], msg['command'], msg['parameter'])
+            return 'Message.Command, from %s, %s, %s -> %s' % (msg['src'], timestamp, msg['command'], msg['parameter'])
         if msg['id'] == Message.Movement:
-            return 'Message.Movement, from %s, %s, %s' % (msg['src'], msg['time'], msg['state'])
+            return 'Message.Movement, from %s, %s, %s' % (msg['src'], timestamp, msg['state'])
