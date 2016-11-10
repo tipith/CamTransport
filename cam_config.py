@@ -24,6 +24,10 @@ if cmd_subfolder not in sys.path:
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
+def except_logger(type, value, tb):
+    conf_logger.exception("Uncaught exception: {0}".format(str(value)))
+
+
 def setup_logging():
     fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
@@ -38,6 +42,8 @@ def setup_logging():
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 
+    sys.excepthook = except_logger
+
 
 config = configparser.RawConfigParser()
 config.read(os.path.join(__location__, 'cam_transport.cfg'))
@@ -48,10 +54,10 @@ db_host = config.get('SERVER', 'db_host')
 db_user = config.get('SERVER', 'db_user')
 db_pass = config.get('SERVER', 'db_pass')
 
-cam_name = config.get('PUBLISHER', 'cam_name')
-upload_ip = config.get('PUBLISHER', 'upload_ip')
-upload_port = config.getint('PUBLISHER', 'upload_port')
-msg_port = config.getint('PUBLISHER', 'msg_port')
+cam_id = config.get('CAMERA', 'cam_id')
+upload_ip = config.get('CAMERA', 'upload_ip')
+upload_port = config.getint('CAMERA', 'upload_port')
+msg_port = config.getint('CAMERA', 'msg_port')
 
 gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')
 gpio_detector = config.getint('LIGHTCONTROL', 'gpio_detector')

@@ -2,7 +2,6 @@ import time
 import calendar
 import threading
 import logging
-import Timekeeper
 
 try:
     import RPi.GPIO as GPIO

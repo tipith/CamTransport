@@ -41,26 +41,14 @@ class Message:
     @staticmethod
     def msg_image(filename):
         with open(filename, 'rb') as f:
-            #timestamp = datetime.strptime(m.group(1), '%Y%m%d_%H%M%S')
-            return {'src': cam_config.cam_name,
+            return {'src': cam_config.cam_id,
                     'time': datetime.now(),
                     'id': Message.Image,
                     'data': f.read()}
-            # /var/www/html/media/im_2436_20160806_191001.jpg
-            #m = re.match('im_\d+_(\d{8}_\d{6}).(jpg|png)', ntpath.basename(file))
-            #if m:
-            #    timestamp = datetime.strptime(m.group(1), '%Y%m%d_%H%M%S')
-            #    return {'src': cam_config.cam_name,
-            #            'time': timestamp,
-            #            'id': Message.Image,
-            #            'data': f.read()}
-            #else:
-            #    message_logger.warn('Error: invalid image name')
-            #    raise AlhoMessageException()
 
     @staticmethod
     def msg_variable(name, value):
-        return {'src': cam_config.cam_name,
+        return {'src': cam_config.cam_id,
                 'time': datetime.now().replace(microsecond=0),
                 'id': Message.Variable,
                 'name': name,
@@ -76,7 +64,7 @@ class Message:
 
     @staticmethod
     def msg_movement(state):
-        return {'src': cam_config.cam_name,
+        return {'src': cam_config.cam_id,
                 'time': datetime.now().replace(microsecond=0),
                 'id': Message.Movement,
                 'state': state}
