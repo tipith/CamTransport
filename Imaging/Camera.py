@@ -42,9 +42,10 @@ class Camera:
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
     def picture(self):
+        pic_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        camera_logger.info("annotating with: %s" % pic_text)
+        self.cam.annotate_text = pic_text
         stream = io.BytesIO()
-        camera_logger.info("annotating")
-        self.cam.annotate_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         #self.cam.annotate_text = 'alho'
         camera_logger.info("picturing")
         self.cam.capture(stream, 'jpeg', quality=20)

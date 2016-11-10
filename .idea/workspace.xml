@@ -85,8 +85,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="306">
+              <caret line="45" column="59" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="59" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -622,13 +622,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00027" summary="More refactoring">
-      <created>1474429434921</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1474429434921</updated>
-    </task>
     <task id="LOCAL-00028" summary="More refactoring">
       <created>1474479165982</created>
       <option name="number" value="00028" />
@@ -965,7 +958,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478806391916</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="seek stream before reading">
+      <created>1478807273595</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1478807273595</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1014,7 +1014,8 @@
     <MESSAGE value="Fix LightControl" />
     <MESSAGE value="Store image meta information to MySQL database" />
     <MESSAGE value="Add Timekeeper and Imaging components to take pictures at specific intervals" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Timekeeper and Imaging components to take pictures at specific intervals" />
+    <MESSAGE value="seek stream before reading" />
+    <option name="LAST_COMMIT_MESSAGE" value="seek stream before reading" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1342,8 +1343,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state relative-caret-position="306">
+          <caret line="45" column="59" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="59" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
