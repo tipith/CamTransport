@@ -21,7 +21,7 @@ class Camera:
     def __init__(self, timer):
         self.timer = timer
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
-        self.cam.annotate_background = picamera.Color('black')
+        #self.cam.annotate_background = picamera.Color('black')
 
         if self.timer.twilight_ongoing():
             self._night()
