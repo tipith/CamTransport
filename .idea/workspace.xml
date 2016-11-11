@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Datastore/DataBaseStore.py" afterPath="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cam_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="641">
-              <caret line="61" column="62" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="62" />
+            <state relative-caret-position="692">
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding>
                 <element signature="e#89#98#0" expanded="true" />
               </folding>
@@ -80,7 +80,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataBaseStore.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataBaseStore.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Datastore/DataBaseStore.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="522">
@@ -201,11 +201,11 @@
         <option value="$PROJECT_DIR$/Datastore/__init__.py" />
         <option value="$PROJECT_DIR$/main_server.py" />
         <option value="$PROJECT_DIR$/cam_transport_template.cfg" />
-        <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
         <option value="$PROJECT_DIR$/cam_transport.cfg" />
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
         <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
+        <option value="$PROJECT_DIR$/cam_config.py" />
       </list>
     </option>
   </component>
@@ -618,13 +618,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00035" summary="More refactoring">
-      <created>1475004071478</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1475004071478</updated>
-    </task>
     <task id="LOCAL-00036" summary="Prevent false alarms with lights of grace period">
       <created>1475086894621</created>
       <option name="number" value="00036" />
@@ -961,7 +954,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478814588064</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="store light and movement events to database">
+      <created>1478819173677</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1478819173677</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1014,7 +1014,8 @@
     <MESSAGE value="change annotate size" />
     <MESSAGE value="indicate light events to camera component" />
     <MESSAGE value="enable config for lights" />
-    <option name="LAST_COMMIT_MESSAGE" value="enable config for lights" />
+    <MESSAGE value="store light and movement events to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="store light and movement events to database" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1291,30 +1292,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script_cmd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main_client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="505">
           <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cam_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="641">
-          <caret line="61" column="62" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="62" />
-          <folding>
-            <element signature="e#89#98#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1349,6 +1332,24 @@
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script_cmd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cam_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="692">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <element signature="e#89#98#0" expanded="true" />
           </folding>
         </state>
       </provider>

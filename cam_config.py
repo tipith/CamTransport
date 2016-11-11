@@ -7,6 +7,7 @@ import sys
 import inspect
 import logging
 import logging.handlers
+import stat
 
 conf_logger = logging.getLogger('Config')
 
@@ -24,11 +25,9 @@ if cmd_subfolder not in sys.path:
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
-def except_logger(type, value, tb):
-    conf_logger.exception("Uncaught exception: {0}".format(str(value)))
-
-
 def setup_logging():
+    log_file = os.path.join(__location__, 'log.txt')
+
     fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
     rootlog = logging.getLogger()
@@ -38,11 +37,11 @@ def setup_logging():
     ch.setFormatter(fmt)
     rootlog.addHandler(ch)
 
-    fh = logging.handlers.RotatingFileHandler(os.path.join(__location__, 'log.txt'), maxBytes=100*1024, backupCount=10)
+    fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=100*1024, backupCount=10)
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 
-    #sys.excepthook = except_logger
+    os.chmod(log_file, stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
 
 
 config = configparser.RawConfigParser()
