@@ -41,7 +41,11 @@ def setup_logging():
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 
-    os.chmod(log_file, stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
+    try:
+        os.chmod(log_file, stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
+    except OSError:
+        pass
+
 
 
 config = configparser.RawConfigParser()

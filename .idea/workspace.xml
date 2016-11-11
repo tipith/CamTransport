@@ -71,8 +71,8 @@
       <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cam_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="692">
-              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+            <state relative-caret-position="471">
+              <caret line="45" column="19" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
               <folding>
                 <element signature="e#89#98#0" expanded="true" />
               </folding>
@@ -618,13 +618,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00036" summary="Prevent false alarms with lights of grace period">
-      <created>1475086894621</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1475086894621</updated>
-    </task>
     <task id="LOCAL-00037" summary="Convert command socket into PUB-SUB  to prevent message balancing">
       <created>1475091658717</created>
       <option name="number" value="00037" />
@@ -961,7 +954,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478819173677</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="user access for log.txt">
+      <created>1478823328771</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1478823328771</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1015,7 +1015,8 @@
     <MESSAGE value="indicate light events to camera component" />
     <MESSAGE value="enable config for lights" />
     <MESSAGE value="store light and movement events to database" />
-    <option name="LAST_COMMIT_MESSAGE" value="store light and movement events to database" />
+    <MESSAGE value="user access for log.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="user access for log.txt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1346,8 +1347,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cam_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        <state relative-caret-position="471">
+          <caret line="45" column="19" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="19" />
           <folding>
             <element signature="e#89#98#0" expanded="true" />
           </folding>
