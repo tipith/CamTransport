@@ -15,7 +15,7 @@ def on_variable_received(msg):
 
 
 def on_movement_received(msg):
-    Datastore.db_store_movement(msg['src'], msg['time'], msg['state'])
+    Datastore.db_store_movement(msg['src'], msg['time'], msg['detector'], msg['state'])
 
 
 def on_text_received(msg):

@@ -30,13 +30,13 @@ def db_store_image(cam_id, timestamp, location, size):
     close_db(db)
 
 
-def db_store_movement(cam_id, timestamp, event):
+def db_store_movement(cam_id, timestamp, detector, event):
     timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S')
     db = open_db()
     cur = db.cursor()
     try:
-        cur.execute("INSERT INTO Movement (idCamera, Timestamp, Event) \
-                    VALUES (%s, %s, %s)", (cam_id, timestamp_str, event))
+        cur.execute("INSERT INTO Movement (idCamera, Timestamp, Detector, Event) \
+                    VALUES (%s, %s, %s, %s)", (cam_id, timestamp_str, detector, event))
     except MySQLdb.IntegrityError:
         db_logger.warn('unable to add entry')
     close_db(db)

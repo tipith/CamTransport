@@ -61,6 +61,7 @@ cam_id = config.getint('CAMERA', 'cam_id')
 upload_ip = config.get('CAMERA', 'upload_ip')
 upload_port = config.getint('CAMERA', 'upload_port')
 msg_port = config.getint('CAMERA', 'msg_port')
+movement_image_path = config.get('CAMERA', 'movement_image_path')
 
 lights_enabled = config.getint('LIGHTCONTROL', 'lights_enabled')
 gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')

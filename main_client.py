@@ -42,10 +42,10 @@ def local_messaging_start():
     return _messaging
 
 
-def on_movement(state):
+def on_movement(detector, state):
     global client_messaging
     if client_messaging is not None:
-        client_messaging.send(Messaging.Message.msg_movement(state))
+        client_messaging.send(Messaging.Message.msg_movement(detector, state))
 
 
 def on_light_control(state):
@@ -61,7 +61,9 @@ if __name__ == "__main__":
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = Timekeeper.Timekeeper()
-    camera = Imaging.Camera(timer)
+
+    camera = Imaging.Camera(timer, on_movement)
+    camera.start()
 
     if cam_config.lights_enabled == 1:
         lights = LightControl.LightControl(on_movement, on_light_control, timer)
@@ -80,3 +82,4 @@ if __name__ == "__main__":
         client_messaging.stop()
         local_messaging.stop()
         lights.stop()
+        camera.stop()

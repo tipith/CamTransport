@@ -119,13 +119,13 @@ class LightControl(threading.Thread):
         if not self.is_detected:
             self.is_detected = True
             if self.movement_cb is not None:
-                self.movement_cb('on')
+                self.movement_cb('pir', 'on')
 
     def _detection_off(self):
         if self.is_detected:
             self.is_detected = False
             if self.movement_cb is not None:
-                self.movement_cb('off')
+                self.movement_cb('pir', 'off')
 
     def _lights_grace_period(self):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)

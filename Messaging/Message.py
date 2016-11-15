@@ -62,10 +62,11 @@ class Message:
                 'parameter': parameter}
 
     @staticmethod
-    def msg_movement(state):
+    def msg_movement(detector, state):
         return {'src': cam_config.cam_id,
                 'time': datetime.now().replace(microsecond=0),
                 'id': Message.Movement,
+                'detector': detector,
                 'state': state}
 
     @staticmethod
@@ -93,7 +94,7 @@ class Message:
         if msg['id'] == Message.Command:
             return 'command from %s, %s, %s -> %s' % (msg['src'], timestamp, msg['command'], msg['parameter'])
         if msg['id'] == Message.Movement:
-            return 'movement from %s, %s, %s' % (msg['src'], timestamp, msg['state'])
+            return 'movement from %s, %s, detector %s, state %s' % (msg['src'], timestamp, msg['detector'], msg['state'])
         if msg['id'] == Message.Text:
             return 'text from %s, %s: %s' % (msg['src'], timestamp, msg['text'])
         if msg['id'] == Message.LightControl:
