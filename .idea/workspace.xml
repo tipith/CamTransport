@@ -4,16 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="user access for log.txt">
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Datastore/DataBaseStore.py" afterPath="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LightControl/LightControl.py" afterPath="$PROJECT_DIR$/LightControl/LightControl.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Messaging/Message.py" afterPath="$PROJECT_DIR$/Messaging/Message.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_transport_template.cfg" afterPath="$PROJECT_DIR$/cam_transport_template.cfg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_client.py" afterPath="$PROJECT_DIR$/main_client.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_server.py" afterPath="$PROJECT_DIR$/main_server.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,8 +29,8 @@
       <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="45">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="39" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -48,62 +41,10 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="272">
+              <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cam_transport_template.cfg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cam_transport_template.cfg">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cam_transport.cfg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cam_config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="63" column="65" selection-start-line="63" selection-start-column="65" selection-end-line="63" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataStore.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Datastore/DataStore.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="25" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_client.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_client.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="64" column="23" selection-start-line="64" selection-start-column="23" selection-end-line="64" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,30 +56,6 @@
             <state relative-caret-position="18768">
               <caret line="1112" column="16" selection-start-line="1112" selection-start-column="0" selection-end-line="1112" selection-end-column="16" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Message.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Messaging/Message.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="58" column="38" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -209,8 +126,8 @@
         <option value="$PROJECT_DIR$/cam_transport_template.cfg" />
         <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/cam_transport.cfg" />
-        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
+        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
       </list>
     </option>
   </component>
@@ -646,13 +563,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00038" summary="Forgot to add topic to SUB socket">
-      <created>1475092714672</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1475092714672</updated>
-    </task>
     <task id="LOCAL-00039" summary="Fix LightControl grace period">
       <created>1475185068131</created>
       <option name="number" value="00039" />
@@ -989,7 +899,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478823467990</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="use OpenCV for motion detection, store motion images as thumbnails to configured location">
+      <created>1479249953172</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1479249953172</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1044,7 +961,8 @@
     <MESSAGE value="enable config for lights" />
     <MESSAGE value="store light and movement events to database" />
     <MESSAGE value="user access for log.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="user access for log.txt" />
+    <MESSAGE value="use OpenCV for motion detection, store motion images as thumbnails to configured location" />
+    <option name="LAST_COMMIT_MESSAGE" value="use OpenCV for motion detection, store motion images as thumbnails to configured location" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1288,16 +1206,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main_server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1342,14 +1250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main_client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1360,10 +1260,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        <state relative-caret-position="272">
+          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>

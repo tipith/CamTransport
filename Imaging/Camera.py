@@ -74,6 +74,7 @@ class Motion:
 class Camera(threading.Thread):
 
     def __init__(self, timer, movement_cb):
+        threading.Thread.__init__(self)
         self.timer = timer
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
         self.cam.annotate_background = picamera.Color('black')
