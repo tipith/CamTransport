@@ -42,7 +42,7 @@ def setup_logging():
     rootlog.addHandler(fh)
 
     try:
-        os.chmod(log_file, stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
+        os.chmod(log_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
     except OSError:
         pass
 

@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/draw_io_class_diagram.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="454">
@@ -47,6 +46,26 @@
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cam_config.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cam_config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="556">
+              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stat.py" pinned="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/stat.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="318">
+              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,16 +87,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
               <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-762174762/cv2/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18768">
-              <caret line="1112" column="16" selection-start-line="1112" selection-start-column="0" selection-end-line="1112" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -191,10 +200,10 @@
         <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
         <option value="$PROJECT_DIR$/cam_transport_template.cfg" />
-        <option value="$PROJECT_DIR$/cam_config.py" />
         <option value="$PROJECT_DIR$/cam_transport.cfg" />
         <option value="$PROJECT_DIR$/main_client.py" />
         <option value="$PROJECT_DIR$/Imaging/Camera.py" />
+        <option value="$PROJECT_DIR$/cam_config.py" />
       </list>
     </option>
   </component>
@@ -566,13 +575,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00040" summary="Fix LightControl grace period again">
-      <created>1475263194581</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1475263194581</updated>
-    </task>
     <task id="LOCAL-00041" summary="Fix LightControl again">
       <created>1475263380454</created>
       <option name="number" value="00041" />
@@ -909,7 +911,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479250203229</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="movement image rename">
+      <created>1479549441960</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1479549441961</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -966,7 +975,8 @@
     <MESSAGE value="user access for log.txt" />
     <MESSAGE value="use OpenCV for motion detection, store motion images as thumbnails to configured location" />
     <MESSAGE value="use OpenCV for motion detection" />
-    <option name="LAST_COMMIT_MESSAGE" value="use OpenCV for motion detection" />
+    <MESSAGE value="movement image rename" />
+    <option name="LAST_COMMIT_MESSAGE" value="movement image rename" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -986,7 +996,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/guide.txt" />
     <entry file="file://C:/Python352/Lib/threading.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -1210,13 +1219,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="63" column="65" selection-start-line="63" selection-start-column="65" selection-end-line="63" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1288,6 +1290,22 @@
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/stat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cam_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
