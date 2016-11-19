@@ -193,7 +193,7 @@ def store_thumbnail(img):
             camera_logger.info("store_thumbnail: creating path %s" % cam_config.movement_image_path)
             os.makedirs(cam_config.movement_image_path)
 
-        filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M') + '.jpg'
+        filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M%S') + '.jpg'
         camera_logger.info('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
 
         with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
