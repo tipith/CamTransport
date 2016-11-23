@@ -4,12 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="dynamic night time shutter speed, motion mask">
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Timekeeper/Timekeeper.py" afterPath="$PROJECT_DIR$/Timekeeper/Timekeeper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_config.py" afterPath="$PROJECT_DIR$/cam_config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cam_transport_template.cfg" afterPath="$PROJECT_DIR$/cam_transport_template.cfg" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,8 +29,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="371" column="27" selection-start-line="371" selection-start-column="27" selection-end-line="371" selection-end-column="27" />
+            <state relative-caret-position="379">
+              <caret line="164" column="63" selection-start-line="164" selection-start-column="63" selection-end-line="164" selection-end-column="63" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -84,8 +81,8 @@
       <file leaf-file-name="cam_transport.cfg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state relative-caret-position="221">
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -569,13 +566,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00045" summary="Store image meta information to MySQL database">
-      <created>1478038937646</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1478038937646</updated>
-    </task>
     <task id="LOCAL-00046" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
       <created>1478649600892</created>
       <option name="number" value="00046" />
@@ -912,7 +902,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479860480848</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="twilight starts earlier and ends later, shutter speed tuning, config parameter for mask file">
+      <created>1479944162750</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1479944162750</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -977,7 +974,8 @@
     <MESSAGE value="movement image rename" />
     <MESSAGE value="log file read rights for user" />
     <MESSAGE value="dynamic night time shutter speed, motion mask" />
-    <option name="LAST_COMMIT_MESSAGE" value="dynamic night time shutter speed, motion mask" />
+    <MESSAGE value="twilight starts earlier and ends later, shutter speed tuning, config parameter for mask file" />
+    <option name="LAST_COMMIT_MESSAGE" value="twilight starts earlier and ends later, shutter speed tuning, config parameter for mask file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1326,14 +1324,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Messaging/Messaging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -1358,10 +1348,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cam_transport.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="371" column="27" selection-start-line="371" selection-start-column="27" selection-end-line="371" selection-end-column="27" />
+        <state relative-caret-position="379">
+          <caret line="164" column="63" selection-start-line="164" selection-start-column="63" selection-end-line="164" selection-end-column="63" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>

@@ -145,7 +145,7 @@ class Camera(threading.Thread):
         self.detected = False
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
-        self.mask = ImageTools.create_mask('mask_cam1.jpg')
+        self.mask = ImageTools.create_mask(cam_config.movement_mask)
 
         if self.timer.twilight_ongoing():
             self._night()
@@ -256,7 +256,7 @@ class Camera(threading.Thread):
             elif avg > 120 and current - 10*tune_value > 0:
                 change = -10*tune_value
 
-            camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg / 1000, current / 1000, change / 1000))
+            camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
             self.cam.shutter_speed = current + change
 
     def _night(self):
