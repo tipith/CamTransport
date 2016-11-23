@@ -10,13 +10,23 @@ import numpy
 import cv2
 
 import Messaging
+import cam_config
 
 try:
     import picamera
 except ImportError:
     pass
 
-import cam_config
+# testing related imports
+import glob
+import os
+from itertools import chain
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+except ImportError:
+    pass
+
 
 camera_logger = logging.getLogger('Camera')
 
@@ -261,14 +271,6 @@ def store_thumbnail(img):
 
         with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
             write_f.write(buf)
-
-
-import glob
-import os
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from itertools import chain
-
 
 def test():
     motion = Motion()
