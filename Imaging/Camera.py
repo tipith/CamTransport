@@ -135,7 +135,8 @@ class Camera(threading.Thread):
         self.is_running = True
         self.motion = Motion()
         self.detected = False
-
+        
+        picamera.PiCamera.CAPTURE_TIMEOUT = 90000
         self.mask = ImageTools.create_mask('mask_cam1.jpg')
 
         if self.timer.twilight_ongoing():
@@ -232,7 +233,7 @@ class Camera(threading.Thread):
         if self.timer.twilight_ongoing():
             # 100 ms steps, max value 10 sec
             tune_value = 100000
-            max_value = 10000000
+            max_value = 12000000
 
             avg = ImageTools.calculate_average(img)
             current = self.cam.shutter_speed
@@ -247,7 +248,7 @@ class Camera(threading.Thread):
     def _night(self):
         camera_logger.info('night parameters')
         self.cam.exposure_mode = 'off'
-        self.cam.shutter_speed = 6000000
+        self.cam.shutter_speed = 1000000
         self.cam.iso = 800
 
     def _day(self):
