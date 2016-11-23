@@ -21,16 +21,58 @@ import cam_config
 camera_logger = logging.getLogger('Camera')
 
 
+class ImageTools:
+
+    @staticmethod
+    def im_reader(file):
+        camera_logger.info('reading ' + file)
+        with open(file, 'rb') as readf:
+            pic_buf = readf.read()
+            img_mat = numpy.fromstring(pic_buf, dtype='uint8')
+            img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
+            if img is not None:
+                return img
+            else:
+                camera_logger.info('unable to decode')
+                return None
+
+    @staticmethod
+    def create_mask(img_filename):
+        mask_img = ImageTools.im_reader(img_filename)
+        img2gray = cv2.cvtColor(mask_img, cv2.COLOR_BGR2GRAY)
+        ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+        return mask
+
+    @staticmethod
+    def calculate_average(img):
+        avg_channels = cv2.mean(img)
+        return sum(avg_channels) / 3
+
+    @staticmethod
+    def apply_mask(img, mask):
+        return cv2.bitwise_and(img, img, mask=mask)
+
+    @staticmethod
+    def calculate_histograms(img, mask):
+        # Calculate histogram with mask and without mask, check third argument for mask
+        hist_full = cv2.calcHist([img], [0], None, [256], [0, 256])
+        hist_mask = cv2.calcHist([img], [0], mask, [256], [0, 256])
+        return [hist_full, hist_mask]
+
+
 class Motion:
 
     def __init__(self):
         self.avg = None
 
-    def feed(self, pic):
+    def feed(self, pic, mask):
         retval = False
 
         # grab the raw NumPy array representing the image and initialize the timestamp and occupied/unoccupied text
         frame = pic
+
+        # apply motion mask
+        frame = ImageTools.apply_mask(frame, mask)
 
         # resize the frame, convert it to grayscale, and blur it
         #frame = imutils.resize(frame, width=500)
@@ -65,10 +107,10 @@ class Motion:
 
             # compute the bounding box for the contour, draw it on the frame, and update the text
             (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
             retval = True
 
-        return (retval, frame)
+        return (retval, pic)
 
 
 class Camera(threading.Thread):
@@ -83,6 +125,8 @@ class Camera(threading.Thread):
         self.is_running = True
         self.motion = Motion()
         self.detected = False
+
+        self.mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
 
         if self.timer.twilight_ongoing():
             self._night()
@@ -113,7 +157,9 @@ class Camera(threading.Thread):
             img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
 
             if img is not None:
-                (m_det, m_img) = self.motion.feed(img)
+                self._tune_shutter_speed(img)
+
+                (m_det, m_img) = self.motion.feed(img, self.mask)
 
                 if self.detected != m_det:
                     self.detected = m_det
@@ -171,6 +217,23 @@ class Camera(threading.Thread):
         #local_messaging.send(Messaging.Message.msg_image(self.picture()))
         #local_messaging.stop()
 
+    def _tune_shutter_speed(self, img):
+        # day mode uses automatic mode
+        if self.timer.twilight_ongoing():
+            # 100 ms steps, max value 10 sec
+            tune_value = 100000
+            max_value = 10000000
+
+            avg = ImageTools.calculate_average(img)
+            current = self.cam.shutter_speed
+
+            if avg < 40 and current < max_value - tune_value:
+                camera_logger.info('pic average %u, increasing shutter speed to %u' % (avg, current + tune_value))
+                self.cam.shutter_speed = current + tune_value
+            if avg > 140 and current < max_value - tune_value:
+                camera_logger.info('pic average %u, decreasing shutter speed to %u' % (avg, current + tune_value))
+                self.cam.shutter_speed = current - tune_value
+
     def _night(self):
         camera_logger.info('night parameters')
         self.cam.exposure_mode = 'off'
@@ -200,12 +263,17 @@ def store_thumbnail(img):
             write_f.write(buf)
 
 
-def test():
-    import glob
-    import os
+import glob
+import os
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from itertools import chain
 
+
+def test():
     motion = Motion()
 
+    mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
     pics = glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg'))
 
     for idx, pic in enumerate(pics):
@@ -215,13 +283,89 @@ def test():
             img_mat = numpy.fromstring(pic_buf, dtype='uint8')
             img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
             if img is not None:
-                (m_det, m_img) = motion.feed(img)
+                (m_det, m_img) = motion.feed(img, mask)
                 if m_det:
                     camera_logger.info('motion detected')
                     store_thumbnail(m_img)
+                    time.sleep(1.0)
             else:
                 camera_logger.info('unable to decode')
 
 
+class TestAnim:
+
+    def __init__(self):
+        self.pics = iter(glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg')))
+        self.fig = plt.figure()
+        self.pic = plt.imshow(ImageTools.im_reader(self.pics), vmin=0, vmax=255)
+
+    def anim(self):
+        ani = animation.FuncAnimation(self.fig, self._update_img, interval=5, blit=True)
+        plt.show()
+
+    def _update_img(self, *args):
+        self.pic.set_array(ImageTools.im_reader(self.pics))
+        return [self.pic]
+
+
+class TestAnim2:
+
+    def __init__(self):
+        self.pics = iter(glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg')))
+
+        self.mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
+
+        self.avg = []
+
+        self.fig, ax = plt.subplots(2, 3)
+
+        pic = ImageTools.im_reader(self.pics.next())
+        masked = ImageTools.apply_mask(pic, self.mask)
+        hist = ImageTools.calculate_histograms(pic, self.mask)
+        self.avg.append(ImageTools.calculate_average(pic))
+
+        self.im = []
+        self.im.append(ax[0, 0].imshow(pic))
+        self.im.append(ax[1, 0].imshow(masked))
+
+        self.im.append(ax[1, 1].plot(hist[0])[0])
+        self.im.append(ax[1, 1].plot(hist[1])[0])
+        self.im.append(ax[0, 2].plot(self.avg)[0])
+
+        for plot in chain.from_iterable(zip(*ax)):
+            plot.tick_params(axis='both', which='both', bottom='off', top='off', labelbottom='off', labelleft='on')
+            plot.set_autoscale_on(True)
+
+    def _update_img(self, *args):
+        pic = ImageTools.im_reader(self.pics.next())
+        masked = ImageTools.apply_mask(pic, self.mask)
+        hist = ImageTools.calculate_histograms(pic, self.mask)
+        self.avg.append(ImageTools.calculate_average(pic))
+
+        self.im[0].set_array(pic)
+        self.im[1].set_array(masked)
+        self.im[2].set_ydata(hist[0])
+        self.im[3].set_ydata(hist[1])
+        self.im[4].set_data(range(len(self.avg)), self.avg)
+
+        axes = self.fig.get_axes()
+        axes[1].relim()
+        axes[1].autoscale()
+        axes[2].relim()
+        axes[2].autoscale()
+        axes[4].relim()
+        axes[4].autoscale()
+        axes[5].relim()
+        axes[5].autoscale()
+
+        return self.im
+
+    def anim(self):
+        ani = animation.FuncAnimation(self.fig, self._update_img, interval=1, blit=False)
+        plt.show()
+
+
 if __name__ == "__main__":
+    #test = TestAnim2()
+    #test.anim()
     test()
