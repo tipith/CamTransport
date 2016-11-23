@@ -20,24 +20,35 @@ logging.getLogger("apscheduler.executors.default").addFilter(SchedulerLogFilter(
 
 class Timekeeper:
 
+    TWILIGHT_CUSTOM = '-3'
+    TWILIGHT_CIVIL = '-6'
+    TWILIGHT_NAUTICAL = '-12'
+    TWILIGHT_ASTRONOMICAL = '-18'
+
     def __init__(self):
         self.salo = ephem.Observer()
         self.salo.lon = str(23.13333)
         self.salo.lat = str(60.38333)
         self.salo.elev = 20
         self.salo.pressure = 0
-        self.salo.horizon = '-6'  # -6 = civil twilight, -12 = nautical, -18 = astronomical
         self.update_date()
         self.twilight_observers = []
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
         self._schedule_next_twilight_event()
         time_logger.info('started scheduler')
+        time_logger.info('current               %s' % self.update_date())
+        time_logger.info('start twilight prev   %s' % self.twilight_start_prev())
+        time_logger.info('start twilight next   %s' % self.twilight_start_next())
+        time_logger.info('end twilight prev     %s' % self.twilight_end_prev())
+        time_logger.info('end twilight next     %s' % self.twilight_end_next())
+        time_logger.info('twilight ongoing      %s' % self.twilight_ongoing())
 
     def update_date(self):
         # PyEphem takes and returns only UTC times
         self.salo.date = ephem.Date(datetime.datetime.utcnow())
-        return ephem.localtime(self.salo.date)
+        date = ephem.localtime(self.salo.date)
+        return date.replace(microsecond=0)
 
     def sunrise(self):
         self.salo.horizon = '-0:34'
@@ -48,20 +59,24 @@ class Timekeeper:
         return ephem.localtime(self.salo.next_setting(ephem.Sun()))
 
     def twilight_start_prev(self):
-        self.salo.horizon = '-6'
-        return ephem.localtime(self.salo.previous_setting(ephem.Sun(), use_center=True))
+        self.salo.horizon = Timekeeper.TWILIGHT_CUSTOM
+        date = ephem.localtime(self.salo.previous_setting(ephem.Sun(), use_center=True))
+        return date.replace(microsecond=0)
 
     def twilight_start_next(self):
-        self.salo.horizon = '-6'
-        return ephem.localtime(self.salo.next_setting(ephem.Sun(), use_center=True))
+        self.salo.horizon = Timekeeper.TWILIGHT_CUSTOM
+        date = ephem.localtime(self.salo.next_setting(ephem.Sun(), use_center=True))
+        return date.replace(microsecond=0)
 
     def twilight_end_prev(self):
-        self.salo.horizon = '-6'
-        return ephem.localtime(self.salo.previous_rising(ephem.Sun(), use_center=True))
+        self.salo.horizon = Timekeeper.TWILIGHT_CUSTOM
+        date = ephem.localtime(self.salo.previous_rising(ephem.Sun(), use_center=True))
+        return date.replace(microsecond=0)
 
     def twilight_end_next(self):
-        self.salo.horizon = '-6'
-        return ephem.localtime(self.salo.next_rising(ephem.Sun(), use_center=True))
+        self.salo.horizon = Timekeeper.TWILIGHT_CUSTOM
+        date = ephem.localtime(self.salo.next_rising(ephem.Sun(), use_center=True))
+        return date.replace(microsecond=0)
 
     def twilight_ongoing(self):
         now = self.update_date()
@@ -98,13 +113,6 @@ def cron_job_test(text):
 
 if __name__ == "__main__":
     timer = Timekeeper()
-
-    test_logger.info('current               %s' % timer.update_date())
-    test_logger.info('start twilight prev   %s' % timer.twilight_start_prev())
-    test_logger.info('start twilight next   %s' % timer.twilight_start_next())
-    test_logger.info('end twilight prev     %s' % timer.twilight_end_prev())
-    test_logger.info('end twilight next     %s' % timer.twilight_end_next())
-    test_logger.info('twilight ongoing      %s' % timer.twilight_ongoing())
 
     timer.add_twilight_observer(twilight_observer_test)
     timer.add_cron_job(cron_job_test, ['test param'], '*/1')

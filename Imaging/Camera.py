@@ -34,24 +34,30 @@ camera_logger = logging.getLogger('Camera')
 class ImageTools:
 
     @staticmethod
-    def im_reader(file):
-        camera_logger.info('reading ' + file)
-        with open(file, 'rb') as readf:
-            pic_buf = readf.read()
-            img_mat = numpy.fromstring(pic_buf, dtype='uint8')
-            img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
-            if img is not None:
-                return img
-            else:
-                camera_logger.info('unable to decode')
-                return None
+    def im_reader(filename):
+        camera_logger.info('reading file: ' + filename)
+        try:
+            with open(filename, 'rb') as readf:
+                pic_buf = readf.read()
+                img_mat = numpy.fromstring(pic_buf, dtype='uint8')
+                img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
+                if img is not None:
+                    return img
+                else:
+                    camera_logger.warn('unable to decode')
+                    return None
+        except IOError:
+            camera_logger.warn('unable to open file: ' + filename)
+            return None
 
     @staticmethod
     def create_mask(img_filename):
         mask_img = ImageTools.im_reader(img_filename)
-        img2gray = cv2.cvtColor(mask_img, cv2.COLOR_BGR2GRAY)
-        ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
-        return mask
+        if mask_img is not None:
+            img2gray = cv2.cvtColor(mask_img, cv2.COLOR_BGR2GRAY)
+            ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+            return mask
+        return None
 
     @staticmethod
     def calculate_average(img):
@@ -60,7 +66,9 @@ class ImageTools:
 
     @staticmethod
     def apply_mask(img, mask):
-        return cv2.bitwise_and(img, img, mask=mask)
+        if mask is not None:
+            return cv2.bitwise_and(img, img, mask=mask)
+        return img
 
     @staticmethod
     def calculate_histograms(img, mask):
@@ -231,19 +239,25 @@ class Camera(threading.Thread):
     def _tune_shutter_speed(self, img):
         # day mode uses automatic mode
         if self.timer.twilight_ongoing():
-            # 100 ms steps, max value 10 sec
+            # 100 ms steps, max value 12 sec
             tune_value = 100000
             max_value = 12000000
+            change = 0
 
             avg = ImageTools.calculate_average(img)
             current = self.cam.shutter_speed
 
-            if avg < 40 and current < max_value - tune_value:
-                camera_logger.info('pic average %u, increasing shutter speed to %u' % (avg, current + tune_value))
-                self.cam.shutter_speed = current + tune_value
-            if avg > 140 and current < max_value - tune_value:
-                camera_logger.info('pic average %u, decreasing shutter speed to %u' % (avg, current + tune_value))
-                self.cam.shutter_speed = current - tune_value
+            if avg < 20 and current < max_value - 10*tune_value:
+                change = 10*tune_value
+            elif avg < 40 and current < max_value - tune_value:
+                change = tune_value
+            elif avg > 70 and current - tune_value > 0:
+                change = -tune_value
+            elif avg > 120 and current - 10*tune_value > 0:
+                change = -10*tune_value
+
+            camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg / 1000, current / 1000, change / 1000))
+            self.cam.shutter_speed = current + change
 
     def _night(self):
         camera_logger.info('night parameters')
@@ -276,7 +290,7 @@ def store_thumbnail(img):
 def test():
     motion = Motion()
 
-    mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
+    mask = ImageTools.create_mask(cam_config.movement_mask)
     pics = glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg'))
 
     for idx, pic in enumerate(pics):
@@ -316,7 +330,7 @@ class TestAnim2:
     def __init__(self):
         self.pics = iter(glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg')))
 
-        self.mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
+        self.mask = ImageTools.create_mask(cam_config.movement_mask)
 
         self.avg = []
 
