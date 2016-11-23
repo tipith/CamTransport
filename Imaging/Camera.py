@@ -136,7 +136,7 @@ class Camera(threading.Thread):
         self.motion = Motion()
         self.detected = False
 
-        self.mask = ImageTools.create_mask(os.path.join('..', 'mask_cam1.jpg'))
+        self.mask = ImageTools.create_mask('mask_cam1.jpg')
 
         if self.timer.twilight_ongoing():
             self._night()
