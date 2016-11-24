@@ -19,7 +19,30 @@ def add_image(cam_id, timestamp, data):
     :return:
     '''
     filename = timestamp.strftime('%Y-%m-%d_%H%M') + '.jpg'
-    path = os.path.join(cam_config.image_path, 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
+    path = os.path.join(cam_config.image_path, 'images', 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
+
+    if not os.path.exists(path):
+        data_logger.info("add_image: creating path %s" % path)
+        os.makedirs(path)
+
+    with open(os.path.join(path, filename), 'wb') as f:
+        f.write(data)
+
+    return os.path.join(path, filename)
+
+
+def add_image_movement(cam_id, timestamp, uuid, data):
+    '''This function adds JPG image contents to a directory structure
+    /movement/<src>/uuid/ with an example file name 2016-12-24_120054.jpg.
+
+    :param cam_id: integer representing camera id
+    :param timestamp: python datetime object telling the image timestamp
+    :param uuid: unique identifier string for the movement entity this image belongs
+    :param data: JPG image contents as bytes
+    :return:
+    '''
+    filename = timestamp.strftime('%Y-%m-%d_%H%M%S') + '.jpg'
+    path = os.path.join(cam_config.image_path, 'movement', 'cam' + str(cam_id), uuid)
 
     if not os.path.exists(path):
         data_logger.info("add_image: creating path %s" % path)

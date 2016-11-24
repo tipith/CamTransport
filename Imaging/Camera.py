@@ -1,11 +1,11 @@
 from fractions import Fraction
 import io
-import os
 import time
 import datetime
 import logging
 import threading
 
+import uuid
 import numpy
 import cv2
 
@@ -77,6 +77,23 @@ class ImageTools:
         hist_mask = cv2.calcHist([img], [0], mask, [256], [0, 256])
         return [hist_full, hist_mask]
 
+    @staticmethod
+    def generate_jpeg_thumbnail(img):
+        cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
+        return cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 70])
+
+    @staticmethod
+    def store_movement(jpeg_buf):
+        if not os.path.exists(cam_config.movement_image_path):
+            camera_logger.info("store_thumbnail: creating path %s" % cam_config.movement_image_path)
+            os.makedirs(cam_config.movement_image_path)
+
+        filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M%S') + '.jpg'
+        camera_logger.info('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
+
+        with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
+            write_f.write(jpeg_buf)
+
 
 class Motion:
 
@@ -92,15 +109,14 @@ class Motion:
         # apply motion mask
         frame = ImageTools.apply_mask(frame, mask)
 
-        # resize the frame, convert it to grayscale, and blur it
-        #frame = imutils.resize(frame, width=500)
+        # convert it to grayscale and blur
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
         # if the average frame is None, initialize it
         if self.avg is None:
             self.avg = gray.copy().astype("float")
-            return (False, None)
+            return False, None
 
         # accumulate the weighted average between the current frame and previous frames,
         # then compute the difference between the current frame and running average
@@ -113,10 +129,6 @@ class Motion:
         thresh = cv2.dilate(thresh, None, iterations=3)
         image, contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        #cv2.imshow('delta', frameDelta)
-        #cv2.imshow('threshold', thresh)
-        #cv2.imshow('contour', image)
-
         # loop over the contours
         for c in contours:
             # if the contour is too small, ignore it
@@ -128,7 +140,7 @@ class Motion:
             cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
             retval = True
 
-        return (retval, pic)
+        return retval, pic
 
 
 class Camera(threading.Thread):
@@ -168,6 +180,10 @@ class Camera(threading.Thread):
         self.timer.add_twilight_observer(self._twilight_event)
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
+        # this is used to identify messages belonging to a single movement
+        # entity which consists of start, end and multiple picture messages
+        self.movement_uuid = None
+
     def run(self):
         camera_logger.info('started')
         while self.is_running:
@@ -183,13 +199,17 @@ class Camera(threading.Thread):
                 if self.detected != m_det:
                     self.detected = m_det
                     if self.detected:
-                        self.movement_cb('cam', 'on')
+                        self.movement_uuid = uuid.uuid1()
+                        self.movement_cb('cam', 'on', self.movement_uuid)
                     else:
-                        self.movement_cb('cam', 'off')
+                        self.movement_cb('cam', 'off', self.movement_uuid)
+                        self.movement_uuid = None
 
                 if m_det:
-                    camera_logger.info('motion detected')
-                    store_thumbnail(m_img)
+                    success, jpeg = ImageTools.generate_jpeg_thumbnail(m_img)
+                    if success:
+                        ImageTools.store_movement(jpeg)
+                        self.local_messaging.send(Messaging.Message.msg_movement_image(jpeg, self.movement_uuid))
 
                 if self.send_pic and m_img is not None:
                     success, buf = cv2.imencode('.jpg', m_img, [cv2.IMWRITE_JPEG_QUALITY, 70])
@@ -232,9 +252,6 @@ class Camera(threading.Thread):
 
     def _cron_job(self):
         self.send_pic = True
-        #local_messaging = Messaging.LocalClientMessaging()
-        #local_messaging.send(Messaging.Message.msg_image(self.picture()))
-        #local_messaging.stop()
 
     def _tune_shutter_speed(self, img):
         # day mode uses automatic mode
@@ -272,21 +289,6 @@ class Camera(threading.Thread):
         self.cam.iso = 0
 
 
-def store_thumbnail(img):
-    small = cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
-    success, buf = cv2.imencode('.jpg', small, [cv2.IMWRITE_JPEG_QUALITY, 70])
-
-    if success:
-        if not os.path.exists(cam_config.movement_image_path):
-            camera_logger.info("store_thumbnail: creating path %s" % cam_config.movement_image_path)
-            os.makedirs(cam_config.movement_image_path)
-
-        filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M%S') + '.jpg'
-        camera_logger.info('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
-
-        with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
-            write_f.write(buf)
-
 def test():
     motion = Motion()
 
@@ -308,6 +310,8 @@ def test():
             else:
                 camera_logger.info('unable to decode')
 
+def test2():
+    print uuid.uuid1()
 
 class TestAnim:
 
@@ -385,4 +389,5 @@ class TestAnim2:
 if __name__ == "__main__":
     #test = TestAnim2()
     #test.anim()
-    test()
+    #test()
+    test2()

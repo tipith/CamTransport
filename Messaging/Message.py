@@ -17,8 +17,9 @@ class Message:
     Movement = 4
     Text = 5
     LightControl = 6
+    ImageMovement = 7
 
-    known_messages = [Image, Variable, Command, Movement, Text, LightControl]
+    known_messages = [Image, Variable, Command, Movement, Text, LightControl, ImageMovement]
 
     @staticmethod
     def verify(msg):
@@ -39,11 +40,11 @@ class Message:
         return False
 
     @staticmethod
-    def msg_image(data):
+    def msg_image(img):
         return {'src': cam_config.cam_id,
-                'time': datetime.now(),
+                'time': datetime.now().replace(microsecond=0),
                 'id': Message.Image,
-                'data': data}
+                'data': img}
 
     @staticmethod
     def msg_variable(name, value):
@@ -84,19 +85,30 @@ class Message:
                 'state': state}
 
     @staticmethod
+    def msg_movement_image(img, uuid):
+        return {'src': cam_config.cam_id,
+                'time': datetime.now().replace(microsecond=0),
+                'id': Message.ImageMovement,
+                'uuid': uuid,
+                'data': img}
+
+    @staticmethod
     def msg_info(msg):
+        src = msg['src']
         timestamp = msg['time'].strftime("%Y-%m-%d %H:%M:%S")
 
         if msg['id'] == Message.Image:
-            return 'image from %s, %s, length %i B' % (msg['src'], timestamp, len(msg['data']))
+            return 'image from %s, %s, length %i B' % (src, timestamp, len(msg['data']))
         if msg['id'] == Message.Variable:
-            return 'variable from %s, %s, %s -> %s' % (msg['src'], timestamp, msg['name'], msg['value'])
+            return 'variable from %s, %s, %s -> %s' % (src, timestamp, msg['name'], msg['value'])
         if msg['id'] == Message.Command:
-            return 'command from %s, %s, %s -> %s' % (msg['src'], timestamp, msg['command'], msg['parameter'])
+            return 'command from %s, %s, %s -> %s' % (src, timestamp, msg['command'], msg['parameter'])
         if msg['id'] == Message.Movement:
-            return 'movement from %s, %s, detector %s, state %s' % (msg['src'], timestamp, msg['detector'], msg['state'])
+            return 'movement from %s, %s, detector %s, state %s' % (src, timestamp, msg['detector'], msg['state'])
         if msg['id'] == Message.Text:
-            return 'text from %s, %s: %s' % (msg['src'], timestamp, msg['text'])
+            return 'text from %s, %s: %s' % (src, timestamp, msg['text'])
         if msg['id'] == Message.LightControl:
-            return 'lightcontrol from %s, %s, %s' % (msg['src'], timestamp, msg['state'])
+            return 'lightcontrol from %s, %s, %s' % (src, timestamp, msg['state'])
+        if msg['id'] == Message.ImageMovement:
+            return 'image from %s, %s, uuid %s, length %i B' % (src, timestamp, msg['uuid'], len(msg['data']))
         return 'unknown message'
