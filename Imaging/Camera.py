@@ -199,7 +199,7 @@ class Camera(threading.Thread):
                 if self.detected != m_det:
                     self.detected = m_det
                     if self.detected:
-                        self.movement_uuid = uuid.uuid1()
+                        self.movement_uuid = str(uuid.uuid1())
                         self.movement_cb('cam', 'on', self.movement_uuid)
                     else:
                         self.movement_cb('cam', 'off', self.movement_uuid)
@@ -268,10 +268,10 @@ class Camera(threading.Thread):
                 change = 10*tune_value
             elif avg < 40 and current < max_value - tune_value:
                 change = tune_value
+            elif avg > 120 and current - 10 * tune_value > 0:
+                change = -10 * tune_value
             elif avg > 70 and current - tune_value > 0:
                 change = -tune_value
-            elif avg > 120 and current - 10*tune_value > 0:
-                change = -10*tune_value
 
             camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
             self.cam.shutter_speed = current + change

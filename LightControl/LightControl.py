@@ -121,7 +121,7 @@ class LightControl(threading.Thread):
         self.time_movement = calendar.timegm(time.gmtime())
         if not self.is_detected:
             self.is_detected = True
-            self.movement_uuid = uuid.uuid1()
+            self.movement_uuid = str(uuid.uuid1())
             if self.movement_cb is not None:
                 self.movement_cb('pir', 'on', self.movement_uuid)
 
