@@ -42,10 +42,10 @@ def local_messaging_start():
     return _messaging
 
 
-def on_movement(detector, state):
+def on_movement(detector, state, uuid):
     global client_messaging
     if client_messaging is not None:
-        client_messaging.send(Messaging.Message.msg_movement(detector, state))
+        client_messaging.send(Messaging.Message.msg_movement(detector, state, uuid))
 
 
 def on_light_control(state):

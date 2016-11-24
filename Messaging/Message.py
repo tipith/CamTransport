@@ -63,12 +63,13 @@ class Message:
                 'parameter': parameter}
 
     @staticmethod
-    def msg_movement(detector, state):
+    def msg_movement(detector, state, uuid):
         return {'src': cam_config.cam_id,
                 'time': datetime.now().replace(microsecond=0),
                 'id': Message.Movement,
                 'detector': detector,
-                'state': state}
+                'state': state,
+                'uuid': uuid}
 
     @staticmethod
     def msg_text(text):

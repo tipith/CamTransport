@@ -2,6 +2,7 @@ import time
 import calendar
 import threading
 import logging
+import uuid
 
 try:
     import RPi.GPIO as GPIO
@@ -88,6 +89,8 @@ class LightControl(threading.Thread):
         self.is_running = True
         self.is_detected = False
         self.timer = timer
+        # used to match start and end events together
+        self.movement_uuid = None
 
     def run(self):
         light_logger.info('started')
@@ -118,14 +121,16 @@ class LightControl(threading.Thread):
         self.time_movement = calendar.timegm(time.gmtime())
         if not self.is_detected:
             self.is_detected = True
+            self.movement_uuid = uuid.uuid1()
             if self.movement_cb is not None:
-                self.movement_cb('pir', 'on')
+                self.movement_cb('pir', 'on', self.movement_uuid)
 
     def _detection_off(self):
         if self.is_detected:
             self.is_detected = False
             if self.movement_cb is not None:
-                self.movement_cb('pir', 'off')
+                self.movement_cb('pir', 'off', self.movement_uuid)
+            self.movement_uuid = None
 
     def _lights_grace_period(self):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
