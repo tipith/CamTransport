@@ -81,5 +81,6 @@ if __name__ == "__main__":
     finally:
         client_messaging.stop()
         local_messaging.stop()
-        lights.stop()
+        if lights is not None:
+            lights.stop()
         camera.stop()
