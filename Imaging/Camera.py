@@ -79,8 +79,8 @@ class ImageTools:
 
     @staticmethod
     def generate_jpeg_thumbnail(img):
-        cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
-        return cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 70])
+        thumbnail = cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
+        return cv2.imencode('.jpg', thumbnail, [cv2.IMWRITE_JPEG_QUALITY, 70])
 
     @staticmethod
     def store_movement(jpeg_buf):

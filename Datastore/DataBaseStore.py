@@ -35,8 +35,11 @@ def db_store_movement(cam_id, timestamp, detector, event, uuid):
     db = open_db()
     cur = db.cursor()
     try:
-        cur.execute("INSERT INTO Movement (idCamera, Timestamp, Detector, Event, UUID) \
-                     VALUES (%s, %s, %s, %s, %s)", (cam_id, timestamp_str, detector, event, uuid))
+        if event == 'on':
+                cur.execute("INSERT INTO Movement (idCamera, StartTimestamp, Detector, Event, UUID) \
+                             VALUES (%s, %s, %s, %s, %s)", (cam_id, timestamp_str, detector, event, uuid))
+        elif event == 'off':
+            cur.execute('UPDATE Movement SET EndTimestamp = %s WHERE UUID = %s' % (timestamp_str, uuid))
     except MySQLdb.IntegrityError:
         db_logger.warn('unable to add entry')
     close_db(db)
