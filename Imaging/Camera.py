@@ -219,7 +219,6 @@ class Camera(threading.Thread):
             else:
                 camera_logger.info('unable to decode')
 
-            time.sleep(1.0)
         camera_logger.info('stopped')
         self.local_messaging.stop()
 
