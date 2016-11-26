@@ -255,21 +255,22 @@ class Camera(threading.Thread):
     def _tune_shutter_speed(self, img):
         # day mode uses automatic mode
         if self.timer.twilight_ongoing():
-            # 100 ms steps, max value 12 sec
-            tune_value = 100000
+            # 10 ms steps, max value 12 sec
+            large_step_factor = 50
+            tune_value = 10000
             max_value = 12000000
             change = 0
 
             avg = ImageTools.calculate_average(img)
             current = self.cam.shutter_speed
 
-            if avg < 20 and current < max_value - 10*tune_value:
-                change = 10*tune_value
-            elif avg < 40 and current < max_value - tune_value:
+            if avg < 20 and current < (max_value - large_step_factor * tune_value):
+                change = large_step_factor * tune_value
+            elif avg < 50 and current < (max_value - tune_value):
                 change = tune_value
-            elif avg > 120 and current - 10 * tune_value > 0:
-                change = -10 * tune_value
-            elif avg > 70 and current - tune_value > 0:
+            elif avg > 130 and (current - large_step_factor * tune_value) > 0:
+                change = -large_step_factor * tune_value
+            elif avg > 80 and (current - tune_value) > 0:
                 change = -tune_value
 
             camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
@@ -278,7 +279,7 @@ class Camera(threading.Thread):
     def _night(self):
         camera_logger.info('night parameters')
         self.cam.exposure_mode = 'off'
-        self.cam.shutter_speed = 1000000
+        self.cam.shutter_speed = 100000
         self.cam.iso = 800
 
     def _day(self):

@@ -30,8 +30,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="204" column="12" selection-start-line="204" selection-start-column="12" selection-end-line="204" selection-end-column="12" />
+            <state relative-caret-position="387">
+              <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -607,13 +607,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00055" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
-      <created>1478651633793</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1478651633793</updated>
-    </task>
     <task id="LOCAL-00056" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
       <created>1478651938057</created>
       <option name="number" value="00056" />
@@ -950,7 +943,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480030710314</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="remove sleep between motion detection pictures">
+      <created>1480122167450</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1480122167450</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -993,7 +993,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix LightControl again" />
     <MESSAGE value="Fix LightControl" />
     <MESSAGE value="Store image meta information to MySQL database" />
     <MESSAGE value="Add Timekeeper and Imaging components to take pictures at specific intervals" />
@@ -1018,7 +1017,8 @@
     <MESSAGE value="thumbnail fix, start and end time into a same movement row" />
     <MESSAGE value="fix tracing" />
     <MESSAGE value="fix db update" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix db update" />
+    <MESSAGE value="remove sleep between motion detection pictures" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove sleep between motion detection pictures" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1393,8 +1393,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="204" column="12" selection-start-line="204" selection-start-column="12" selection-end-line="204" selection-end-column="12" />
+        <state relative-caret-position="387">
+          <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
