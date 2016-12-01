@@ -5,10 +5,10 @@ import datetime
 import logging
 import threading
 
-import uuid
 import numpy
 import cv2
 
+import CamUtilities
 import Messaging
 import cam_config
 
@@ -154,6 +154,7 @@ class Camera(threading.Thread):
         self.movement_cb = movement_cb
         self.is_running = True
         self.motion = Motion()
+        self.motion_alarm = CamUtilities.MotionAlarm('cam', 120.0, movement_cb)
         self.detected = False
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
@@ -180,10 +181,6 @@ class Camera(threading.Thread):
         self.timer.add_twilight_observer(self._twilight_event)
         self.timer.add_cron_job(self._cron_job, [], '*/5')
 
-        # this is used to identify messages belonging to a single movement
-        # entity which consists of start, end and multiple picture messages
-        self.movement_uuid = None
-
     def run(self):
         camera_logger.info('started')
         while self.is_running:
@@ -197,20 +194,13 @@ class Camera(threading.Thread):
 
                 (m_det, m_img) = self.motion.feed(img, self.mask)
 
-                if self.detected != m_det:
-                    self.detected = m_det
-                    if self.detected:
-                        self.movement_uuid = str(uuid.uuid1())
-                        self.movement_cb('cam', 'on', self.movement_uuid)
-                    else:
-                        self.movement_cb('cam', 'off', self.movement_uuid)
-                        self.movement_uuid = None
+                m_uuid = self.motion_alarm.update(m_det)
 
-                if m_det:
+                if m_det and m_uuid is not None:
                     success, jpeg = ImageTools.generate_jpeg_thumbnail(m_img)
                     if success:
                         ImageTools.store_movement(jpeg)
-                        self.local_messaging.send(Messaging.Message.msg_movement_image(jpeg, self.movement_uuid))
+                        self.local_messaging.send(Messaging.Message.msg_movement_image(jpeg, m_uuid))
 
                 if self.send_pic and m_img is not None:
                     success, buf = cv2.imencode('.jpg', m_img, [cv2.IMWRITE_JPEG_QUALITY, 70])
@@ -305,13 +295,11 @@ def test():
                 (m_det, m_img) = motion.feed(img, mask)
                 if m_det:
                     camera_logger.info('motion detected')
-                    store_thumbnail(m_img)
+                    ImageTools.store_movement(m_img)
                     time.sleep(1.0)
             else:
                 camera_logger.info('unable to decode')
 
-def test2():
-    print uuid.uuid1()
 
 class TestAnim:
 

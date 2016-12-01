@@ -4,6 +4,8 @@ import threading
 import logging
 import uuid
 
+import CamUtilities
+
 try:
     import RPi.GPIO as GPIO
 except ImportError:
@@ -92,19 +94,16 @@ class LightControl(threading.Thread):
         self.is_running = True
         self.is_detected = False
         self.timer = timer
-        # used to match start and end events together
-        self.movement_uuid = None
+
+        self.motion_alarm = CamUtilities.MotionAlarm('pir', 120.0, movement_callback)
 
     def run(self):
         light_logger.info('started')
-        self.detector.arm(self._detected)
+        self.detector.arm(self._cb_detected)
         while self.is_running:
-            if self.detector.state():
-                self._detected(0)
+            self._detection(self.detector.state())
             if self._lights_on_timeout():
                 self.relay.deactivate()
-            if self._movement_timeout():
-                self._detection_off()
             time.sleep(2.0)
         GPIO.cleanup()
         light_logger.info('stopped')
@@ -120,21 +119,6 @@ class LightControl(threading.Thread):
     def stop(self):
         self.is_running = False
 
-    def _detection_on(self):
-        self.time_movement = calendar.timegm(time.gmtime())
-        if not self.is_detected:
-            self.is_detected = True
-            self.movement_uuid = str(uuid.uuid1())
-            if self.movement_cb is not None:
-                self.movement_cb('pir', 'on', self.movement_uuid)
-
-    def _detection_off(self):
-        if self.is_detected:
-            self.is_detected = False
-            if self.movement_cb is not None:
-                self.movement_cb('pir', 'off', self.movement_uuid)
-            self.movement_uuid = None
-
     def _lights_grace_period(self):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
 
@@ -142,15 +126,13 @@ class LightControl(threading.Thread):
         control_or_movement_time = max(self.relay.activated_time(), self.time_movement, self.time_control)
         return calendar.timegm(time.gmtime()) > (control_or_movement_time + self.duration_lights)
 
-    def _movement_timeout(self):
-        return calendar.timegm(time.gmtime()) > (self.time_movement + self.duration_movement)
-
-    def _detected(self, channel):
-        # movement detector gives false alarms when lights are turned on/off
-        if self._lights_grace_period():
-            self._detection_on()
-            if self.timer.twilight_ongoing():
+    def _detection(self, state):
+        self.motion_alarm.update(state)
+        if state and self.timer.twilight_ongoing():
+            if self._lights_grace_period():
                 self.relay.activate()
-        else:
-            light_logger.info('movement ignored during grace period')
+            else:
+                light_logger.info('movement ignored during grace period')
 
+    def _cb_detected(self, channel):
+        self._detection(True)

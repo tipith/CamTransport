@@ -1,6 +1,6 @@
 import Messaging
 import LightControl
-import Timekeeper
+import CamUtilities
 import Imaging
 
 import logging
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     main_logger.info('starting up %s' % cam_config.cam_id)
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
-    timer = Timekeeper.Timekeeper()
+    timer = CamUtilities.Timekeeper()
 
     camera = Imaging.Camera(timer, on_movement)
     camera.start()

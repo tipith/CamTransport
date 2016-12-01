@@ -6,7 +6,7 @@ from apscheduler.schedulers.background  import BackgroundScheduler
 
 import cam_config
 
-time_logger = logging.getLogger('Timekeeper')
+time_logger = logging.getLogger('CamUtilities')
 test_logger = logging.getLogger('test')
 
 
