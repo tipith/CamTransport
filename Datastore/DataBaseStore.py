@@ -36,8 +36,8 @@ def db_store_movement(cam_id, timestamp, detector, event, uuid):
     cur = db.cursor()
     try:
         if event == 'on':
-                cur.execute("INSERT INTO Movement (idCamera, StartTimestamp, Detector, Event, UUID) \
-                             VALUES (%s, %s, %s, %s, %s)", (cam_id, timestamp_str, detector, event, uuid))
+                cur.execute("INSERT INTO Movement (idCamera, StartTimestamp, Detector, UUID) \
+                             VALUES (%s, %s, %s, %s)", (cam_id, timestamp_str, detector, uuid))
         elif event == 'off':
             cur.execute("UPDATE Movement SET EndTimestamp = '%s' WHERE UUID = '%s'" % (timestamp_str, uuid))
     except MySQLdb.IntegrityError:
@@ -45,13 +45,16 @@ def db_store_movement(cam_id, timestamp, detector, event, uuid):
     close_db(db)
 
 
-def db_store_light_control(cam_id, timestamp, event):
+def db_store_light_control(cam_id, timestamp, event, uuid):
     timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S')
     db = open_db()
     cur = db.cursor()
     try:
-        cur.execute("INSERT INTO LightControl (idCamera, Timestamp, Event) \
-                     VALUES (%s, %s, %s)", (cam_id, timestamp_str, event))
+        if event == 'on':
+                cur.execute("INSERT INTO LightControl (idCamera, StartTimestamp, UUID) \
+                             VALUES (%s, %s, %s)", (cam_id, timestamp_str, uuid))
+        elif event == 'off':
+            cur.execute("UPDATE LightControl SET EndTimestamp = '%s' WHERE UUID = '%s'" % (timestamp_str, uuid))
     except MySQLdb.IntegrityError:
         db_logger.warn('unable to add entry')
     close_db(db)

@@ -49,11 +49,11 @@ def on_movement(detector, state, uuid):
         client_messaging.send(Messaging.Message.msg_movement(detector, state, uuid))
 
 
-def on_light_control(state):
+def on_light_control(state, uuid):
     global client_messaging, camera
-    main_logger.info('on_light_control: %s' % (state))
+    main_logger.info('on_light_control: %s, uuid %s' % (state, uuid))
     if client_messaging is not None:
-        client_messaging.send(Messaging.Message.msg_light_control(state))
+        client_messaging.send(Messaging.Message.msg_light_control(state, uuid))
     if camera is not None:
         camera.light_control(state)
 

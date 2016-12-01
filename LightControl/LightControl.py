@@ -28,15 +28,17 @@ class Relay:
         self.time_activated = 0
         self.time_deactivated = 0
         self.relay_cb = relay_callback
+        self.relay_uuid = None
 
     def activate(self):
         if not self.enabled:
             relay_logger.info('activate')
             GPIO.output(self.pin, GPIO.HIGH)
             self.enabled = True
+            self.relay_uuid = str(uuid.uuid1())
             self.time_activated = calendar.timegm(time.gmtime())
             if self.relay_cb is not None:
-                self.relay_cb('on')
+                self.relay_cb('on', self.relay_uuid)
 
     def deactivate(self):
         if self.enabled:
@@ -45,7 +47,8 @@ class Relay:
             self.enabled = False
             self.time_deactivated = calendar.timegm(time.gmtime())
             if self.relay_cb is not None:
-                self.relay_cb('off')
+                self.relay_cb('off',  self.relay_uuid)
+            self.relay_uuid = None
 
     def change_time(self):
         return max(self.time_activated, self.time_deactivated)

@@ -79,11 +79,12 @@ class Message:
                 'text': text}
 
     @staticmethod
-    def msg_light_control(state):
+    def msg_light_control(state, uuid):
         return {'src': cam_config.cam_id,
                 'time': datetime.now().replace(microsecond=0),
                 'id': Message.LightControl,
-                'state': state}
+                'state': state,
+                'uuid': uuid}
 
     @staticmethod
     def msg_movement_image(img, uuid):

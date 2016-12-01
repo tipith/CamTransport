@@ -23,7 +23,7 @@ def on_text(msg):
 
 
 def on_light_control(msg):
-    Datastore.db_store_light_control(msg['src'], msg['time'], msg['state'])
+    Datastore.db_store_light_control(msg['src'], msg['time'], msg['state'], msg['uuid'])
 
 
 def on_image_movement(msg):
