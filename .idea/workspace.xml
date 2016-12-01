@@ -4,9 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="fixes to motion hysteresis">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" afterPath="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LightControl/LightControl.py" afterPath="$PROJECT_DIR$/LightControl/LightControl.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
@@ -42,8 +42,8 @@
       <file leaf-file-name="MotionAlarm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CamUtilities/MotionAlarm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+            <state relative-caret-position="234">
+              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -100,8 +100,8 @@
       <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="121" column="132" selection-start-line="121" selection-start-column="132" selection-end-line="121" selection-end-column="132" />
+            <state relative-caret-position="256">
+              <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -204,8 +204,8 @@
         <option value="$PROJECT_DIR$/Timekeeper/Utils.py" />
         <option value="$PROJECT_DIR$/Timekeeper/__init__.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
-        <option value="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
         <option value="$PROJECT_DIR$/Imaging/Camera.py" />
+        <option value="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
       </list>
     </option>
@@ -625,13 +625,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00060" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
-      <created>1478707957542</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1478707957542</updated>
-    </task>
     <task id="LOCAL-00061" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
       <created>1478796884319</created>
       <option name="number" value="00061" />
@@ -968,7 +961,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480635613391</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="fixes to motion hysteresis">
+      <created>1480636408297</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1480636408297</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1412,8 +1412,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CamUtilities/MotionAlarm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        <state relative-caret-position="234">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -1422,8 +1422,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="121" column="132" selection-start-line="121" selection-start-column="132" selection-end-line="121" selection-end-column="132" />
+        <state relative-caret-position="256">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

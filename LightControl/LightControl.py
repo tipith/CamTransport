@@ -118,9 +118,8 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
 
     def _lights_on_timeout(self):
-        action_time = max(self.relay.activated_time(), self.motion_alarm.last_detection(), self.time_control)
-        light_logger.info('relay %s, motionalarm %s, control %s' % (calendar.timegm(time.gmtime()), action_time, self.time_control))
-        light_logger.info('current %s vs %s' % (calendar.timegm(time.gmtime()), action_time))
+        action_time = max(self.relay.activated_time(), self.motion_alarm.latest(), self.time_control)
+        light_logger.info('%s sec to shutdown' % (calendar.timegm(time.gmtime()) - action_time))
         return calendar.timegm(time.gmtime()) > (action_time + self.duration_lights)
 
     def _detection(self, state):

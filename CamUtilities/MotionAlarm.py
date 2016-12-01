@@ -30,7 +30,7 @@ class MotionAlarm:
                 self.last_detection = 0
         return self.uuid
 
-    def last_detection(self):
+    def latest(self):
         return self.last_detection
 
     def _timeout_passed(self):
