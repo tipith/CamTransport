@@ -87,15 +87,10 @@ class LightControl(threading.Thread):
         self.detector = Detector(cam_config.gpio_detector)
         self.relay = Relay(cam_config.gpio_relay, lights_callback)
         self.duration_lights = cam_config.lights_on_time
-        self.duration_movement = 30
-        self.time_movement = 0
         self.time_control = 0
-        self.movement_cb = movement_callback
         self.is_running = True
-        self.is_detected = False
         self.timer = timer
-
-        self.motion_alarm = CamUtilities.MotionAlarm('pir', 120.0, movement_callback)
+        self.motion_alarm = CamUtilities.MotionAlarm('pir', 180.0, movement_callback)
 
     def run(self):
         light_logger.info('started')
@@ -123,16 +118,16 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (self.relay.change_time() + 2.0)
 
     def _lights_on_timeout(self):
-        control_or_movement_time = max(self.relay.activated_time(), self.time_movement, self.time_control)
-        return calendar.timegm(time.gmtime()) > (control_or_movement_time + self.duration_lights)
+        action_time = max(self.relay.activated_time(), self.motion_alarm.last_detection(), self.time_control)
+        return calendar.timegm(time.gmtime()) > (action_time + self.duration_lights)
 
     def _detection(self, state):
-        self.motion_alarm.update(state)
-        if state and self.timer.twilight_ongoing():
-            if self._lights_grace_period():
+        if self._lights_grace_period():
+            self.motion_alarm.update(state)
+            if state and self.timer.twilight_ongoing():
                 self.relay.activate()
-            else:
-                light_logger.info('movement ignored during grace period')
+        else:
+            light_logger.info('movement ignored during grace period')
 
     def _cb_detected(self, channel):
         self._detection(True)

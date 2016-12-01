@@ -30,5 +30,8 @@ class MotionAlarm:
                 self.last_detection = 0
         return self.uuid
 
+    def last_detection(self):
+        return self.last_detection
+
     def _timeout_passed(self):
         return calendar.timegm(time.gmtime()) > (self.last_detection + self.off_timeout)

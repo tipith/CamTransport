@@ -151,11 +151,9 @@ class Camera(threading.Thread):
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
         self.cam.annotate_background = picamera.Color('black')
         self.cam.annotate_text_size = 50
-        self.movement_cb = movement_cb
         self.is_running = True
         self.motion = Motion()
         self.motion_alarm = CamUtilities.MotionAlarm('cam', 120.0, movement_cb)
-        self.detected = False
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
         self.mask = ImageTools.create_mask(cam_config.movement_mask)
@@ -377,5 +375,4 @@ class TestAnim2:
 if __name__ == "__main__":
     #test = TestAnim2()
     #test.anim()
-    #test()
-    test2()
+    test()
