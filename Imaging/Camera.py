@@ -153,7 +153,7 @@ class Camera(threading.Thread):
         self.cam.annotate_text_size = 50
         self.is_running = True
         self.motion = Motion()
-        self.motion_alarm = CamUtilities.MotionAlarm('cam', 120.0, movement_cb)
+        self.motion_alarm = CamUtilities.MotionAlarm('cam', 180.0, movement_cb)
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
         self.mask = ImageTools.create_mask(cam_config.movement_mask)

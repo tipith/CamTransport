@@ -4,16 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="exposure tuning only at night and if exposure mode is manual">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CamUtilities/Timekeeper.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CamUtilities/__init__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Timekeeper/Timekeeper.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Timekeeper/__init__.py" afterPath="" />
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LightControl/LightControl.py" afterPath="$PROJECT_DIR$/LightControl/LightControl.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_client.py" afterPath="$PROJECT_DIR$/main_client.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="156" column="79" selection-start-line="156" selection-start-column="79" selection-end-line="156" selection-end-column="79" />
+            <state relative-caret-position="374">
+              <caret line="165" column="39" selection-start-line="165" selection-start-column="39" selection-end-line="165" selection-end-column="39" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -48,8 +42,8 @@
       <file leaf-file-name="MotionAlarm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CamUtilities/MotionAlarm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="29" />
+            <state relative-caret-position="285">
+              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -94,8 +88,8 @@
       <file leaf-file-name="main_client.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="591">
-              <caret line="70" column="42" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="42" />
+            <state relative-caret-position="493">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -103,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+            <state relative-caret-position="358">
+              <caret line="121" column="132" selection-start-line="121" selection-start-column="132" selection-end-line="121" selection-end-column="132" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -206,12 +200,12 @@
         <option value="$PROJECT_DIR$/Datastore/DataStore.py" />
         <option value="$PROJECT_DIR$/Datastore/DataBaseStore.py" />
         <option value="$PROJECT_DIR$/main_server.py" />
-        <option value="$PROJECT_DIR$/main_client.py" />
         <option value="$PROJECT_DIR$/Messaging/Message.py" />
         <option value="$PROJECT_DIR$/Timekeeper/Utils.py" />
         <option value="$PROJECT_DIR$/Timekeeper/__init__.py" />
-        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
+        <option value="$PROJECT_DIR$/main_client.py" />
         <option value="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
+        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
       </list>
     </option>
@@ -631,20 +625,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00058" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
-      <created>1478652205721</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1478652205721</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
-      <created>1478652289482</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1478652289482</updated>
-    </task>
     <task id="LOCAL-00060" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
       <created>1478707957542</created>
       <option name="number" value="00060" />
@@ -974,7 +954,21 @@
       <option name="project" value="LOCAL" />
       <updated>1480630314145</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="off hysteresis time to motion detection">
+      <created>1480634311797</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1480634311797</updated>
+    </task>
+    <task id="LOCAL-00108" summary="fixes to motion hysteresis">
+      <created>1480635613391</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1480635613391</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1017,8 +1011,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Timekeeper and Imaging components to take pictures at specific intervals" />
-    <MESSAGE value="seek stream before reading" />
     <MESSAGE value="change annotate size" />
     <MESSAGE value="indicate light events to camera component" />
     <MESSAGE value="enable config for lights" />
@@ -1042,7 +1034,9 @@
     <MESSAGE value="remove sleep between motion detection pictures" />
     <MESSAGE value="light control start and end identification with uuid" />
     <MESSAGE value="exposure tuning only at night and if exposure mode is manual" />
-    <option name="LAST_COMMIT_MESSAGE" value="exposure tuning only at night and if exposure mode is manual" />
+    <MESSAGE value="off hysteresis time to motion detection" />
+    <MESSAGE value="fixes to motion hysteresis" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes to motion hysteresis" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1398,18 +1392,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="70" column="42" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="42" />
+        <state relative-caret-position="493">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="165" column="39" selection-start-line="165" selection-start-column="39" selection-end-line="165" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CamUtilities/MotionAlarm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="29" />
+        <state relative-caret-position="285">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -1418,20 +1422,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+        <state relative-caret-position="358">
+          <caret line="121" column="132" selection-start-line="121" selection-start-column="132" selection-end-line="121" selection-end-column="132" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="156" column="79" selection-start-line="156" selection-start-column="79" selection-end-line="156" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
