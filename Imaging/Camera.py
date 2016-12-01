@@ -192,7 +192,8 @@ class Camera(threading.Thread):
             img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
 
             if img is not None:
-                self._tune_shutter_speed(img)
+                if self.timer.twilight_ongoing():
+                    self._tune_shutter_speed(img)
 
                 (m_det, m_img) = self.motion.feed(img, self.mask)
 
@@ -253,8 +254,7 @@ class Camera(threading.Thread):
         self.send_pic = True
 
     def _tune_shutter_speed(self, img):
-        # day mode uses automatic mode
-        if self.timer.twilight_ongoing():
+        if self.cam.exposure_mode != 'auto':
             # 10 ms steps, max value 12 sec
             large_step_factor = 50
             tune_value = 10000
