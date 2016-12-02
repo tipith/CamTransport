@@ -4,9 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/testing/db_test.py" line="20" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="fixes to motion hysteresis">
+    <list default="true" id="7c4c1f12-2be5-4aa4-92bc-fc8563f83004" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" afterPath="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Imaging/Camera.py" afterPath="$PROJECT_DIR$/Imaging/Camera.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LightControl/LightControl.py" afterPath="$PROJECT_DIR$/LightControl/LightControl.py" />
     </list>
     <ignored path="AlhoCamTransport.iws" />
@@ -27,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="165" column="39" selection-start-line="165" selection-start-column="39" selection-end-line="165" selection-end-column="39" />
+            <state relative-caret-position="272">
+              <caret line="132" column="26" selection-start-line="132" selection-start-column="26" selection-end-line="132" selection-end-column="26" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -97,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LightControl.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+            <state relative-caret-position="324">
+              <caret line="119" column="33" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -204,9 +204,9 @@
         <option value="$PROJECT_DIR$/Timekeeper/Utils.py" />
         <option value="$PROJECT_DIR$/Timekeeper/__init__.py" />
         <option value="$PROJECT_DIR$/main_client.py" />
-        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
         <option value="$PROJECT_DIR$/CamUtilities/MotionAlarm.py" />
         <option value="$PROJECT_DIR$/LightControl/LightControl.py" />
+        <option value="$PROJECT_DIR$/Imaging/Camera.py" />
       </list>
     </option>
   </component>
@@ -625,13 +625,6 @@
       <option name="presentableId" value="Default" />
       <updated>1470486498570</updated>
     </task>
-    <task id="LOCAL-00061" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
-      <created>1478796884319</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1478796884319</updated>
-    </task>
     <task id="LOCAL-00062" summary="Add Timekeeper and Imaging components to take pictures at specific intervals">
       <created>1478799324215</created>
       <option name="number" value="00062" />
@@ -968,7 +961,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480636408297</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="fixes to motion hysteresis">
+      <created>1480636705023</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1480636705023</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1400,16 +1400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="165" column="39" selection-start-line="165" selection-start-column="39" selection-end-line="165" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CamUtilities/MotionAlarm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -1422,10 +1412,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LightControl/LightControl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        <state relative-caret-position="324">
+          <caret line="119" column="33" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Imaging/Camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="132" column="26" selection-start-line="132" selection-start-column="26" selection-end-line="132" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>

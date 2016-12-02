@@ -119,7 +119,6 @@ class LightControl(threading.Thread):
 
     def _lights_on_timeout(self):
         action_time = max(self.relay.activated_time(), self.motion_alarm.latest(), self.time_control)
-        light_logger.info('%s sec to shutdown' % (calendar.timegm(time.gmtime()) - action_time))
         return calendar.timegm(time.gmtime()) > (action_time + self.duration_lights)
 
     def _detection(self, state):

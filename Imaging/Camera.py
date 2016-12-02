@@ -131,8 +131,8 @@ class Motion:
 
         # loop over the contours
         for c in contours:
-            # if the contour is too small, ignore it
-            if cv2.contourArea(c) < 5000:
+            # if the contour is too small or big, ignore it
+            if cv2.contourArea(c) < 5000 or cv2.contourArea(c) > 1000000:
                 continue
 
             # compute the bounding box for the contour, draw it on the frame, and update the text
