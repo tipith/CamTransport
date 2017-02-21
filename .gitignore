@@ -1,0 +1,4 @@
+log.txt*
+*.pyc
+cam_transport.cfg
+data
