@@ -11,7 +11,6 @@ import stat
 
 conf_logger = logging.getLogger('Config')
 
-
 # realpath() will make your script run, even if you symlink it :)
 cmd_folder = os.path.realpath(os.path.abspath(os.path.split(inspect.getfile(inspect.currentframe()))[0]))
 if cmd_folder not in sys.path:
@@ -29,7 +28,6 @@ class LoggerWriter:
     """
     Fake file-like stream object that redirects writes to a logger instance.
     """
-
     def __init__(self, logger, log_level=logging.INFO):
         self.logger = logger
         self.log_level = log_level
@@ -42,11 +40,12 @@ class LoggerWriter:
 
 def setup_logging():
     log_file = os.path.join(__location__, 'log.txt')
+    numeric_level = getattr(logging, loglevel.upper(), logging.INFO)
 
     fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
     rootlog = logging.getLogger()
-    rootlog.setLevel(logging.DEBUG)
+    rootlog.setLevel(numeric_level)
 
     ch = logging.StreamHandler(sys.stdout)
     ch.setFormatter(fmt)
@@ -85,6 +84,8 @@ lights_enabled = config.getint('LIGHTCONTROL', 'lights_enabled')
 gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')
 gpio_detector = config.getint('LIGHTCONTROL', 'gpio_detector')
 lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
+
+loglevel = config.get('COMMON', 'loglevel')
 
 setup_logging()
 

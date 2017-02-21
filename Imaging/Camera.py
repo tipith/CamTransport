@@ -89,7 +89,7 @@ class ImageTools:
             os.makedirs(cam_config.movement_image_path)
 
         filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M%S') + '.jpg'
-        camera_logger.info('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
+        camera_logger.debug('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
 
         with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
             write_f.write(jpeg_buf)
@@ -261,7 +261,7 @@ class Camera(threading.Thread):
             elif avg > 80 and (current - tune_value) > 0:
                 change = -tune_value
 
-            camera_logger.info('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
+            camera_logger.debug('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
             self.cam.shutter_speed = current + change
 
     def _night(self):
