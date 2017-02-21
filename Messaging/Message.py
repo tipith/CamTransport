@@ -91,7 +91,7 @@ class Message:
     def msg_movement_image(img, uuid):
         msg = Message._header(config.cam_id, Message.ImageMovement)
         msg['uuid'] = uuid
-        msg['img'] = img
+        msg['data'] = img
         return msg
 
     @staticmethod
