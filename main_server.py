@@ -36,7 +36,7 @@ def on_image_movement(msg):
     # send only the first picture belonging to a group of pictures from a source. uuid is the group identifier
     if msg['src'] not in email_alert or email_alert[msg['src']] != msg['uuid']:
         email_alert[msg['src']] = msg['uuid']
-        gmail.send_email('Activity from cam %i' % msg['src'], 'See attachment.')
+        gmail.send('Activity from cam %i' % msg['src'], 'See attachment.', msg['data'])
 
 
 def on_any(msg):
