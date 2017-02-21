@@ -25,6 +25,21 @@ if cmd_subfolder not in sys.path:
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
+class LoggerWriter:
+    """
+    Fake file-like stream object that redirects writes to a logger instance.
+    """
+
+    def __init__(self, logger, log_level=logging.INFO):
+        self.logger = logger
+        self.log_level = log_level
+        self.linebuf = ''
+
+    def write(self, buf):
+        for line in buf.rstrip().splitlines():
+            self.logger.log(self.log_level, line.rstrip())
+
+
 def setup_logging():
     log_file = os.path.join(__location__, 'log.txt')
 
@@ -40,6 +55,8 @@ def setup_logging():
     fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=100*1024, backupCount=10)
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
+
+    sys.stderr = LoggerWriter(rootlog)
 
     try:
         os.chmod(log_file, stat.S_IRUSR | stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)
