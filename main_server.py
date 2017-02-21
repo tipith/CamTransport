@@ -31,6 +31,10 @@ def on_image_movement(msg):
     Datastore.db_store_image_movement(msg['src'], msg['time'], filename, msg['uuid'], len(msg['data']))
 
 
+def on_any(msg):
+    Datastore.set_variable(msg['src'], 'uptime', msg['uptime'])
+
+
 def server_messaging_start():
     _messaging = Messaging.ServerMessaging()
     _messaging.start()
@@ -40,6 +44,7 @@ def server_messaging_start():
     _messaging.install(Messaging.Message.Text, on_text)
     _messaging.install(Messaging.Message.LightControl, on_light_control)
     _messaging.install(Messaging.Message.ImageMovement, on_image_movement)
+    _messaging.install('*', on_any)
     return _messaging
 
 
