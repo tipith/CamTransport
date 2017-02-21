@@ -20,79 +20,79 @@ class Message:
     ImageMovement = 7
 
     known_messages = [Image, Variable, Command, Movement, Text, LightControl, ImageMovement]
+    header_fields = ['src', 'time', 'uptime', 'id']
+
+    @staticmethod
+    def _uptime():
+        try:
+            with open('/proc/uptime', 'r') as f:
+                return int(float(f.readline().split()[0]))
+        except IOError:
+            return 0
+
+    @staticmethod
+    def _header(src, id):
+        return dict(zip(Message.header_fields, [src, datetime.now().replace(microsecond=0), Message._uptime(), id]))
 
     @staticmethod
     def verify(msg):
         if msg is not None:
-            if 'id' in msg:
+            if all(k in msg for k in Message.header_fields):
                 if msg['id'] in Message.known_messages:
-                    if 'src' in msg:
-                        if 'time' in msg:
-                            return True
-                        else:
-                            message_logger.warn('Error: message does not contain time field')
-                    else:
-                        message_logger.warn('Error: message does not contain source field')
+                    return True
                 else:
                     message_logger.warn('Error: message id is not known: %i' % (msg['id']))
             else:
-                message_logger.warn('Error: message does not contain frame id field')
+                message_logger.warn('Error: invalid header fields')
         return False
 
     @staticmethod
     def msg_image(img):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.Image,
-                'data': img}
+        msg = Message._header(cam_config.cam_id, Message.Image)
+        msg['data'] = img
+        return msg
 
     @staticmethod
     def msg_variable(name, value):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.Variable,
-                'name': name,
-                'value': value}
+        msg = Message._header(cam_config.cam_id, Message.Variable)
+        msg['name'] = name
+        msg['value'] = value
+        return msg
 
     @staticmethod
     def msg_command(command, parameter):
-        return {'src': 'server',
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.Command,
-                'command': command,
-                'parameter': parameter}
+        msg = Message._header('server', Message.Command)
+        msg['command'] = command
+        msg['parameter'] = parameter
+        return msg
 
     @staticmethod
     def msg_movement(detector, state, uuid):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.Movement,
-                'detector': detector,
-                'state': state,
-                'uuid': uuid}
+        msg = Message._header(cam_config.cam_id, Message.Movement)
+        msg['detector'] = detector
+        msg['state'] = state
+        msg['uuid'] = uuid
+        return msg
 
     @staticmethod
     def msg_text(text):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.Text,
-                'text': text}
+        msg = Message._header(cam_config.cam_id, Message.Text)
+        msg['text'] = text
+        return msg
 
     @staticmethod
     def msg_light_control(state, uuid):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.LightControl,
-                'state': state,
-                'uuid': uuid}
+        msg = Message._header(cam_config.cam_id, Message.LightControl)
+        msg['state'] = state
+        msg['uuid'] = uuid
+        return msg
 
     @staticmethod
     def msg_movement_image(img, uuid):
-        return {'src': cam_config.cam_id,
-                'time': datetime.now().replace(microsecond=0),
-                'id': Message.ImageMovement,
-                'uuid': uuid,
-                'data': img}
+        msg = Message._header(cam_config.cam_id, Message.ImageMovement)
+        msg['uuid'] = uuid
+        msg['img'] = img
+        return msg
 
     @staticmethod
     def msg_info(msg):

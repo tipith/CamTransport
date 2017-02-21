@@ -12,14 +12,6 @@ client_messaging = None
 camera = None
 
 
-def get_uptime():
-    try:
-        with open('/proc/uptime', 'r') as f:
-            return int(float(f.readline().split()[0]))
-    except IOError:
-        return 0
-
-
 def on_cmd_received(msg):
     global lights
     if lights is not None and msg['command'] == 'lights':
@@ -78,7 +70,6 @@ if __name__ == "__main__":
             if Messaging.Message.verify(msg):
                 main_logger.info('forward %s' % Messaging.Message.msg_info(msg))
                 client_messaging.send(msg)
-                client_messaging.send(Messaging.Message.msg_variable('uptime', get_uptime()))
     finally:
         client_messaging.stop()
         local_messaging.stop()
