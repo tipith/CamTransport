@@ -3,7 +3,7 @@ import json
 import time
 import logging
 
-import cam_config
+import config
 
 
 data_logger = logging.getLogger('DataStore')
@@ -19,7 +19,7 @@ def add_image(cam_id, timestamp, data):
     :return:
     '''
     filename = timestamp.strftime('%Y-%m-%d_%H%M') + '.jpg'
-    path = os.path.join(cam_config.image_path, 'images', 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
+    path = os.path.join(config.image_path, 'images', 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
 
     if not os.path.exists(path):
         data_logger.info("add_image: creating path %s" % path)
@@ -42,7 +42,7 @@ def add_image_movement(cam_id, timestamp, uuid, data):
     :return:
     '''
     filename = timestamp.strftime('%Y-%m-%d_%H%M%S') + '.jpg'
-    path = os.path.join(cam_config.image_path, 'movement', 'cam' + str(cam_id), uuid)
+    path = os.path.join(config.image_path, 'movement', 'cam' + str(cam_id), uuid)
 
     if not os.path.exists(path):
         data_logger.info("add_image: creating path %s" % path)
@@ -55,7 +55,7 @@ def add_image_movement(cam_id, timestamp, uuid, data):
 
 
 def set_variable(cam_id, name, value):
-    var_file = os.path.join(cam_config.variable_path, 'vars.json')
+    var_file = os.path.join(config.variable_path, 'vars.json')
     data = {}
 
     try:
@@ -72,9 +72,9 @@ def set_variable(cam_id, name, value):
     data[cam_name][name] = value
     data[cam_name]["last_heard"] = time.strftime("%Y-%m-%d %H:%M:%S")
 
-    if not os.path.exists(cam_config.variable_path):
-        data_logger.info("set_variable: creating path %s" % cam_config.variable_path)
-        os.makedirs(cam_config.variable_path)
+    if not os.path.exists(config.variable_path):
+        data_logger.info("set_variable: creating path %s" % config.variable_path)
+        os.makedirs(config.variable_path)
 
     with open(var_file, 'w') as f:
         json.dump(data, f)

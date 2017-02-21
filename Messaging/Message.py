@@ -1,7 +1,7 @@
 from datetime import datetime
 import logging
 
-import cam_config
+import config
 
 message_logger = logging.getLogger('Message')
 
@@ -48,13 +48,13 @@ class Message:
 
     @staticmethod
     def msg_image(img):
-        msg = Message._header(cam_config.cam_id, Message.Image)
+        msg = Message._header(config.cam_id, Message.Image)
         msg['data'] = img
         return msg
 
     @staticmethod
     def msg_variable(name, value):
-        msg = Message._header(cam_config.cam_id, Message.Variable)
+        msg = Message._header(config.cam_id, Message.Variable)
         msg['name'] = name
         msg['value'] = value
         return msg
@@ -68,7 +68,7 @@ class Message:
 
     @staticmethod
     def msg_movement(detector, state, uuid):
-        msg = Message._header(cam_config.cam_id, Message.Movement)
+        msg = Message._header(config.cam_id, Message.Movement)
         msg['detector'] = detector
         msg['state'] = state
         msg['uuid'] = uuid
@@ -76,20 +76,20 @@ class Message:
 
     @staticmethod
     def msg_text(text):
-        msg = Message._header(cam_config.cam_id, Message.Text)
+        msg = Message._header(config.cam_id, Message.Text)
         msg['text'] = text
         return msg
 
     @staticmethod
     def msg_light_control(state, uuid):
-        msg = Message._header(cam_config.cam_id, Message.LightControl)
+        msg = Message._header(config.cam_id, Message.LightControl)
         msg['state'] = state
         msg['uuid'] = uuid
         return msg
 
     @staticmethod
     def msg_movement_image(img, uuid):
-        msg = Message._header(cam_config.cam_id, Message.ImageMovement)
+        msg = Message._header(config.cam_id, Message.ImageMovement)
         msg['uuid'] = uuid
         msg['img'] = img
         return msg

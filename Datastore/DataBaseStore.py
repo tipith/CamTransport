@@ -2,14 +2,14 @@ import datetime
 import logging
 import MySQLdb
 
-import cam_config
+import config
 
 
 db_logger = logging.getLogger('DataBase')
 
 
 def open_db():
-    return MySQLdb.connect(host=cam_config.db_host, user=cam_config.db_user, passwd=cam_config.db_pass, db="Alho")
+    return MySQLdb.connect(host=config.db_host, user=config.db_user, passwd=config.db_pass, db="Alho")
 
 
 def close_db(db):

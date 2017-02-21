@@ -4,7 +4,7 @@ import CamUtilities
 import Imaging
 
 import logging
-import cam_config
+import config
 
 main_logger = logging.getLogger('Main')
 lights = None
@@ -50,7 +50,7 @@ def on_light_control(state, uuid):
 
 
 if __name__ == "__main__":
-    main_logger.info('starting up %s' % cam_config.cam_id)
+    main_logger.info('starting up %s' % config.cam_id)
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = CamUtilities.Timekeeper()
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     camera = Imaging.Camera(timer, on_movement)
     camera.start()
 
-    if cam_config.lights_enabled == 1:
+    if config.lights_enabled == 1:
         lights = LightControl.LightControl(on_movement, on_light_control, timer)
         lights.start()
 

@@ -72,6 +72,10 @@ variable_path = config.get('SERVER', 'path_variables')
 db_host = config.get('SERVER', 'db_host')
 db_user = config.get('SERVER', 'db_user')
 db_pass = config.get('SERVER', 'db_pass')
+if config.has_option('SERVER', 'gmail_user') and config.has_option('SERVER', 'gmail_pass') and config.has_option('SERVER', 'alarm_email'):
+    gmail_user = config.get('SERVER', 'gmail_user')
+    gmail_pass = config.get('SERVER', 'gmail_pass')
+    alarm_email = config.get('SERVER', 'alarm_email')
 
 cam_id = config.getint('CAMERA', 'cam_id')
 upload_ip = config.get('CAMERA', 'upload_ip')

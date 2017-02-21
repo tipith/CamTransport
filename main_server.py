@@ -1,9 +1,12 @@
 import Messaging
 import Datastore
+import config
+import gmail
+
 import logging
 
 main_logger = logging.getLogger('Main')
-
+email_alert = {}
 
 def on_image(msg):
     filename = Datastore.add_image(msg['src'], msg['time'], msg['data'])
@@ -27,8 +30,13 @@ def on_light_control(msg):
 
 
 def on_image_movement(msg):
+    global email_alert
     filename = Datastore.add_image_movement(msg['src'], msg['time'], msg['uuid'], msg['data'])
     Datastore.db_store_image_movement(msg['src'], msg['time'], filename, msg['uuid'], len(msg['data']))
+    # send only the first picture belonging to a group of pictures from a source. uuid is the group identifier
+    if msg['src'] not in email_alert or email_alert[msg['src']] != msg['uuid']:
+        email_alert[msg['src']] = msg['uuid']
+        gmail.send_email('Activity from cam %i' % msg['src'], 'See attachment.')
 
 
 def on_any(msg):

@@ -2,9 +2,9 @@
 import MySQLdb
 import time
 
-import cam_config
+import config
 
-db = MySQLdb.connect(host=cam_config.db_host, user=cam_config.db_user, passwd=cam_config.db_pass, db="Alho")
+db = MySQLdb.connect(host=config.db_host, user=config.db_user, passwd=config.db_pass, db="Alho")
 
 cur = db.cursor()
 

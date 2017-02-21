@@ -9,10 +9,10 @@ from main_server import messaging_start as server_messaging
 from main_client import messaging_start as client_messaging
 import Messaging
 
-import cam_config
+import config
 
 if __name__ == "__main__":
-    cam_config.upload_ip = 'localhost'
+    config.upload_ip = 'localhost'
 
     client = client_messaging()
     server = server_messaging()

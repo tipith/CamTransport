@@ -11,7 +11,7 @@ try:
 except ImportError:
     pass
 
-import cam_config
+import config
 
 light_logger = logging.getLogger('LightControl')
 relay_logger = logging.getLogger('Relay')
@@ -84,9 +84,9 @@ class LightControl(threading.Thread):
 
     def __init__(self, movement_callback, lights_callback, timer):
         threading.Thread.__init__(self)
-        self.detector = Detector(cam_config.gpio_detector)
-        self.relay = Relay(cam_config.gpio_relay, lights_callback)
-        self.duration_lights = cam_config.lights_on_time
+        self.detector = Detector(config.gpio_detector)
+        self.relay = Relay(config.gpio_relay, lights_callback)
+        self.duration_lights = config.lights_on_time
         self.time_control = 0
         self.is_running = True
         self.timer = timer

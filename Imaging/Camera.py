@@ -10,7 +10,7 @@ import cv2
 
 import CamUtilities
 import Messaging
-import cam_config
+import config
 
 try:
     import picamera
@@ -84,14 +84,14 @@ class ImageTools:
 
     @staticmethod
     def store_movement(jpeg_buf):
-        if not os.path.exists(cam_config.movement_image_path):
-            camera_logger.info("store_thumbnail: creating path %s" % cam_config.movement_image_path)
-            os.makedirs(cam_config.movement_image_path)
+        if not os.path.exists(config.movement_image_path):
+            camera_logger.info("store_thumbnail: creating path %s" % config.movement_image_path)
+            os.makedirs(config.movement_image_path)
 
         filename = datetime.datetime.now().strftime('th_%Y-%m-%d_%H%M%S') + '.jpg'
-        camera_logger.debug('writing thumbnail ' + os.path.join(cam_config.movement_image_path, filename))
+        camera_logger.debug('writing thumbnail ' + os.path.join(config.movement_image_path, filename))
 
-        with open(os.path.join(cam_config.movement_image_path, filename), 'wb') as write_f:
+        with open(os.path.join(config.movement_image_path, filename), 'wb') as write_f:
             write_f.write(jpeg_buf)
 
 
@@ -156,7 +156,7 @@ class Camera(threading.Thread):
         self.motion_alarm = CamUtilities.MotionAlarm('cam', 180.0, movement_cb)
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
-        self.mask = ImageTools.create_mask(cam_config.movement_mask)
+        self.mask = ImageTools.create_mask(config.movement_mask)
 
         if self.timer.twilight_ongoing():
             self._night()
@@ -215,7 +215,7 @@ class Camera(threading.Thread):
         self.is_running = False
 
     def picture(self):
-        self.cam.annotate_text = 'Alho%d %s' % (cam_config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.cam.annotate_text = 'Alho%d %s' % (config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         stream = io.BytesIO()
         self.cam.capture(stream, 'jpeg', quality=20)
         stream.seek(0)
@@ -280,7 +280,7 @@ class Camera(threading.Thread):
 def test():
     motion = Motion()
 
-    mask = ImageTools.create_mask(cam_config.movement_mask)
+    mask = ImageTools.create_mask(config.movement_mask)
     pics = glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg'))
 
     for idx, pic in enumerate(pics):
@@ -320,7 +320,7 @@ class TestAnim2:
     def __init__(self):
         self.pics = iter(glob.glob(os.path.join('..', 'testing', 'test_data2', '*.jpg')))
 
-        self.mask = ImageTools.create_mask(cam_config.movement_mask)
+        self.mask = ImageTools.create_mask(config.movement_mask)
 
         self.avg = []
 

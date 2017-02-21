@@ -1,6 +1,6 @@
 import zmq
 import threading
-import cam_config
+import config
 import pickle
 import logging
 from . Message import Message
@@ -70,8 +70,8 @@ class ServerMessaging(BaseMessaging):
 
     def __init__(self):
         self.context = zmq.Context()
-        incoming = "tcp://*:%s" % cam_config.upload_port
-        outgoing = "tcp://*:%s" % cam_config.msg_port
+        incoming = "tcp://*:%s" % config.upload_port
+        outgoing = "tcp://*:%s" % config.msg_port
 
         downlink = self.context.socket(zmq.PULL)
         downlink.bind(incoming)
@@ -88,8 +88,8 @@ class ClientMessaging(BaseMessaging):
 
     def __init__(self):
         self.context = zmq.Context()
-        outgoing = "tcp://%s:%i" % (cam_config.upload_ip, cam_config.upload_port)
-        incoming = "tcp://%s:%i" % (cam_config.upload_ip, cam_config.msg_port)
+        outgoing = "tcp://%s:%i" % (config.upload_ip, config.upload_port)
+        incoming = "tcp://%s:%i" % (config.upload_ip, config.msg_port)
 
         uplink = self.context.socket(zmq.PUSH)
         uplink.connect(outgoing)
