@@ -20,7 +20,7 @@ def send(subject, body, img):
 
         text = MIMEText(body)
         msg.attach(text)
-        image = MIMEImage(img, name=os.path.basename('img.jpg'))
+        image = MIMEImage(img, name=os.path.basename('img.jpg'), _subtype="jpg")
         msg.attach(image)
 
         try:
