@@ -11,8 +11,9 @@ import config
 main_logger = logging.getLogger('email')
 
 
-def send(subject, body, img):
+def send(subject, body, filename):
     if hasattr(config, 'alarm_email') and hasattr(config, 'gmail_user') and hasattr(config, 'gmail_pass'):
+
         msg = MIMEMultipart()
         msg['Subject'] = subject
         msg['From'] = config.gmail_user
@@ -20,8 +21,9 @@ def send(subject, body, img):
 
         text = MIMEText(body)
         msg.attach(text)
-        image = MIMEImage(img, name=os.path.basename('img.jpg'), _subtype="jpg")
-        msg.attach(image)
+        with open(filename, 'rb') as img_f:
+            image = MIMEImage(img_f.read(), name=os.path.basename('img.jpg'))
+            msg.attach(image)
 
         try:
             # Allow access for less secure apps in your Google account, otherwise exception is thrown
