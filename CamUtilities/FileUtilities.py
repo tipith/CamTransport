@@ -27,6 +27,8 @@ def remove_oldest_files(dir_path, size_limit, size_after):
             total += i
             yield total
 
+    fileutil_logger.info('truncating %s' % (dir_path))
+
     files = list_files(dir_path)
     if len(files):
         cumulative_size = list(partial_sums((f['size'] for f in files)))
@@ -44,7 +46,7 @@ def remove_oldest_files(dir_path, size_limit, size_after):
                         fileutil_logger.error('failed to delete %s' % (f['path']))
                         pass
         else:
-            fileutil_logger.error('dir %s not overflowing, current size %u kB, limit %u kB' % (dir_path, cumulative_size[-1] / 1024, size_limit / 1024))
+            fileutil_logger.info('dir %s not overflowing, current size %u kB, limit %u kB' % (dir_path, cumulative_size[-1] / 1024, size_limit / 1024))
 
 
 if __name__ == "__main__":
