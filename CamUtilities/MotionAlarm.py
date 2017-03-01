@@ -16,13 +16,15 @@ class MotionAlarm:
 
         self.last_detection = 0
         self.off_timeout = off_timeout
+        self.grace_end = 0
 
     def update(self, state):
         if state:
-            self.last_detection = calendar.timegm(time.gmtime())
-            if self.uuid is None:
-                self.uuid = str(uuid.uuid1())
-                self.cb(self.src, 'on', self.uuid)
+            if self.grace_end < calendar.timegm(time.gmtime()):
+                self.last_detection = calendar.timegm(time.gmtime())
+                if self.uuid is None:
+                    self.uuid = str(uuid.uuid1())
+                    self.cb(self.src, 'on', self.uuid)
         else:
             if self.uuid is not None and self._timeout_passed():
                 self.cb(self.src, 'off', self.uuid)
@@ -32,6 +34,9 @@ class MotionAlarm:
 
     def latest(self):
         return self.last_detection
+
+    def grace_period(self, duration):
+        self.grace_end = calendar.timegm(time.gmtime()) + duration
 
     def _timeout_passed(self):
         return calendar.timegm(time.gmtime()) > (self.last_detection + self.off_timeout)

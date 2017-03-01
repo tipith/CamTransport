@@ -233,6 +233,7 @@ class Camera(threading.Thread):
 
     def _twilight_event(self, event):
         camera_logger.info('twilight event: ' + event)
+        self.motion_alarm.grace_period(20.0)
         if event == 'start':
             self._night()
         else:
@@ -244,7 +245,7 @@ class Camera(threading.Thread):
     def _tune_shutter_speed(self, img):
         if self.cam.exposure_mode != 'auto':
             # 10 ms steps, max value 12 sec
-            large_step_factor = 50
+            large_step_factor = 40
             tune_value = 10000
             max_value = 12000000
             change = 0
