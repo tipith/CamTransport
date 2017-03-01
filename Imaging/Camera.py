@@ -178,7 +178,7 @@ class Camera(threading.Thread):
 
         self.timer.add_twilight_observer(self._twilight_event)
         self.timer.add_cron_job(self._cron_job, [], '*/5')
-        self.timer.add_cron_job(Camera._movement_images_truncation_cron_job, [], '*/10')
+        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/10')
 
     def run(self):
         camera_logger.info('started')
