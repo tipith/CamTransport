@@ -51,7 +51,7 @@ def setup_logging():
     ch.setFormatter(fmt)
     rootlog.addHandler(ch)
 
-    fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=100*1024, backupCount=10)
+    fh = logging.handlers.RotatingFileHandler(log_file, maxBytes=250*1024, backupCount=4)
     fh.setFormatter(fmt)
     rootlog.addHandler(fh)
 

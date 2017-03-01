@@ -27,8 +27,6 @@ def remove_oldest_files(dir_path, size_limit, size_after):
             total += i
             yield total
 
-    fileutil_logger.info('truncating %s' % (dir_path))
-
     files = list_files(dir_path)
     if len(files):
         cumulative_size = list(partial_sums((f['size'] for f in files)))
