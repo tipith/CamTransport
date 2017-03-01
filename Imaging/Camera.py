@@ -178,7 +178,7 @@ class Camera(threading.Thread):
 
         self.timer.add_twilight_observer(self._twilight_event)
         self.timer.add_cron_job(self._cron_job, [], '*/5')
-        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/10')
+        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/20')
 
     def run(self):
         camera_logger.info('started')
@@ -245,7 +245,7 @@ class Camera(threading.Thread):
 
     @staticmethod
     def _movement_img_truncate_cron_job():
-        CamUtilities.remove_oldest_files(config.movement_image_path, 768*1024*1024, 512*1024*1024)
+        CamUtilities.remove_oldest_files(config.movement_image_path, 5*1024*1024*1024, 4*1024*1024*1024)
 
     def _tune_shutter_speed(self, img):
         if self.cam.exposure_mode != 'auto':
