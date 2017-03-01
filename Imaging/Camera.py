@@ -244,7 +244,7 @@ class Camera(threading.Thread):
         self.send_pic = True
 
     @staticmethod
-    def _movement_img_truncate_cron_job(self):
+    def _movement_img_truncate_cron_job():
         CamUtilities.remove_oldest_files(config.movement_image_path, 768*1024*1024, 512*1024*1024)
 
     def _tune_shutter_speed(self, img):
