@@ -78,6 +78,10 @@ class ImageTools:
         return [hist_full, hist_mask]
 
     @staticmethod
+    def generate_jpeg(img):
+        return cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
+
+    @staticmethod
     def generate_jpeg_thumbnail(img):
         thumbnail = cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
         return cv2.imencode('.jpg', thumbnail, [cv2.IMWRITE_JPEG_QUALITY, 75])
@@ -198,7 +202,7 @@ class Camera(threading.Thread):
                 if m_det and m_uuid is not None:
                     success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
                     if success:
-                        ImageTools.store_movement(m_img)
+                        ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
                         self.local_messaging.send(Messaging.Message.msg_movement_image(m_img_tb, m_uuid))
 
                 if self.send_pic and m_img is not None:
