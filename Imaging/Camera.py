@@ -80,7 +80,7 @@ class ImageTools:
     @staticmethod
     def generate_jpeg_thumbnail(img):
         thumbnail = cv2.resize(img, (0, 0), fx=0.3, fy=0.3)
-        return cv2.imencode('.jpg', thumbnail, [cv2.IMWRITE_JPEG_QUALITY, 70])
+        return cv2.imencode('.jpg', thumbnail, [cv2.IMWRITE_JPEG_QUALITY, 75])
 
     @staticmethod
     def store_movement(jpeg_buf):
@@ -178,6 +178,7 @@ class Camera(threading.Thread):
 
         self.timer.add_twilight_observer(self._twilight_event)
         self.timer.add_cron_job(self._cron_job, [], '*/5')
+        self.timer.add_cron_job(Camera._movement_images_truncation_cron_job, [], '*/10')
 
     def run(self):
         camera_logger.info('started')
@@ -195,13 +196,13 @@ class Camera(threading.Thread):
                 m_uuid = self.motion_alarm.update(m_det)
 
                 if m_det and m_uuid is not None:
-                    success, jpeg = ImageTools.generate_jpeg_thumbnail(m_img)
+                    success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
                     if success:
-                        ImageTools.store_movement(jpeg)
-                        self.local_messaging.send(Messaging.Message.msg_movement_image(jpeg, m_uuid))
+                        ImageTools.store_movement(m_img)
+                        self.local_messaging.send(Messaging.Message.msg_movement_image(m_img_tb, m_uuid))
 
                 if self.send_pic and m_img is not None:
-                    success, buf = cv2.imencode('.jpg', m_img, [cv2.IMWRITE_JPEG_QUALITY, 70])
+                    success, buf = cv2.imencode('.jpg', m_img, [cv2.IMWRITE_JPEG_QUALITY, 75])
                     if success:
                         self.local_messaging.send(Messaging.Message.msg_image(buf))
                     self.send_pic = False
@@ -241,6 +242,10 @@ class Camera(threading.Thread):
 
     def _cron_job(self):
         self.send_pic = True
+
+    @staticmethod
+    def _movement_img_truncate_cron_job(self):
+        CamUtilities.remove_oldest_files(config.movement_image_path, 768*1024*1024, 512*1024*1024)
 
     def _tune_shutter_speed(self, img):
         if self.cam.exposure_mode != 'auto':
