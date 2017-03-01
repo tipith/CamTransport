@@ -1,6 +1,11 @@
 import uuid
 import calendar
 import time
+import logging
+
+import config
+
+motionalarm_logger = logging.getLogger('MotionAlarm')
 
 
 class MotionAlarm:
@@ -25,6 +30,8 @@ class MotionAlarm:
                 if self.uuid is None:
                     self.uuid = str(uuid.uuid1())
                     self.cb(self.src, 'on', self.uuid)
+            else:
+                motionalarm_logger.info('skip alarm while grace period active, %u s left' % (self.grace_end - calendar.timegm(time.gmtime())))
         else:
             if self.uuid is not None and self._timeout_passed():
                 self.cb(self.src, 'off', self.uuid)
@@ -40,3 +47,51 @@ class MotionAlarm:
 
     def _timeout_passed(self):
         return calendar.timegm(time.gmtime()) > (self.last_detection + self.off_timeout)
+
+
+def motion_cb(src, state, uuid):
+    motionalarm_logger.info('src %s state %s uuid %s' % (src, state, uuid))
+
+
+if __name__ == "__main__":
+    m = MotionAlarm('test', 2, motion_cb)
+
+    m.update(False)
+    time.sleep(1)
+
+    motionalarm_logger.info('test: should activate')
+    m.update(True)
+    time.sleep(1)
+    m.update(False)
+    time.sleep(1)
+    m.update(False)
+    time.sleep(1)
+    motionalarm_logger.info('test: should deactivate')
+    m.update(False)
+    time.sleep(1)
+
+    motionalarm_logger.info('test: grace period 5 seconds')
+    m.grace_period(5)
+    m.update(True)
+    time.sleep(1)
+    m.update(True)
+    time.sleep(1)
+    m.update(True)
+    time.sleep(1)
+    m.update(True)
+    time.sleep(1)
+    m.update(True)
+    time.sleep(1)
+    m.update(True)
+    time.sleep(1)
+
+    motionalarm_logger.info('test: should activate')
+    m.update(True)
+    time.sleep(1)
+    m.update(False)
+    time.sleep(1)
+    m.update(False)
+    time.sleep(1)
+    motionalarm_logger.info('test: should deactivate')
+    m.update(False)
+    time.sleep(1)
