@@ -54,7 +54,7 @@ def check_uplink():
     global client_messaging
     stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
     if stats is not None:
-        client_messaging.send(Messaging.Message.msg_text(json.dumps()))
+        client_messaging.send(Messaging.Message.msg_text(json.dumps(stats)))
     else:
         main_logger.warn('could not read uplink stats')
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     timer = CamUtilities.Timekeeper()
 
     if config.cam_id == 1:
-        timer.add_cron_job(check_uplink, [], '*/10')
+        timer.add_cron_job(check_uplink, [], '*/1')
 
     camera = Imaging.Camera(timer, on_movement)
     camera.start()
