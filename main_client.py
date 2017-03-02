@@ -51,11 +51,12 @@ def on_light_control(state, uuid):
 
 
 def check_uplink(local_comm):
-    main_logger.info('check_uplink')
-    main_logger.info(local_comm)
     stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
     if stats is not None:
+        main_logger.info(stats)
         local_comm.send(Messaging.Message.msg_text(json.dumps()))
+    else:
+        main_logger.info('could not read uplink stats')
 
 
 if __name__ == "__main__":
@@ -80,7 +81,7 @@ if __name__ == "__main__":
         while True:
             msg = local_messaging.wait()
             if Messaging.Message.verify(msg):
-                main_logger.info('forward %s' % Messaging.Message.msg_info(msg))
+                main_logger.info('%s' % Messaging.Message.msg_info(msg))
                 client_messaging.send(msg)
     finally:
         client_messaging.stop()
