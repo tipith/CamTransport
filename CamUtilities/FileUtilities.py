@@ -32,10 +32,10 @@ def remove_oldest_files(dir_path, size_limit, size_after):
         cumulative_size = list(partial_sums((f['size'] for f in files)))
         if cumulative_size[-1] > size_limit > size_after:
             overflow_bytes = cumulative_size[-1] - size_after
-            fileutil_logger.info('overflowing by %u b' % overflow_bytes)
+            fileutil_logger.info('dir %s overflowing, %u/%u MB' % (dir_path, cumulative_size[-1] / 1024 / 1024, size_limit / 1024 / 1024))
             file_ind = bisect.bisect_left(cumulative_size, overflow_bytes)
             if file_ind < len(files):
-                fileutil_logger.info('partial sum found at index %u value %u' % (file_ind, cumulative_size[file_ind]))
+                fileutil_logger.debug('partial sum found at index %u value %u' % (file_ind, cumulative_size[file_ind]))
                 for f in files[:file_ind+1]:
                     fileutil_logger.info('deleting %s' % f['path'])
                     try:
@@ -44,7 +44,7 @@ def remove_oldest_files(dir_path, size_limit, size_after):
                         fileutil_logger.error('failed to delete %s' % (f['path']))
                         pass
         else:
-            fileutil_logger.info('dir %s not overflowing, current size %u kB, limit %u kB' % (dir_path, cumulative_size[-1] / 1024, size_limit / 1024))
+            fileutil_logger.info('dir %s not overflowing, %u/%u MB' % (dir_path, cumulative_size[-1] / 1024 / 1024, size_limit / 1024 / 1024))
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import Messaging
 import LightControl
 import CamUtilities
 import Imaging
+import json
 
 import logging
 import config
@@ -49,11 +50,21 @@ def on_light_control(state, uuid):
         camera.light_control(state)
 
 
+def check_uplink(local_comm):
+    stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
+    if stats is not None:
+        local_comm.send(Messaging.Message.msg_text(json.dumps()))
+
+
 if __name__ == "__main__":
     main_logger.info('starting up %s' % config.cam_id)
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = CamUtilities.Timekeeper()
+
+    if config.cam_id == 1:
+        timer.add_cron_job(check_uplink, local_messaging, '*/1')
+        lights.start()
 
     camera = Imaging.Camera(timer, on_movement)
     camera.start()
