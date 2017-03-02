@@ -40,14 +40,12 @@ def dlink_dwr921_stats(ip):
         resp = urllib2.urlopen('http://%s/stats.xml' % ip)
         root = ElementTree.fromstring(resp.read())
         status = {
-            'device_uptime':     root.findall("./login/item[@name='sysuptime']")[0].text.strip(),
-            'connection_uptime': root.findall("./wan3g/item[@name='uptime3g']")[0].text,
-            'dbm':               root.findall("./wan3g/item[@name='signaldbm']")[0].text,
-            'ip':                root.findall("./wan3g/item[@name='ip3g']")[0].text,
-            'technology':        root.findall("./wan3g/item[@name='cntsta3g']")[0].text,
-            'ip':                root.findall("./wan3g/item[@name='ip3g']")[0].text,
-            'network':           root.findall("./cardinfos/item[@name='networkname']")[0].text,
-            'signal':            root.findall("./cardinfos/item[@name='signal']")[0].text,
+            'up':  root.findall("./wan3g/item[@name='uptime3g']")[0].text,
+            'dbm': root.findall("./wan3g/item[@name='signaldbm']")[0].text,
+            'rat': root.findall("./wan3g/item[@name='cntsta3g']")[0].text,
+            'ip':  root.findall("./wan3g/item[@name='ip3g']")[0].text,
+            'net': root.findall("./cardinfos/item[@name='networkname']")[0].text,
+            'sig': root.findall("./cardinfos/item[@name='signal']")[0].text,
         }
         return status
     except:
