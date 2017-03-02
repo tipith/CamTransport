@@ -51,6 +51,8 @@ def on_light_control(state, uuid):
 
 
 def check_uplink(local_comm):
+    main_logger.info('check_uplink')
+    main_logger.info(local_comm)
     stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
     if stats is not None:
         local_comm.send(Messaging.Message.msg_text(json.dumps()))
