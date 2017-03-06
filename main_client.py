@@ -66,7 +66,7 @@ if __name__ == "__main__":
     timer = CamUtilities.Timekeeper()
 
     if config.cam_id == 1:
-        timer.add_cron_job(check_uplink, [], '*/1')
+        timer.add_cron_job(check_uplink, [], '*/10')
 
     camera = Imaging.Camera(timer, on_movement)
     camera.start()

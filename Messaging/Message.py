@@ -18,8 +18,9 @@ class Message:
     Text = 5
     LightControl = 6
     ImageMovement = 7
+    Heartbeat = 8
 
-    known_messages = [Image, Variable, Command, Movement, Text, LightControl, ImageMovement]
+    known_messages = [Image, Variable, Command, Movement, Text, LightControl, ImageMovement, Heartbeat]
     header_fields = ['src', 'time', 'uptime', 'id']
 
     @staticmethod
@@ -92,6 +93,11 @@ class Message:
         msg = Message._header(config.cam_id, Message.ImageMovement)
         msg['uuid'] = uuid
         msg['data'] = img
+        return msg
+
+    @staticmethod
+    def msg_heartbeat():
+        msg = Message._header(config.cam_id, Message.Heartbeat)
         return msg
 
     @staticmethod
