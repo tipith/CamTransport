@@ -254,7 +254,7 @@ class Camera(threading.Thread):
     def _tune_shutter_speed(self, img):
         if self.cam.exposure_mode != 'auto':
             # 10 ms steps, max value 12 sec
-            large_step_factor = 40
+            large_step_factor = 20
             tune_value = 10000
             max_value = 12000000
             change = 0
