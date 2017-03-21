@@ -8,13 +8,17 @@ import logging
 main_logger = logging.getLogger('Main')
 email_alert = {}
 
+
 def on_image(msg):
     filename = Datastore.add_image(msg['src'], msg['time'], msg['data'])
     Datastore.db_store_image(msg['src'], msg['time'], filename, len(msg['data']))
 
 
 def on_variable(msg):
-    Datastore.set_variable(msg['src'], msg['name'], msg['value'])
+    if msg['name'] == 'temperature':
+        Datastore.db_store_temperature(msg['src'], msg['time'], msg['value'])
+    else:
+        Datastore.set_variable(msg['src'], msg['name'], msg['value'])
 
 
 def on_movement(msg):

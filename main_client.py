@@ -50,6 +50,13 @@ def on_light_control(state, uuid):
         camera.light_control(state)
 
 
+def check_rpi():
+    global client_messaging
+    temperature = CamUtilities.rpi_temp()
+    if temperature is not None:
+        client_messaging.send(Messaging.Message.msg_variable('temperature', temperature))
+
+
 def check_uplink():
     global client_messaging
     stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
@@ -64,6 +71,8 @@ if __name__ == "__main__":
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = CamUtilities.Timekeeper()
+
+    timer.add_cron_job(check_rpi, [], '*/1')
 
     if config.cam_id == 1:
         timer.add_cron_job(check_uplink, [], '*/10')

@@ -71,3 +71,15 @@ def db_store_image_movement(cam_id, timestamp, location, uuid, size):
     except MySQLdb.IntegrityError:
         db_logger.warn('unable to add entry')
     close_db(db)
+
+
+def db_store_temperature(cam_id, timestamp, temperature):
+    timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S')
+    db = open_db()
+    cur = db.cursor()
+    try:
+        cur.execute("INSERT INTO RpiTemperature (Timestamp, idCamera, Temperature) \
+                     VALUES (%s, %s, %s)", (timestamp_str, cam_id, temperature))
+    except MySQLdb.IntegrityError:
+        db_logger.warn('unable to add entry')
+    close_db(db)
