@@ -72,7 +72,7 @@ if __name__ == "__main__":
     local_messaging = local_messaging_start()
     timer = CamUtilities.Timekeeper()
 
-    timer.add_cron_job(check_rpi, [], '*/1')
+    timer.add_cron_job(check_rpi, [], '*/10')
 
     if config.cam_id == 1:
         timer.add_cron_job(check_uplink, [], '*/10')
