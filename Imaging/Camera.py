@@ -136,16 +136,11 @@ class Motion:
         # loop over the contours
         for c in contours:
             # if the contour is too small or big, ignore it
-            area = cv2.contourArea(c)
-            camera_logger.info('contour area: ' + str(area))
-
-            if 500000 < area < 10000:
-                continue
-
-            # compute the bounding box for the contour, draw it on the frame, and update the text
-            (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            retval = True
+            if 7500 < cv2.contourArea(c) < 500000:
+                # compute the bounding box for the contour, draw it on the frame, and update the text
+                (x, y, w, h) = cv2.boundingRect(c)
+                cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                retval = True
 
         return retval, pic
 
