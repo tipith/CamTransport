@@ -124,19 +124,19 @@ class Motion:
 
         # accumulate the weighted average between the current frame and previous frames,
         # then compute the difference between the current frame and running average
-        cv2.accumulateWeighted(gray, self.avg, 0.5)
+        cv2.accumulateWeighted(gray, self.avg, 0.4)
         frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(self.avg))
 
         # threshold the delta image, dilate the thresholded image to fill
         # in holes, then find contours on thresholded image
-        thresh = cv2.threshold(frameDelta, 17, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=3)
         image, contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         # loop over the contours
         for c in contours:
             # if the contour is too small or big, ignore it
-            if cv2.contourArea(c) < 5000 or cv2.contourArea(c) > 1000000:
+            if 500000 < cv2.contourArea(c) < 10000:
                 continue
 
             # compute the bounding box for the contour, draw it on the frame, and update the text
