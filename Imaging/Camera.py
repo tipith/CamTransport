@@ -136,7 +136,10 @@ class Motion:
         # loop over the contours
         for c in contours:
             # if the contour is too small or big, ignore it
-            if 500000 < cv2.contourArea(c) < 10000:
+            area = cv2.contourArea(c)
+            camera_logger.info('contour area: ' + str(area))
+
+            if 500000 < area < 10000:
                 continue
 
             # compute the bounding box for the contour, draw it on the frame, and update the text
@@ -195,7 +198,7 @@ class Camera(threading.Thread):
                 if self.timer.twilight_ongoing():
                     self._tune_shutter_speed(img)
 
-                (m_det, m_img) = self.motion.feed(img, self.mask)
+                (m_det, m_img) = self.motion.feed(img.copy(), self.mask)
 
                 m_uuid = self.motion_alarm.update(m_det)
 
@@ -205,8 +208,8 @@ class Camera(threading.Thread):
                         ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
                         self.local_messaging.send(Messaging.Message.msg_movement_image(m_img_tb, m_uuid))
 
-                if self.send_pic and m_img is not None:
-                    success, buf = cv2.imencode('.jpg', m_img, [cv2.IMWRITE_JPEG_QUALITY, 75])
+                if self.send_pic and img is not None:
+                    success, buf = cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 75])
                     if success:
                         self.local_messaging.send(Messaging.Message.msg_image(buf))
                     self.send_pic = False
