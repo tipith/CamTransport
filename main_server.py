@@ -49,7 +49,8 @@ def on_image_movement(msg):
                 email_alert['last'] = calendar.timegm(time.gmtime())
                 gmail.send('Activity from cam %i' % msg['src'], 'See attachment.', filename)
             else:
-                main_logger.info('skip email alert due to grace period, last alert %u s ago' % calendar.timegm(time.gmtime()) - email_alert['last'])
+                main_logger.info('skip email alert due to grace period, last alert %u s ago' %
+                                 (calendar.timegm(time.gmtime()) - email_alert['last']))
         else:
             main_logger.info('skip email alert during day')
 
