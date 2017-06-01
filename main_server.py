@@ -3,10 +3,13 @@ import Datastore
 import config
 import gmail
 
+import time
+import calendar
+import datetime
 import logging
 
 main_logger = logging.getLogger('Main')
-email_alert = {}
+email_alert = {'last': 0}
 
 
 def on_image(msg):
@@ -40,7 +43,15 @@ def on_image_movement(msg):
     # send only the first picture belonging to a group of pictures from a source. uuid is the group identifier
     if msg['src'] not in email_alert or email_alert[msg['src']] != msg['uuid']:
         email_alert[msg['src']] = msg['uuid']
-        gmail.send('Activity from cam %i' % msg['src'], 'See attachment.', filename)
+
+        if not (datetime.time(8, 0) < datetime.datetime.now().time() < datetime.time(15, 0)):
+            if calendar.timegm(time.gmtime()) > email_alert['last'] + 3600:
+                email_alert['last'] = calendar.timegm(time.gmtime())
+                gmail.send('Activity from cam %i' % msg['src'], 'See attachment.', filename)
+            else:
+                main_logger.info('skip email alert due to grace period, last alert %u s ago' % calendar.timegm(time.gmtime()) - email_alert['last'])
+        else:
+            main_logger.info('skip email alert during day')
 
 
 def on_any(msg):
