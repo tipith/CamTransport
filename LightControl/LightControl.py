@@ -82,7 +82,7 @@ class Detector:
 
 class LightControl(threading.Thread):
 
-    def __init__(self, movement_callback, lights_callback, timer):
+    def __init__(self, movement_callback, lights_callback, timer, pir_enabled):
         threading.Thread.__init__(self)
         self.detector = Detector(config.gpio_detector)
         self.relay = Relay(config.gpio_relay, lights_callback)
@@ -91,6 +91,7 @@ class LightControl(threading.Thread):
         self.is_running = True
         self.timer = timer
         self.motion_alarm = CamUtilities.MotionAlarm('pir', 180.0, movement_callback)
+        self.pir_enabled = pir_enabled
 
     def run(self):
         light_logger.info('started')
@@ -109,6 +110,7 @@ class LightControl(threading.Thread):
         self.relay.activate()
 
     def turn_off(self):
+        self.time_control = 0
         self.relay.deactivate()
 
     def stop(self):
@@ -122,12 +124,14 @@ class LightControl(threading.Thread):
         return calendar.timegm(time.gmtime()) > (action_time + self.duration_lights)
 
     def _detection(self, state):
-        if self._lights_grace_period():
-            self.motion_alarm.update(state)
-            if state and self.timer.twilight_ongoing():
-                self.relay.activate()
-        else:
-            light_logger.info('movement ignored during grace period')
+        if self.pir_enabled:
+            if self._lights_grace_period():
+                self.motion_alarm.update(state)
+                if state and self.timer.twilight_ongoing():
+                    self.relay.activate()
+            else:
+                light_logger.info('movement ignored during grace period')
 
     def _cb_detected(self, channel):
         self._detection(True)
+        light_logger.info('pir detected movement')
