@@ -122,22 +122,22 @@ class Motion:
             self.avg = gray.copy().astype("float")
             return False, None
 
-        # compare new frame to running average
-        frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(self.avg))
-
         # accumulate the running average
         cv2.accumulateWeighted(gray, self.avg, 0.3)
 
+        # compare new frame to running average
+        frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(self.avg))
+
         # threshold the delta image, dilate the thresholded image to fill
         # in holes, then find contours on thresholded image
-        thresh = cv2.threshold(frameDelta, 30, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(frameDelta, 40, 255, cv2.THRESH_BINARY)[1]
         thresh = cv2.dilate(thresh, None, iterations=3)
         image, contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         # loop over the contours
         for c in contours:
             # if the contour is too small or big, ignore it
-            if 7500 < cv2.contourArea(c) < 1000000:
+            if 7500 < cv2.contourArea(c) < 750000:
                 # compute the bounding box for the contour, draw it on the frame, and update the text
                 (x, y, w, h) = cv2.boundingRect(c)
                 cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
