@@ -10,6 +10,7 @@ import logging
 
 main_logger = logging.getLogger('Main')
 email_alert = {'last': 0}
+local_messaging = None
 
 
 def on_image(msg):
@@ -29,7 +30,11 @@ def on_movement(msg):
 
 
 def on_text(msg):
-    pass
+    global local_messaging
+    main_logger.info('forwarding to websocket')
+    if Messaging.Message.verify(msg):
+        main_logger.info('forwarding to websocket')
+        local_messaging.send(message)
 
 
 def on_light_control(msg):
@@ -72,14 +77,11 @@ def server_messaging_start():
     return _messaging
 
 
-def local_messaging_start():
-    _messaging = Messaging.LocalServerMessaging()
-    return _messaging
-
-
 if __name__ == "__main__":
+    global local_messaging
+
     server_messaging = server_messaging_start()
-    local_messaging = local_messaging_start()
+    local_messaging = Messaging.LocalServerMessaging()
 
     try:
         while True:

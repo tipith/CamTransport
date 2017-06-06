@@ -138,24 +138,38 @@ class LocalServerMessaging(BaseMessaging):
 
     def __init__(self):
         self.context = zmq.Context()
+        outgoing = "tcp://127.0.0.1:9996"
         incoming = "tcp://127.0.0.1:9997"
 
+        # forwards messages locally from the cameras
+        uplink = self.context.socket(zmq.PUB)
+        uplink.bind(outgoing)
+
+        # forwards messages locally to the cameras
         downlink = self.context.socket(zmq.PULL)
         downlink.bind(incoming)
         downlink.setsockopt(zmq.RCVTIMEO, 1000)
 
         # module_logger.info('listening to %s (LocalServer)' % incoming)
-        super(LocalServerMessaging, self).__init__(None, downlink, False)
+        super(LocalServerMessaging, self).__init__(uplink, downlink, False)
 
 
 class LocalClientMessaging(BaseMessaging):
 
     def __init__(self):
         self.context = zmq.Context()
+        incoming = "tcp://127.0.0.1:9996"
         outgoing = "tcp://127.0.0.1:9997"
 
+        # incoming messages from the cameras
+        downlink = self.context.socket(zmq.SUB)
+        downlink.connect(incoming)
+        downlink.setsockopt(zmq.SUBSCRIBE, b'')
+        downlink.setsockopt(zmq.RCVTIMEO, 1000)
+
+        # incoming messages from the cameras
         uplink = self.context.socket(zmq.PUSH)
         uplink.connect(outgoing)
 
         # module_logger.info('connecting to %s (LocalClient)' % outgoing)
-        super(LocalClientMessaging, self).__init__(uplink, None, False)
+        super(LocalClientMessaging, self).__init__(uplink, downlink, False)
