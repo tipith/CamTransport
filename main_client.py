@@ -68,6 +68,7 @@ def check_uplink():
 
 if __name__ == "__main__":
     main_logger.info('starting up %s' % config.cam_id)
+    client_messaging.send(Messaging.Message.msg_text('start'))
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
     timer = CamUtilities.Timekeeper()
@@ -83,8 +84,6 @@ if __name__ == "__main__":
     if config.lights_enabled == 1:
         lights = LightControl.LightControl(on_movement, on_light_control, timer, pir_enabled=False)
         lights.start()
-
-    client_messaging.send(Messaging.Message.msg_text('start'))
 
     try:
         while True:
