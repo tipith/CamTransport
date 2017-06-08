@@ -30,8 +30,6 @@ def on_movement(msg):
 
 
 def on_text(msg):
-    global local_messaging
-    main_logger.info('forwarding to websocket')
     if Messaging.Message.verify(msg):
         main_logger.info('forwarding to websocket')
         local_messaging.send(message)
@@ -42,7 +40,6 @@ def on_light_control(msg):
 
 
 def on_image_movement(msg):
-    global email_alert
     filename = Datastore.add_image_movement(msg['src'], msg['time'], msg['uuid'], msg['data'])
     Datastore.db_store_image_movement(msg['src'], msg['time'], filename, msg['uuid'], len(msg['data']))
     # send only the first picture belonging to a group of pictures from a source. uuid is the group identifier
@@ -78,8 +75,6 @@ def server_messaging_start():
 
 
 if __name__ == "__main__":
-    global local_messaging
-
     server_messaging = server_messaging_start()
     local_messaging = Messaging.LocalServerMessaging()
 
