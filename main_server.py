@@ -55,36 +55,35 @@ def on_image_movement(msg):
             main_logger.info('skip email alert during day')
 
 
-def on_any(msg):
+def cam_on_any(msg):
     Datastore.set_variable(msg['src'], 'uptime', msg['uptime'])
-    main_logger.info('forwarding to websocket: ' + str(msg))
+    main_logger.info('cameras -> local %s' % Messaging.Message.msg_info(msg))
     local_messaging.send(msg)
 
 
-def server_messaging_start():
-    _messaging = Messaging.ServerMessaging()
-    _messaging.start()
-    _messaging.install(Messaging.Message.Image, on_image)
-    _messaging.install(Messaging.Message.Variable, on_variable)
-    _messaging.install(Messaging.Message.Movement, on_movement)
-    _messaging.install(Messaging.Message.Text, on_text)
-    _messaging.install(Messaging.Message.LightControl, on_light_control)
-    _messaging.install(Messaging.Message.ImageMovement, on_image_movement)
-    _messaging.install('*', on_any)
-    return _messaging
+def local_on_any(msg):
+    main_logger.info('local -> cameras %s' % Messaging.Message.msg_info(msg))
+    server_messaging.send(msg)
 
 
 if __name__ == "__main__":
-    server_messaging = server_messaging_start()
+    server_messaging = Messaging.ServerMessaging()
+    server_messaging.start()
+    server_messaging.install(Messaging.Message.Image, on_image)
+    server_messaging.install(Messaging.Message.Variable, on_variable)
+    server_messaging.install(Messaging.Message.Movement, on_movement)
+    server_messaging.install(Messaging.Message.Text, on_text)
+    server_messaging.install(Messaging.Message.LightControl, on_light_control)
+    server_messaging.install(Messaging.Message.ImageMovement, on_image_movement)
+    server_messaging.install('*', cam_on_any)
+
     local_messaging = Messaging.LocalServerMessaging()
+    local_messaging.start()
+    local_messaging.install('*', local_on_any)
 
     try:
         while True:
-            message = local_messaging.wait()
-            if Messaging.Message.verify(message):
-                main_logger.info('forward %s' % Messaging.Message.msg_info(message))
-                #main_logger.info(str(message))
-                server_messaging.send(message)
+            time.sleep(1)
     finally:
         server_messaging.stop()
         local_messaging.stop()
