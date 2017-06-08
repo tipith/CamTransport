@@ -68,13 +68,13 @@ def check_uplink():
 
 if __name__ == "__main__":
     main_logger.info('starting up %s' % config.cam_id)
-    client_messaging.send(Messaging.Message.msg_text('start'))
     client_messaging = client_messaging_start()
     local_messaging = local_messaging_start()
+
+    client_messaging.send(Messaging.Message.msg_text('start'))
+
     timer = CamUtilities.Timekeeper()
-
     timer.add_cron_job(check_rpi, [], '*/10')
-
     if config.cam_id == 1:
         timer.add_cron_job(check_uplink, [], '*/10')
 
