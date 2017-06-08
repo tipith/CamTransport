@@ -82,8 +82,10 @@ if __name__ == "__main__":
         while True:
             message = local_messaging.wait()
             if Messaging.Message.verify(message):
-                main_logger.info('forward %s' % Messaging.Message.msg_info(message))
+                #main_logger.info('forward %s' % Messaging.Message.msg_info(message))
+                main_logger.info(str(message))
                 server_messaging.send(message)
+                local_messaging.send(message)
     finally:
         server_messaging.stop()
         local_messaging.stop()
