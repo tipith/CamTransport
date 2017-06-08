@@ -30,9 +30,7 @@ def on_movement(msg):
 
 
 def on_text(msg):
-    if Messaging.Message.verify(msg):
-        main_logger.info('forwarding to websocket')
-        local_messaging.send(message)
+    pass
 
 
 def on_light_control(msg):
@@ -59,6 +57,8 @@ def on_image_movement(msg):
 
 def on_any(msg):
     Datastore.set_variable(msg['src'], 'uptime', msg['uptime'])
+    main_logger.info('forwarding to websocket: ' + str(msg))
+    local_messaging.send(msg)
 
 
 def server_messaging_start():
@@ -82,10 +82,9 @@ if __name__ == "__main__":
         while True:
             message = local_messaging.wait()
             if Messaging.Message.verify(message):
-                #main_logger.info('forward %s' % Messaging.Message.msg_info(message))
-                main_logger.info(str(message))
+                main_logger.info('forward %s' % Messaging.Message.msg_info(message))
+                #main_logger.info(str(message))
                 server_messaging.send(message)
-                local_messaging.send(message)
     finally:
         server_messaging.stop()
         local_messaging.stop()
