@@ -44,6 +44,8 @@ class BaseMessaging(threading.Thread):
                             module_logger.info('no handler found for frame %i' % (msg['id']))
                         if '*' in self.handlers:
                             self.handlers['*'](msg)
+                else:
+                    time.sleep(0.5)
 
                 curr_time = calendar.timegm(time.gmtime())
 
