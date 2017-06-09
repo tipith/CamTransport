@@ -29,7 +29,7 @@ class BaseMessaging(threading.Thread):
             module_logger.info('started')
             while self.is_running:
                 events = self.down.poll(timeout=1.0)
-                module_logger.info('hep')
+                #module_logger.info('hep')
                 if events == zmq.POLLIN:
                     msg = self.wait()
                     if Message.verify(msg):
