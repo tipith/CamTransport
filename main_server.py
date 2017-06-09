@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     try:
         while True:
-            time.sleep(1)
+            time.sleep(1.0)
     finally:
         server_messaging.stop()
         local_messaging.stop()
