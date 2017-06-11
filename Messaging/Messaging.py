@@ -81,11 +81,11 @@ class BaseMessaging(threading.Thread):
         except Exception as e:
             return None
 
-    def send(self, msg):
+    def send(self, msg, serialize=True):
         if self.up is not None:
             try:
                 self.last_up = calendar.timegm(time.gmtime())
-                return self.up.send_pyobj(msg.serialize(), protocol=2)
+                return self.up.send_pyobj(msg.serialize() if serialize else msg, protocol=2)
             except zmq.ZMQError:
                 module_logger.info('Error: unable to send msg')
                 return None

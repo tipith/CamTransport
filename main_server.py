@@ -10,7 +10,8 @@ import logging
 
 main_logger = logging.getLogger('Main')
 email_alert = {'last': 0}
-local_messaging = None
+server_messaging = Messaging.ServerMessaging()
+local_messaging = Messaging.LocalServerMessaging()
 
 
 def on_image(msg):
@@ -59,16 +60,15 @@ def on_light_control(msg):
 def cam_on_any(msg):
     Datastore.set_variable(msg['src'], 'uptime', msg['uptime'])
     main_logger.info('cameras -> local %s' % Messaging.Message.msg_info(msg))
-    local_messaging.send(msg)
+    local_messaging.send(msg, serialize=False)
 
 
 def local_on_any(msg):
     main_logger.info('local -> cameras %s' % Messaging.Message.msg_info(msg))
-    server_messaging.send(msg)
+    server_messaging.send(msg, serialize=False)
 
 
 if __name__ == "__main__":
-    server_messaging = Messaging.ServerMessaging()
     server_messaging.start()
     server_messaging.install(Messaging.Message.Image, on_image)
     server_messaging.install(Messaging.Message.Variable, on_variable)
@@ -77,7 +77,6 @@ if __name__ == "__main__":
     server_messaging.install(Messaging.Message.LightControlEvent, on_light_control)
     server_messaging.install('*', cam_on_any)
 
-    local_messaging = Messaging.LocalServerMessaging()
     local_messaging.start()
     local_messaging.install('*', local_on_any)
 

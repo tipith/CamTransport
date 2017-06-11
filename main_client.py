@@ -51,8 +51,8 @@ def check_uplink():
 
 
 def on_any_local(msg):
-    main_logger.info('%s' % Messaging.Message.msg_info(msg))
-    client_messaging.send(msg)
+    main_logger.info('local -> server %s' % Messaging.Message.msg_info(msg))
+    client_messaging.send(msg, serialize=False)
 
 
 if __name__ == "__main__":
