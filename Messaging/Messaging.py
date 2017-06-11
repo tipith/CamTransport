@@ -41,8 +41,6 @@ class BaseMessaging(threading.Thread):
                         if msg['id'] in self.handlers:
                             module_logger.info('%s' % Message.msg_info(msg))
                             self.handlers[msg['id']](msg)
-                        else:
-                            module_logger.info('no handler found for frame %i' % (msg['id']))
                         if '*' in self.handlers:
                             self.handlers['*'](msg)
                 else:
