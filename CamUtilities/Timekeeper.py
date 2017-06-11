@@ -2,6 +2,7 @@ import ephem
 import datetime
 import logging
 import time
+import calendar
 from apscheduler.schedulers.background  import BackgroundScheduler
 
 import config
@@ -101,6 +102,23 @@ class Timekeeper:
             self.scheduler.add_job(self._twilight_event, 'date', ['end'], next_run_time=self.twilight_end_next() + datetime.timedelta(seconds=30))
         else:
             self.scheduler.add_job(self._twilight_event, 'date', ['start'], next_run_time=self.twilight_start_next() + datetime.timedelta(seconds=30))
+
+
+class TimeoutManager:
+
+    def __init__(self, duration_seconds):
+        self.event_start = calendar.timegm(time.gmtime())
+        self.event_duration = duration_seconds
+
+    def restart(self, duration_seconds):
+        self.event_start = calendar.timegm(time.gmtime())
+        self.event_duration = duration_seconds
+
+    def has_passed(self):
+        if calendar.timegm(time.gmtime()) >= (self.event_start + self.event_duration):
+            return True
+        else:
+            return False
 
 
 def twilight_observer_test(event):

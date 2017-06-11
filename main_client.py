@@ -20,6 +20,11 @@ def on_cmd_received(msg):
             lights.turn_on()
         else:
             lights.turn_off()
+    elif camera is not None and msg['command'] == 'livestream':
+        if msg['parameter'] == 'on':
+            camera.livestream(60)
+        else:
+            camera.livestream(0)
 
 
 def on_movement(detector, state, uuid):

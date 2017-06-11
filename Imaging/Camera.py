@@ -157,6 +157,7 @@ class Camera(threading.Thread):
         self.is_running = True
         self.motion = Motion()
         self.motion_alarm = CamUtilities.MotionAlarm('cam', 180.0, movement_cb)
+        self.livestream_timeout = CamUtilities.TimeoutManager(0)
         
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
         self.mask = ImageTools.create_mask(config.movement_mask)
@@ -209,6 +210,11 @@ class Camera(threading.Thread):
                     if success:
                         self.local_messaging.send(Messaging.ImageMessagePeriodical(buf))
                     self.send_pic = False
+
+                if not self.livestream_timeout.has_passed():
+                    success, img_tb = ImageTools.generate_jpeg_thumbnail(img)
+                    if success:
+                        self.local_messaging.send(Messaging.ImageMessageLive(img_tb))
             else:
                 camera_logger.info('unable to decode')
 
@@ -234,6 +240,9 @@ class Camera(threading.Thread):
                 self._night()
         else:
             camera_logger.info('day time. ignoring light events')
+
+    def livestream(self, duration):
+        self.livestream_timeout.restart(duration)
 
     def _twilight_event(self, event):
         camera_logger.info('twilight event: ' + event)
