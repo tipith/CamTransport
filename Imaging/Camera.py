@@ -202,12 +202,12 @@ class Camera(threading.Thread):
                     success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
                     if success:
                         ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
-                        self.local_messaging.send(Messaging.Message.msg_movement_image(m_img_tb, m_uuid))
+                        self.local_messaging.send(Messaging.ImageMessageMovement(m_img_tb, m_uuid))
 
                 if self.send_pic:
                     success, buf = cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 75])
                     if success:
-                        self.local_messaging.send(Messaging.Message.msg_image(buf))
+                        self.local_messaging.send(Messaging.ImageMessagePeriodical(buf))
                     self.send_pic = False
             else:
                 camera_logger.info('unable to decode')

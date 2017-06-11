@@ -3,6 +3,7 @@ import LightControl
 import CamUtilities
 import Imaging
 import json
+import time
 
 import logging
 import config
@@ -14,7 +15,6 @@ camera = None
 
 
 def on_cmd_received(msg):
-    global lights
     if lights is not None and msg['command'] == 'lights':
         if msg['parameter'] == 'on':
             lights.turn_on()
@@ -22,56 +22,51 @@ def on_cmd_received(msg):
             lights.turn_off()
 
 
-def client_messaging_start():
-    _messaging = Messaging.ClientMessaging()
-    _messaging.start()
-    _messaging.install(Messaging.Message.Command, on_cmd_received)
-    return _messaging
-
-
-def local_messaging_start():
-    _messaging = Messaging.LocalServerMessaging()
-    return _messaging
-
-
 def on_movement(detector, state, uuid):
-    global client_messaging
     main_logger.info('on_movement: %s from %s with uuid %s' % (state, detector, uuid))
     if client_messaging is not None:
-        client_messaging.send(Messaging.Message.msg_movement(detector, state, uuid))
+        client_messaging.send(Messaging.MovementEventMessage(detector, state, uuid))
 
 
 def on_light_control(state, uuid):
-    global client_messaging, camera
     main_logger.info('on_light_control: %s, uuid %s' % (state, uuid))
     if client_messaging is not None:
-        client_messaging.send(Messaging.Message.msg_light_control(state, uuid))
+        client_messaging.send(Messaging.LightControlEventMessage(state, uuid))
     if camera is not None:
         camera.light_control(state)
 
 
 def check_rpi():
-    global client_messaging
     temperature = CamUtilities.rpi_temp()
     if temperature is not None:
-        client_messaging.send(Messaging.Message.msg_variable('temperature', temperature))
+        client_messaging.send(Messaging.VariableMessage('temperature', temperature))
 
 
 def check_uplink():
-    global client_messaging
     stats = CamUtilities.dlink_dwr921_stats('192.168.0.1')
     if stats is not None:
-        client_messaging.send(Messaging.Message.msg_text(json.dumps(stats)))
+        client_messaging.send(Messaging.TextMessage(json.dumps(stats)))
     else:
         main_logger.warn('could not read uplink stats')
 
 
+def on_any_local(msg):
+    main_logger.info('%s' % Messaging.Message.msg_info(msg))
+    client_messaging.send(msg)
+
+
 if __name__ == "__main__":
     main_logger.info('starting up %s' % config.cam_id)
-    client_messaging = client_messaging_start()
-    local_messaging = local_messaging_start()
 
-    client_messaging.send(Messaging.Message.msg_text('start'))
+    client_messaging = Messaging.ClientMessaging()
+    client_messaging.start()
+    client_messaging.install(Messaging.Message.Command, on_cmd_received)
+
+    local_messaging = Messaging.LocalServerMessaging()
+    local_messaging.start()
+    local_messaging.install('*', on_any_local)
+
+    client_messaging.send(Messaging.TextMessage('start'))
 
     timer = CamUtilities.Timekeeper()
     timer.add_cron_job(check_rpi, [], '*/10')
@@ -87,10 +82,7 @@ if __name__ == "__main__":
 
     try:
         while True:
-            msg = local_messaging.wait()
-            if Messaging.Message.verify(msg):
-                main_logger.info('%s' % Messaging.Message.msg_info(msg))
-                client_messaging.send(msg)
+            time.sleep(1.0)
     finally:
         client_messaging.stop()
         local_messaging.stop()
