@@ -19,7 +19,7 @@ class AlhoMessageException(Exception):
     pass
 
 
-class Message:
+class Message(object):
 
     def __init__(self):
         pass
@@ -51,7 +51,7 @@ class Message:
         return False
 
     @staticmethod
-    def __str__(msg):
+    def msg_info(msg):
         src = msg['src']
         timestamp = msg['time'].strftime("%Y-%m-%d %H:%M:%S")
 
@@ -106,7 +106,7 @@ class ImageMessageLive(ImageMessage):
         self.type = 3
         self.img = img
         self.uuid = ''
-        super(ImageMessageMovement, self).__init__()
+        super(ImageMessageLive, self).__init__()
 
 
 class VariableMessage(Message):
@@ -165,7 +165,7 @@ class LightControlEventMessage(Message):
     def __init__(self, state, uuid):
         self.state = state
         self.uuid = uuid
-        super(TextMessage, self).__init__()
+        super(LightControlEventMessage, self).__init__()
 
     def __call__(self):
         msg = self.header(config.cam_id, Message.LightControlEvent)
