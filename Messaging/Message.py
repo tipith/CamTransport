@@ -6,15 +6,6 @@ import config
 message_logger = logging.getLogger('Message')
 
 
-@staticmethod
-def _uptime():
-    try:
-        with open('/proc/uptime', 'r') as f:
-            return int(float(f.readline().split()[0]))
-    except IOError:
-        return 0
-
-
 class AlhoMessageException(Exception):
     pass
 
@@ -36,7 +27,15 @@ class Message(object):
         pass
 
     def header(self, src, id):
-        return dict(zip(Message.header_fields, [src, datetime.now().replace(microsecond=0), _uptime(), id]))
+        return dict(zip(Message.header_fields, [src, datetime.now().replace(microsecond=0), Message._uptime(), id]))
+
+    @staticmethod
+    def _uptime():
+        try:
+            with open('/proc/uptime', 'r') as f:
+                return int(float(f.readline().split()[0]))
+        except IOError:
+            return 0
 
     @staticmethod
     def verify(msg):
