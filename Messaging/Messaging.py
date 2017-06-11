@@ -5,7 +5,7 @@ import calendar
 import time
 import pickle
 import logging
-from . Message import Message
+from . Message import Message, HeartbeatMessage
 
 module_logger = logging.getLogger('Messaging')
 
@@ -51,7 +51,7 @@ class BaseMessaging(threading.Thread):
 
                 # send heartbeat to uplink
                 if self.last_up + 10 < curr_time:
-                    self.send(Message.msg_heartbeat())
+                    self.send(HeartbeatMessage())
 
                 # check received heartbeat status
                 if self.heartbeat_enable and self.last_down + 300 < curr_time and self.last_retry + min(self.retry_cnt, 10) * 60 < curr_time:
