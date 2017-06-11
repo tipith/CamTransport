@@ -22,8 +22,10 @@ def on_cmd_received(msg):
             lights.turn_off()
     elif camera is not None and msg['command'] == 'livestream':
         if msg['parameter'] == 'on':
-            camera.livestream(60)
+            client_messaging.send(Messaging.TextMessage('streaming for 10 minutes'))
+            camera.livestream(600)
         else:
+            client_messaging.send(Messaging.TextMessage('stop streaming'))
             camera.livestream(0)
 
 
