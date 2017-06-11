@@ -34,8 +34,6 @@ def on_image(msg):
                                      (calendar.timegm(time.gmtime()) - email_alert['last']))
             else:
                 main_logger.info('skip email alert during day')
-    else:
-        main_logger.info('livestream pic from %s' % msg['src'])
 
 
 def on_variable(msg):
