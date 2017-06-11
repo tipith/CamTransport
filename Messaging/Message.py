@@ -77,7 +77,7 @@ class ImageMessage(Message):
     def __str__(self):
         return self.text
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header(config.cam_id, Message.Image)
         msg['type'] = self.type
         msg['data'] = self.img
@@ -115,7 +115,7 @@ class VariableMessage(Message):
         self.value = value
         super(VariableMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header(config.cam_id, Message.Variable)
         msg['name'] = self.name
         msg['value'] = self.value
@@ -128,7 +128,7 @@ class CommandMessage(Message):
         self.parameter = parameter
         super(CommandMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header('server', Message.Command)
         msg['command'] = self.command
         msg['parameter'] = self.parameter
@@ -142,7 +142,7 @@ class MovementEventMessage(Message):
         self.uuid = uuid
         super(MovementEventMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header(config.cam_id, Message.MovementEvent)
         msg['detector'] = self.detector
         msg['state'] = self.state
@@ -155,7 +155,7 @@ class TextMessage(Message):
         self.text = text
         super(TextMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header(config.cam_id, Message.Text)
         msg['text'] = self.text
         return msg
@@ -167,7 +167,7 @@ class LightControlEventMessage(Message):
         self.uuid = uuid
         super(LightControlEventMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         msg = self.header(config.cam_id, Message.LightControlEvent)
         msg['state'] = self.state
         msg['uuid'] = self.uuid
@@ -178,5 +178,5 @@ class HeartbeatMessage(Message):
     def __init__(self):
         super(HeartbeatMessage, self).__init__()
 
-    def __call__(self):
+    def serialize(self):
         return self.header(config.cam_id, Message.Heartbeat)
