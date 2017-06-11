@@ -14,6 +14,7 @@ class BaseMessaging(threading.Thread):
 
     def __init__(self, up, down, heartbeat_enable):
         threading.Thread.__init__(self)
+        self.name = 'MessagingThread'
         self.is_running = True
         self.handlers = {}
         self.up = up
@@ -84,7 +85,7 @@ class BaseMessaging(threading.Thread):
         if self.up is not None:
             try:
                 self.last_up = calendar.timegm(time.gmtime())
-                return self.up.send_pyobj(msg, protocol=2)
+                return self.up.send_pyobj(msg(), protocol=2)
             except zmq.ZMQError:
                 module_logger.info('Error: unable to send msg')
                 return None

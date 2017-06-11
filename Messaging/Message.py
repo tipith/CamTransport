@@ -21,9 +21,6 @@ class AlhoMessageException(Exception):
 
 class Message(object):
 
-    def __init__(self):
-        pass
-
     Image = 1
     Variable = 2
     Command = 3
@@ -34,6 +31,9 @@ class Message(object):
 
     known_messages = [Image, Variable, Command, MovementEvent, Text, LightControlEvent, Heartbeat]
     header_fields = ['src', 'time', 'uptime', 'id']
+
+    def __init__(self):
+        pass
 
     def header(self, src, id):
         return dict(zip(Message.header_fields, [src, datetime.now().replace(microsecond=0), _uptime(), id]))
