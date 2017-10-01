@@ -10,8 +10,8 @@ import logging
 
 main_logger = logging.getLogger('Main')
 email_alert = {'last': 0}
-server_messaging = Messaging.ServerMessaging()
-local_messaging = Messaging.LocalServerMessaging()
+server_messaging = Messaging.WanServer()
+local_messaging = Messaging.LocalServer()
 
 
 def on_image(msg):

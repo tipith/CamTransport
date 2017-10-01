@@ -40,12 +40,12 @@ class LoggerWriter:
 
 def setup_logging():
     log_file = os.path.join(__location__, 'log.txt')
-    numeric_level = getattr(logging, loglevel.upper(), logging.INFO)
+    #numeric_level = getattr(logging, loglevel.upper(), logging.DEBUG)
 
-    fmt = logging.Formatter('%(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+    fmt = logging.Formatter('%(levelname)8s %(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
     rootlog = logging.getLogger()
-    rootlog.setLevel(numeric_level)
+    rootlog.setLevel(logging.INFO)
 
     ch = logging.StreamHandler(sys.stdout)
     ch.setFormatter(fmt)

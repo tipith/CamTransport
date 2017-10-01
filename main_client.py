@@ -65,11 +65,11 @@ def on_any_local(msg):
 if __name__ == "__main__":
     main_logger.info('starting up %s' % config.cam_id)
 
-    client_messaging = Messaging.ClientMessaging()
+    client_messaging = Messaging.WanClient()
     client_messaging.start()
     client_messaging.install(Messaging.Message.Command, on_cmd_received)
 
-    local_messaging = Messaging.LocalServerMessaging()
+    local_messaging = Messaging.LocalServer()
     local_messaging.start()
     local_messaging.install('*', on_any_local)
 

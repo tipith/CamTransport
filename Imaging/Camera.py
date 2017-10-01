@@ -177,7 +177,7 @@ class Camera(threading.Thread):
         else:
             self._day()
 
-        self.local_messaging = Messaging.LocalClientMessaging()
+        self.local_messaging = Messaging.LocalClient()
         self.send_pic = False
 
         self.timer.add_twilight_observer(self._twilight_event)
