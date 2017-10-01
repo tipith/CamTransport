@@ -189,7 +189,7 @@ def security(auth_method):
     return decorator
 
 
-@security('none')
+@security('curve')
 class WanServer(BaseMessaging):
 
     def __init__(self):
@@ -212,7 +212,7 @@ class WanServer(BaseMessaging):
         self.up.bind(outgoing)
 
 
-@security('none')
+@security('curve')
 class WanClient(BaseMessaging):
 
     def __init__(self):
