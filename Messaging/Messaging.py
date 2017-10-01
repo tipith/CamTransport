@@ -126,7 +126,7 @@ def security_add(ctx, i_am_server, up, down):
 
     auth = ThreadAuthenticator(ctx)
     auth.start()
-    auth.allow('127.0.0.1')
+    #auth.allow('127.0.0.1')
     auth.configure_curve(domain='*', location=public_keys_dir)
 
     if i_am_server:
