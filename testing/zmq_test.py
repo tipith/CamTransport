@@ -17,6 +17,7 @@ test_logger = logging.getLogger('test')
 client_q = queue.Queue()
 server_q = queue.Queue()
 
+
 def test_decorator(q):
     def real_decorator(func):
         @wraps(func)

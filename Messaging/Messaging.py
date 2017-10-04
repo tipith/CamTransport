@@ -196,7 +196,7 @@ class WanServer(BaseMessaging):
         self.context = zmq.Context()
         downlink = self.context.socket(zmq.PULL)
         uplink = self.context.socket(zmq.PUB)
-        BaseMessaging.__init__(self, uplink, downlink, True)
+        BaseMessaging.__init__(self, uplink, downlink, False)
 
         self.name = self.__class__.__name__
         self.logger = logging.getLogger(self.name)
