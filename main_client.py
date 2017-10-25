@@ -84,7 +84,7 @@ if __name__ == "__main__":
     camera.start()
 
     if config.lights_enabled == 1:
-        lights = LightControl.LightControl(on_movement, on_light_control, timer, pir_enabled=False)
+        lights = LightControl.LightControl(on_movement, on_light_control, timer, pir_enabled=True)
         lights.start()
 
     try:
