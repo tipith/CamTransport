@@ -32,7 +32,7 @@ if __name__ == "__main__":
     client_messaging.send(Messaging.TextMessage('start tester'))
 
     timer = CamUtilities.Timekeeper()
-    camera = Imaging.Camera(timer, on_movement, Imaging.PiCam(), test_mode=True)
+    camera = Imaging.Camera(timer, on_movement, Imaging.USBCam(), test_mode=True)
     camera.start()
 
     try:
