@@ -181,7 +181,38 @@ class DummyCam:
 
 
 class USBCam:
-    pass
+
+    def __init__(self):
+        self.cam = cv2.VideoCapture(0)
+        self._exposure_mode = 'auto'
+
+    def autotune_gains(self, is_night):
+        camera_logger.info('autotuned, is_night={}'.format(is_night))
+
+    @property
+    def exposure_mode(self):
+        return self._exposure_mode
+
+    @exposure_mode.setter
+    def exposure_mode(self, val):
+        camera_logger.info('exposure set to {}'.format(val))
+        self._exposure_mode = val
+
+    @property
+    def picture(self):
+        ret_val, img = self.cam.read()
+        return img
+
+    @property
+    def night(self):
+        return True
+
+    @night.setter
+    def night(self, val):
+        camera_logger.info('night set to {}'.format(val))
+
+    def tune_shutter(self, img):
+        pass
 
 
 class PiCam:

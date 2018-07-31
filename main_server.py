@@ -38,7 +38,7 @@ def on_image(msg):
                 main_logger.info('skip email alert during day')
     elif msg['type'] == Messaging.ImageMessage.TYPE_TEST:
         filename = Datastore.add_test_image(msg['src'], msg['time'], msg['data'])
-        main_logger.info('wrote', filename)
+        main_logger.info('wrote {}'.format(filename))
 
 
 def on_variable(msg):
