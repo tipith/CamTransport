@@ -193,11 +193,11 @@ class PiCam:
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
 
     def autotune_gains(self, is_night):
-        self.cam.night = is_night
-        self.cam.exposure_mode = 'auto'
+        self.night = is_night
+        self.exposure_mode = 'auto'
         if is_night:
             time.sleep(30)  # Give the camera a good long time to set gains and measure AWB
-        self.cam.night = is_night
+        self.night = is_night
 
     @property
     def exposure_mode(self):
