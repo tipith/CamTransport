@@ -33,6 +33,7 @@ if __name__ == "__main__":
 
     timer = CamUtilities.Timekeeper()
     camera = Imaging.Camera(timer, on_movement, Imaging.PiCam(), test_mode=True)
+    camera.start()
 
     try:
         while True:
