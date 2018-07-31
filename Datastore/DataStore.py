@@ -9,6 +9,22 @@ import config
 data_logger = logging.getLogger('DataStore')
 
 
+def _store_image(path, filename, data):
+    if not os.path.exists(path):
+        data_logger.info("creating path %s" % path)
+        os.makedirs(path)
+    with open(os.path.join(path, filename), 'wb') as f:
+        f.write(data)
+    return os.path.join(path, filename)
+
+
+def add_test_image(cam_id, timestamp, data):
+    filename = 'test_cam{}_{}.jpg'.format(cam_id, timestamp.strftime('%Y-%m-%d_%H%M%S'))
+    path = os.path.join(config.image_path, 'test')
+    print(filename, path)
+    return _store_image(path, filename, data)
+
+
 def add_image(cam_id, timestamp, data):
     '''This function adds JPG image contents to a directory structure
     <src>/year/month/day/ with an example file name 2016-12-24_1200.jpg.
@@ -18,17 +34,9 @@ def add_image(cam_id, timestamp, data):
     :param data: JPG image contents as bytes
     :return:
     '''
-    filename = timestamp.strftime('%Y-%m-%d_%H%M') + '.jpg'
+    filename = '{}.jpg'.format(timestamp.strftime('%Y-%m-%d_%H%M'))
     path = os.path.join(config.image_path, 'images', 'cam' + str(cam_id), str(timestamp.year), str(timestamp.month), str(timestamp.day))
-
-    if not os.path.exists(path):
-        data_logger.info("add_image: creating path %s" % path)
-        os.makedirs(path)
-
-    with open(os.path.join(path, filename), 'wb') as f:
-        f.write(data)
-
-    return os.path.join(path, filename)
+    return _store_image(path, filename, data)
 
 
 def add_image_movement(cam_id, timestamp, uuid, data):
@@ -41,17 +49,9 @@ def add_image_movement(cam_id, timestamp, uuid, data):
     :param data: JPG image contents as bytes
     :return:
     '''
-    filename = timestamp.strftime('%Y-%m-%d_%H%M%S') + '.jpg'
+    filename = '{}.jpg'.format(timestamp.strftime('%Y-%m-%d_%H%M'))
     path = os.path.join(config.image_path, 'movement', 'cam' + str(cam_id), uuid)
-
-    if not os.path.exists(path):
-        data_logger.info("add_image: creating path %s" % path)
-        os.makedirs(path)
-
-    with open(os.path.join(path, filename), 'wb') as f:
-        f.write(data)
-
-    return os.path.join(path, filename)
+    return _store_image(path, filename, data)
 
 
 def set_variable(cam_id, name, value):
@@ -78,3 +78,9 @@ def set_variable(cam_id, name, value):
 
     with open(var_file, 'w') as f:
         json.dump(data, f)
+
+
+if __name__ == '__main__':
+    import datetime
+    config.image_path = 'C:\data'
+    add_test_image(1, datetime.datetime.now(), b'12345')

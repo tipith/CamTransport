@@ -70,6 +70,11 @@ class Message(object):
 
 
 class ImageMessage(Message):
+    TYPE_PERIODICAL = 1
+    TYPE_MOVEMENT = 2
+    TYPE_LIVE = 3
+    TYPE_TEST = 4
+
     def __init__(self):
         super(ImageMessage, self).__init__()
 
@@ -83,7 +88,7 @@ class ImageMessage(Message):
 
 class ImageMessagePeriodical(ImageMessage):
     def __init__(self, img):
-        self.type = 1
+        self.type = ImageMessage.TYPE_PERIODICAL
         self.img = img
         self.uuid = ''
         super(ImageMessagePeriodical, self).__init__()
@@ -91,7 +96,7 @@ class ImageMessagePeriodical(ImageMessage):
 
 class ImageMessageMovement(ImageMessage):
     def __init__(self, img, uuid):
-        self.type = 2
+        self.type = ImageMessage.TYPE_MOVEMENT
         self.img = img
         self.uuid = uuid
         super(ImageMessageMovement, self).__init__()
@@ -99,10 +104,18 @@ class ImageMessageMovement(ImageMessage):
 
 class ImageMessageLive(ImageMessage):
     def __init__(self, img):
-        self.type = 3
+        self.type = ImageMessage.TYPE_LIVE
         self.img = img
         self.uuid = ''
         super(ImageMessageLive, self).__init__()
+
+
+class ImageMessageTest(ImageMessage):
+    def __init__(self, img, test_text):
+        self.type = ImageMessage.TYPE_TEST
+        self.img = img
+        self.uuid = test_text
+        super(ImageMessageTest, self).__init__()
 
 
 class VariableMessage(Message):

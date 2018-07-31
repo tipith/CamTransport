@@ -17,10 +17,10 @@ local_messaging = Messaging.LocalServer()
 
 
 def on_image(msg):
-    if msg['type'] == 1:
+    if msg['type'] == Messaging.ImageMessage.TYPE_PERIODICAL:
         filename = Datastore.add_image(msg['src'], msg['time'], msg['data'])
         Datastore.db_store_image(msg['src'], msg['time'], filename, len(msg['data']))
-    elif msg['type'] == 2:
+    elif msg['type'] == Messaging.ImageMessage.TYPE_MOVEMENT:
         filename = Datastore.add_image_movement(msg['src'], msg['time'], msg['uuid'], msg['data'])
         Datastore.db_store_image_movement(msg['src'], msg['time'], filename, msg['uuid'], len(msg['data']))
         # send only the first picture belonging to a group of pictures from a source. uuid is the group identifier
@@ -36,6 +36,9 @@ def on_image(msg):
                                      (calendar.timegm(time.gmtime()) - email_alert['last']))
             else:
                 main_logger.info('skip email alert during day')
+    elif msg['type'] == Messaging.ImageMessage.TYPE_TEST:
+        filename = Datastore.add_test_image(msg['src'], msg['time'], msg['data'])
+        main_logger.info('wrote', filename)
 
 
 def on_variable(msg):
