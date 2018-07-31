@@ -80,7 +80,7 @@ if __name__ == "__main__":
     if config.cam_id == 1:
         timer.add_cron_job(check_uplink, [], '*/10')
 
-    camera = Imaging.Camera(timer, on_movement, Imaging.PiCam())
+    camera = Imaging.Camera(timer, on_movement, Imaging.USBCam())
     camera.start()
 
     if config.lights_enabled == 1:

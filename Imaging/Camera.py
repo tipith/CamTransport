@@ -183,7 +183,9 @@ class DummyCam:
 class USBCam:
 
     def __init__(self):
-        self.cam = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(3, 1920)
+        self.cap.set(4, 1080)
         self._exposure_mode = 'auto'
 
     def autotune_gains(self, is_night):
@@ -245,7 +247,8 @@ class PiCam:
         stream = io.BytesIO()
         self.cam.capture(stream, 'jpeg', quality=20)
         stream.seek(0)
-        return stream.read()
+        img_mat = numpy.fromstring(stream.read(), dtype='uint8')
+        return cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
 
     @property
     def night(self):
@@ -320,22 +323,21 @@ class Camera(threading.Thread):
     def run(self):
         camera_logger.info('started')
         while self.is_running:
-            buf = self.cam.picture
-            img_mat = numpy.fromstring(buf, dtype='uint8')
-            img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
+            img = self.cam.picture
 
             if img is not None:
                 if self.timer.twilight_ongoing():
                     self.cam.tune_shutter(img)
 
-                (m_det, m_img) = self.motion.feed(img.copy(), self.mask)
-                m_uuid = self.motion_alarm.update(m_det)
+                if False:  # temporarily disabled due to usb cam different resolution
+                    (m_det, m_img) = self.motion.feed(img.copy(), self.mask)
+                    m_uuid = self.motion_alarm.update(m_det)
 
-                if m_det and m_uuid is not None:
-                    success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
-                    if success:
-                        ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
-                        self.local_messaging.send(Messaging.ImageMessageMovement(m_img_tb, m_uuid))
+                    if m_det and m_uuid is not None:
+                        success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
+                        if success:
+                            ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
+                            self.local_messaging.send(Messaging.ImageMessageMovement(m_img_tb, m_uuid))
 
                 if self.send_pic:
                     success, buf = cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 75])
