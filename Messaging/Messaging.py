@@ -10,6 +10,8 @@ import calendar
 import time
 import pickle
 import logging
+import traceback
+
 from . Message import Message, HeartbeatMessage
 
 
@@ -79,8 +81,10 @@ class BaseMessaging(threading.Thread):
             return None
         except (AttributeError, EOFError, ImportError, IndexError) as e:
             self.logger.error('Error: Other')
+            self.logger.error(traceback.format_exc())
             return None
         except Exception as e:
+            self.logger.error(traceback.format_exc())
             return None
 
     def send(self, msg, serialize=True):

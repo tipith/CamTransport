@@ -8,7 +8,7 @@ import threading
 import numpy
 import cv2
 
-import CamUtilities
+from CamUtilities import TimeoutManager, MotionAlarm, remove_oldest_files
 import Messaging
 import config
 
@@ -146,57 +146,150 @@ class Motion:
         return retval, pic
 
 
-class Camera(threading.Thread):
+class DummyCam:
 
-    def __init__(self, timer, movement_cb):
-        threading.Thread.__init__(self)
-        self.timer = timer
+    def __init__(self):
+        self._exposure_mode = 'auto'
+
+    def autotune_gains(self, is_night):
+        camera_logger.info('autotuned, is_night={}'.format(is_night))
+
+    @property
+    def exposure_mode(self):
+        return self._exposure_mode
+
+    @exposure_mode.setter
+    def exposure_mode(self, val):
+        camera_logger.info('exposure set to {}'.format(val))
+        self._exposure_mode = val
+
+    @property
+    def picture(self):
+        with open(os.path.join('..', 'data', 'images', 'cam1', '2017', '6', '2', '2017-06-02_0010.jpg'), 'rb') as f:
+            return f.read()
+
+    @property
+    def night(self):
+        return True
+
+    @night.setter
+    def night(self, val):
+        camera_logger.info('night set to {}'.format(val))
+
+    def tune_shutter(self, img):
+        pass
+
+
+class USBCam:
+    pass
+
+
+class PiCam:
+
+    def __init__(self):
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
         self.cam.annotate_background = picamera.Color('black')
         self.cam.annotate_text_size = 50
+        picamera.PiCamera.CAPTURE_TIMEOUT = 90000
+
+    def autotune_gains(self, is_night):
+        self.cam.night = is_night
+        self.cam.exposure_mode = 'auto'
+        if is_night:
+            time.sleep(30)  # Give the camera a good long time to set gains and measure AWB
+        self.cam.night = is_night
+
+    @property
+    def exposure_mode(self):
+        return self.cam.exposure_mode
+
+    @exposure_mode.setter
+    def exposure_mode(self, val):
+        self.cam.exposure_mode = val
+
+    @property
+    def picture(self):
+        self.cam.annotate_text = 'Alho%d %s' % (
+        config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        stream = io.BytesIO()
+        self.cam.capture(stream, 'jpeg', quality=20)
+        stream.seek(0)
+        return stream.read()
+
+    @property
+    def night(self):
+        return self.exposure_mode == 'off'
+
+    @night.setter
+    def night(self, val):
+        if val:
+            camera_logger.info('night parameters')
+            self.exposure_mode = 'off'
+            self.cam.shutter_speed = 100000
+            self.cam.iso = 800
+        else:
+            camera_logger.info('day parameters')
+            self.exposure_mode = 'auto'
+            self.cam.shutter_speed = 0
+            self.cam.iso = 0
+
+    def tune_shutter(self, img):
+        if self.cam.exposure_mode != 'auto':
+            # 10 ms steps, max value 12 sec
+            large_step_factor = 20
+            tune_value = 10000
+            max_value = 12000000
+            change = 0
+
+            avg = ImageTools.calculate_average(img)
+            current = self.cam.shutter_speed
+
+            if avg < 20 and current < (max_value - large_step_factor * tune_value):
+                change = large_step_factor * tune_value
+            elif avg < 50 and current < (max_value - tune_value):
+                change = tune_value
+            elif avg > 130 and (current - large_step_factor * tune_value) > 0:
+                change = -large_step_factor * tune_value
+            elif avg > 80 and (current - tune_value) > 0:
+                change = -tune_value
+
+            camera_logger.debug(
+                'pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
+            self.cam.shutter_speed = current + change
+
+
+class Camera(threading.Thread):
+
+    def __init__(self, timer, movement_cb, cam):
+        threading.Thread.__init__(self)
+        self.timer = timer
+        self.cam = cam
+        self.cam.autotune_gains(is_night=self.timer.twilight_ongoing())
         self.is_running = True
         self.motion = Motion()
-        self.motion_alarm = CamUtilities.MotionAlarm('cam', 180.0, movement_cb)
-        self.livestream_timeout = CamUtilities.TimeoutManager(0)
-        
-        picamera.PiCamera.CAPTURE_TIMEOUT = 90000
+        self.motion_alarm = MotionAlarm('cam', 180.0, movement_cb)
+        self.livestream_timeout = TimeoutManager(0)
         self.mask = ImageTools.create_mask(config.movement_mask)
-
-        if self.timer.twilight_ongoing():
-            self._night()
-        else:
-            self._day()
-
-        self.cam.exposure_mode = 'auto'
-
-        # Give the camera a good long time to set gains and measure AWB (you may wish to use fixed AWB instead)
-        time.sleep(30)
-
-        if self.timer.twilight_ongoing():
-            self._night()
-        else:
-            self._day()
 
         self.local_messaging = Messaging.LocalClient()
         self.send_pic = False
 
         self.timer.add_twilight_observer(self._twilight_event)
-        self.timer.add_cron_job(self._cron_job, [], '*/5')
-        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/60')
+        self.timer.add_cron_job(self._cron_job, [], second='*/5')
+        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/59')
 
     def run(self):
         camera_logger.info('started')
         while self.is_running:
-            buf = self.picture()
+            buf = self.cam.picture
             img_mat = numpy.fromstring(buf, dtype='uint8')
             img = cv2.imdecode(img_mat, cv2.IMREAD_UNCHANGED)
 
             if img is not None:
                 if self.timer.twilight_ongoing():
-                    self._tune_shutter_speed(img)
+                    self.cam.tune_shutter(img)
 
                 (m_det, m_img) = self.motion.feed(img.copy(), self.mask)
-
                 m_uuid = self.motion_alarm.update(m_det)
 
                 if m_det and m_uuid is not None:
@@ -217,27 +310,15 @@ class Camera(threading.Thread):
                         self.local_messaging.send(Messaging.ImageMessageLive(img_tb))
             else:
                 camera_logger.info('unable to decode')
-
         camera_logger.info('stopped')
-        self.local_messaging.stop()
 
     def stop(self):
         self.is_running = False
 
-    def picture(self):
-        self.cam.annotate_text = 'Alho%d %s' % (config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        stream = io.BytesIO()
-        self.cam.capture(stream, 'jpeg', quality=20)
-        stream.seek(0)
-        return stream.read()
-
     def light_control(self, state):
         camera_logger.info('light control event: ' + state)
         if self.timer.twilight_ongoing():
-            if state == 'on':
-                self._day()
-            else:
-                self._night()
+            self.cam.night = (state != 'on')
         else:
             camera_logger.info('day time. ignoring light events')
 
@@ -247,52 +328,15 @@ class Camera(threading.Thread):
     def _twilight_event(self, event):
         camera_logger.info('twilight event: ' + event)
         self.motion_alarm.grace_period(20.0)
-        if event == 'start':
-            self._night()
-        else:
-            self._day()
+        self.cam.night = (event == 'start')
 
     def _cron_job(self):
+        camera_logger.info('pic send requested')
         self.send_pic = True
 
     @staticmethod
     def _movement_img_truncate_cron_job():
-        CamUtilities.remove_oldest_files(config.movement_image_path, 5*1024*1024*1024, 4*1024*1024*1024)
-
-    def _tune_shutter_speed(self, img):
-        if self.cam.exposure_mode != 'auto':
-            # 10 ms steps, max value 12 sec
-            large_step_factor = 20
-            tune_value = 10000
-            max_value = 12000000
-            change = 0
-
-            avg = ImageTools.calculate_average(img)
-            current = self.cam.shutter_speed
-
-            if avg < 20 and current < (max_value - large_step_factor * tune_value):
-                change = large_step_factor * tune_value
-            elif avg < 50 and current < (max_value - tune_value):
-                change = tune_value
-            elif avg > 130 and (current - large_step_factor * tune_value) > 0:
-                change = -large_step_factor * tune_value
-            elif avg > 80 and (current - tune_value) > 0:
-                change = -tune_value
-
-            camera_logger.debug('pixel avg %u, current shutter %i ms, change %i ms' % (avg, current / 1000, change / 1000))
-            self.cam.shutter_speed = current + change
-
-    def _night(self):
-        camera_logger.info('night parameters')
-        self.cam.exposure_mode = 'off'
-        self.cam.shutter_speed = 100000
-        self.cam.iso = 800
-
-    def _day(self):
-        camera_logger.info('day parameters')
-        self.cam.exposure_mode = 'auto'
-        self.cam.shutter_speed = 0
-        self.cam.iso = 0
+        remove_oldest_files(config.movement_image_path, 5*1024*1024*1024, 4*1024*1024*1024)
 
 
 def test():
@@ -311,7 +355,7 @@ def test():
                 (m_det, m_img) = motion.feed(img, mask)
                 if m_det:
                     camera_logger.info('motion detected')
-                    ImageTools.store_movement(m_img)
+                    #ImageTools.store_movement(m_img)
                     time.sleep(1.0)
             else:
                 camera_logger.info('unable to decode')
@@ -390,7 +434,21 @@ class TestAnim2:
         plt.show()
 
 
+def test_dummycam():
+    def on_movement(detector, state, uuid):
+        print(detector, state, uuid)
+
+    import CamUtilities
+    cam = DummyCam()
+    timer = CamUtilities.Timekeeper()
+    c = Camera(timer, on_movement, cam)
+    c.start()
+    time.sleep(10)
+    c.stop()
+
+
 if __name__ == "__main__":
     #test = TestAnim2()
     #test.anim()
-    test()
+    #test()
+    test_dummycam()

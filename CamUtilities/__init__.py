@@ -1,4 +1,5 @@
-__all__ = ['Timekeeper', 'MotionAlarm', 'remove_oldest_files', 'dlink_dwr921_syslog', 'dlink_dwr921_reboot', 'dlink_dwr921_stats', 'rpi_temp']
+__all__ = ['TimeoutManager', 'Timekeeper', 'MotionAlarm', 'remove_oldest_files', 'dlink_dwr921_syslog',
+           'dlink_dwr921_reboot', 'dlink_dwr921_stats', 'rpi_temp']
 
 from . Timekeeper import Timekeeper, TimeoutManager
 from . MotionAlarm import MotionAlarm

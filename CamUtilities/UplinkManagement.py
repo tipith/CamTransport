@@ -1,9 +1,14 @@
 from xml.etree import cElementTree as ElementTree
-import urllib2
-import cookielib
+
+try:
+    from urllib.request import urlopen, build_opener, HTTPCookieProcessor, HTTPErrorProcessor
+    from http.cookiejar import CookieJar
+except ImportError:
+    from urllib2 import urlopen, build_opener, HTTPCookieProcessor, HTTPErrorProcessor
+    from cookielib import CookieJar
 
 
-class NoRedirection(urllib2.HTTPErrorProcessor):
+class NoRedirection(HTTPErrorProcessor):
 
     def http_response(self, request, response):
         return response
@@ -13,8 +18,8 @@ class NoRedirection(urllib2.HTTPErrorProcessor):
 
 def dlink_dwr921_syslog(ip, user, passwd):
     try:
-        cj = cookielib.CookieJar()
-        opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
+        cj = CookieJar()
+        opener = build_opener(NoRedirection, HTTPCookieProcessor(cj))
         opener.open('http://{0}/log/in?un={1}&pw={2}&rd=/'.format(ip, user, passwd))
         syslog = opener.open('http://{0}/system.log'.format(ip))
         opener.open('http://{0}/log/out'.format(ip))
@@ -25,8 +30,8 @@ def dlink_dwr921_syslog(ip, user, passwd):
 
 def dlink_dwr921_reboot(ip, user, passwd):
     try:
-        cj = cookielib.CookieJar()
-        opener = urllib2.build_opener(NoRedirection, urllib2.HTTPCookieProcessor(cj))
+        cj = CookieJar()
+        opener = build_opener(NoRedirection, HTTPCookieProcessor(cj))
         opener.open('http://{0}/log/in?un={1}&pw={2}&rd=/'.format(ip, user, passwd))
         opener.open('http://{0}/uir/rebo.htm'.format(ip))
         opener.open('http://{0}/log/out'.format(ip))
@@ -37,7 +42,7 @@ def dlink_dwr921_reboot(ip, user, passwd):
 
 def dlink_dwr921_stats(ip):
     try:
-        resp = urllib2.urlopen('http://%s/stats.xml' % ip)
+        resp = urlopen('http://%s/stats.xml' % ip)
         root = ElementTree.fromstring(resp.read())
         status = {
             'up':  root.findall("./wan3g/item[@name='uptime3g']")[0].text,
@@ -53,6 +58,6 @@ def dlink_dwr921_stats(ip):
 
 
 if __name__ == '__main__':
-    print dlink_dwr921_stats('192.168.1.69:8999')
-    print dlink_dwr921_syslog('192.168.1.69:8999', 'admin', 'admin')
+    print(dlink_dwr921_stats('192.168.1.69:8999'))
+    print(dlink_dwr921_syslog('192.168.1.69:8999', 'admin', 'admin'))
     #dlink_dwr921_reboot('192.168.1.69:8999', 'admin', 'admin')

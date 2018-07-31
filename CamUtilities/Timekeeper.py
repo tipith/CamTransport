@@ -89,8 +89,8 @@ class Timekeeper:
     def add_twilight_observer(self, cb):
         self.twilight_observers.append(cb)
 
-    def add_cron_job(self, cb, args, time):
-        self.scheduler.add_job(cb, 'cron', args, minute=time)
+    def add_cron_job(self, cb, args, minute=None, second=None):
+        self.scheduler.add_job(cb, 'cron', args, minute=minute, second=second)
 
     def _twilight_event(self, event):
         for observer in self.twilight_observers:
