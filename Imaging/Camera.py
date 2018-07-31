@@ -260,14 +260,14 @@ class PiCam:
 
 class Camera(threading.Thread):
 
-    def __init__(self, timer, movement_cb, cam):
+    def __init__(self, timer, movement_cb, cam, test_mode=False):
         threading.Thread.__init__(self)
         self.timer = timer
         self.cam = cam
         self.cam.autotune_gains(is_night=self.timer.twilight_ongoing())
-        self.is_running = True
         self.motion = Motion()
-        self.motion_alarm = MotionAlarm('cam', 180.0, movement_cb)
+        self.is_running = True
+
         self.livestream_timeout = TimeoutManager(0)
         self.mask = ImageTools.create_mask(config.movement_mask)
 
@@ -275,8 +275,16 @@ class Camera(threading.Thread):
         self.send_pic = False
 
         self.timer.add_twilight_observer(self._twilight_event)
-        self.timer.add_cron_job(self._cron_job, [], minute='*/5')
-        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/59')
+        self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], minute='*/59')
+
+        if test_mode:
+            self.timer.add_cron_job(self._cron_job, [], second='*/30')
+            self.motion_alarm = MotionAlarm('cam', 180.0, None)
+            self.periodical_cls = Messaging.ImageMessageTest
+        else:
+            self.timer.add_cron_job(self._cron_job, [], minute='*/5')
+            self.motion_alarm = MotionAlarm('cam', 180.0, movement_cb)
+            self.periodical_cls = Messaging.ImageMessagePeriodical
 
     def run(self):
         camera_logger.info('started')
@@ -301,7 +309,7 @@ class Camera(threading.Thread):
                 if self.send_pic:
                     success, buf = cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 75])
                     if success:
-                        self.local_messaging.send(Messaging.ImageMessagePeriodical(buf))
+                        self.local_messaging.send(self.periodical_cls(buf))
                     self.send_pic = False
 
                 if not self.livestream_timeout.has_passed():
@@ -441,7 +449,7 @@ def test_dummycam():
     import CamUtilities
     cam = DummyCam()
     timer = CamUtilities.Timekeeper()
-    c = Camera(timer, on_movement, cam)
+    c = Camera(timer, on_movement, cam, test_mode=True)
     c.start()
     time.sleep(10)
     c.stop()

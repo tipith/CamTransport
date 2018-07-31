@@ -44,9 +44,9 @@ class Message(object):
                 if msg['id'] in Message.known_messages:
                     return True
                 else:
-                    message_logger.warn('Error: message id is not known: %i' % (msg['id']))
+                    message_logger.warning('Error: message id is not known: %i' % (msg['id']))
             else:
-                message_logger.warn('Error: invalid header fields')
+                message_logger.warning('Error: invalid header fields')
         return False
 
     @staticmethod
@@ -111,10 +111,10 @@ class ImageMessageLive(ImageMessage):
 
 
 class ImageMessageTest(ImageMessage):
-    def __init__(self, img, test_text):
+    def __init__(self, img):
         self.type = ImageMessage.TYPE_TEST
         self.img = img
-        self.uuid = test_text
+        self.uuid = ''
         super(ImageMessageTest, self).__init__()
 
 

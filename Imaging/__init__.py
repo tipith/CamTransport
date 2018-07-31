@@ -1,3 +1,3 @@
-__all__ = ['Camera', 'PiCam', 'USBCam']
+__all__ = ['Camera', 'PiCam', 'USBCam', 'DummyCam']
 
-from . Camera import Camera, PiCam, USBCam
+from . Camera import Camera, PiCam, USBCam, DummyCam

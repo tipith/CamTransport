@@ -75,16 +75,23 @@ class BaseMessaging(threading.Thread):
 
     def wait(self):
         try:
-            return self.down.recv_pyobj()
-        except pickle.UnpicklingError as e:
-            self.logger.error('Error: UnpicklingError')
-            return None
+            msg = self.down.recv()
         except (AttributeError, EOFError, ImportError, IndexError) as e:
             self.logger.error('Error: Other')
             self.logger.error(traceback.format_exc())
             return None
         except Exception as e:
             self.logger.error(traceback.format_exc())
+            return None
+
+        try:
+            return pickle.loads(msg)
+        except UnicodeDecodeError:
+            msg = pickle.loads(msg, encoding='bytes')
+            print(msg)
+            return msg
+        except pickle.UnpicklingError:
+            self.logger.error('Error: UnpicklingError')
             return None
 
     def send(self, msg, serialize=True):

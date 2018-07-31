@@ -27,13 +27,13 @@ class MotionAlarm:
         if state:
             if self.grace_end < calendar.timegm(time.gmtime()):
                 self.last_detection = calendar.timegm(time.gmtime())
-                if self.uuid is None:
+                if self.uuid is None and self.cb is not None:
                     self.uuid = str(uuid.uuid1())
                     self.cb(self.src, 'on', self.uuid)
             else:
                 motionalarm_logger.info('skip alarm while grace period active, %u s left' % (self.grace_end - calendar.timegm(time.gmtime())))
         else:
-            if self.uuid is not None and self._timeout_passed():
+            if self.uuid is not None and self._timeout_passed() and self.cb is not None:
                 self.cb(self.src, 'off', self.uuid)
                 self.uuid = None
                 self.last_detection = 0
