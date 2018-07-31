@@ -202,7 +202,7 @@ class USBCam:
 
     @property
     def picture(self):
-        ret_val, img = self.cam.read()
+        ret_val, img = self.cap.read()
         return img
 
     @property
