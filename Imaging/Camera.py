@@ -275,7 +275,7 @@ class Camera(threading.Thread):
         self.send_pic = False
 
         self.timer.add_twilight_observer(self._twilight_event)
-        self.timer.add_cron_job(self._cron_job, [], second='*/5')
+        self.timer.add_cron_job(self._cron_job, [], minute='*/5')
         self.timer.add_cron_job(Camera._movement_img_truncate_cron_job, [], '*/59')
 
     def run(self):
