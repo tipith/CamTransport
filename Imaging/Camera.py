@@ -98,6 +98,18 @@ class ImageTools:
         with open(os.path.join(config.movement_image_path, filename), 'wb') as write_f:
             write_f.write(jpeg_buf)
 
+    @staticmethod
+    def annotate_image(img, text):
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 1.4
+        thickness = 2
+        size = cv2.getTextSize(text, font, font_scale, thickness)
+
+        height, width, channels = img.shape
+        color = (255, 255, 255)
+        pos = (width // 2 - size[0][0] // 2, size[0][1] + 30)
+        cv2.putText(img, text, pos, font, font_scale, color, thickness)
+
 
 class Motion:
 
@@ -203,14 +215,6 @@ class USBCam:
     @property
     def picture(self):
         ret_val, img = self.cap.read()
-        height, width, channels = img.shape
-        cv2.putText(img,
-                    text='Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
-                    org=(width // 2 - 100, height // 10),
-                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                    fontScale=2,
-                    color=(255, 255, 255),
-                    lineType=2)
         return img
 
     @property
@@ -229,8 +233,6 @@ class PiCam:
 
     def __init__(self):
         self.cam = picamera.PiCamera(resolution=(1640, 1232), framerate=Fraction(1, 6))
-        self.cam.annotate_background = picamera.Color('black')
-        self.cam.annotate_text_size = 50
         picamera.PiCamera.CAPTURE_TIMEOUT = 90000
 
     def autotune_gains(self, is_night):
@@ -250,7 +252,6 @@ class PiCam:
 
     @property
     def picture(self):
-        self.cam.annotate_text = 'Alho%d %s' % (config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         stream = io.BytesIO()
         self.cam.capture(stream, 'jpeg', quality=20)
         stream.seek(0)
@@ -331,6 +332,7 @@ class Camera(threading.Thread):
         camera_logger.info('started')
         while self.is_running:
             img = self.cam.picture
+            ImageTools.annotate_image(img, 'Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
             if img is not None:
                 if self.timer.twilight_ongoing():
