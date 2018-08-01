@@ -207,7 +207,7 @@ class USBCam:
         cv2.putText(img,
                     text='Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
                     org=(width // 2, height // 10),
-                    fontFace=cv2.CV_FONT_HERSHEY_SIMPLEX,
+                    fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=1,
                     color=(255, 255, 255),
                     lineType=2)
