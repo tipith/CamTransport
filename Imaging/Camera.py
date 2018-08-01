@@ -203,6 +203,14 @@ class USBCam:
     @property
     def picture(self):
         ret_val, img = self.cap.read()
+        height, width, channels = img.shape
+        cv2.putText(img,
+                    text='Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+                    org=(width // 2, height // 10),
+                    fontFace=cv2.CV_FONT_HERSHEY_SIMPLEX,
+                    fontScale=1,
+                    color=(255, 255, 255),
+                    lineType=2)
         return img
 
     @property
@@ -242,8 +250,7 @@ class PiCam:
 
     @property
     def picture(self):
-        self.cam.annotate_text = 'Alho%d %s' % (
-        config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.cam.annotate_text = 'Alho%d %s' % (config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         stream = io.BytesIO()
         self.cam.capture(stream, 'jpeg', quality=20)
         stream.seek(0)
