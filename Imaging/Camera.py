@@ -206,9 +206,9 @@ class USBCam:
         height, width, channels = img.shape
         cv2.putText(img,
                     text='Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
-                    org=(width // 2, height // 10),
+                    org=(width // 2 - 100, height // 10),
                     fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                    fontScale=1,
+                    fontScale=2,
                     color=(255, 255, 255),
                     lineType=2)
         return img
