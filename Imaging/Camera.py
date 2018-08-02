@@ -100,14 +100,26 @@ class ImageTools:
 
     @staticmethod
     def annotate_image(img, text):
+        height, width, channels = img.shape
+        overlay = img.copy()
+
         font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 1.4
         thickness = 2
         size = cv2.getTextSize(text, font, font_scale, thickness)
 
-        height, width, channels = img.shape
+        offset_y = 30
+        margin = 7
+        upper_left = (width // 2 - size[0][0] // 2 - margin, offset_y - margin)
+        lower_right = (width // 2 + size[0][0] // 2 + margin, size[0][1] + offset_y + margin)
         color = (255, 255, 255)
-        pos = (width // 2 - size[0][0] // 2, size[0][1] + 30)
+        cv2.rectangle(overlay, upper_left, lower_right, color, thickness=-1)
+
+        alpha = 0.5
+        cv2.addWeighted(src1=overlay, alpha=alpha, src2=img, beta=1 - alpha, gamma=0, dst=img)
+
+        color = (255, 255, 255)
+        pos = (width // 2 - size[0][0] // 2, size[0][1] + offset_y)
         cv2.putText(img, text, pos, font, font_scale, color, thickness)
 
 
