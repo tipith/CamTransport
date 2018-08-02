@@ -354,7 +354,11 @@ class Camera(threading.Thread):
                 m_uuid = self.motion_alarm.update(m_det)
 
                 text = 'Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-                ImageTools.annotate_image(img, text)
+
+                if self.send_pic or not self.livestream_timeout.has_passed():
+                    ImageTools.annotate_image(img, text)
+                if m_det:
+                    ImageTools.annotate_image(m_img, text)
 
                 if m_det and m_uuid is not None:
                     success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
