@@ -83,6 +83,7 @@ upload_port = config.getint('CAMERA', 'upload_port')
 msg_port = config.getint('CAMERA', 'msg_port')
 movement_image_path = config.get('CAMERA', 'movement_image_path')
 movement_mask = config.get('CAMERA', 'movement_mask')
+cam_type = config.get('CAMERA', 'cam_type')
 
 lights_enabled = config.getint('LIGHTCONTROL', 'lights_enabled')
 gpio_relay = config.getint('LIGHTCONTROL', 'gpio_relay')
