@@ -66,7 +66,7 @@ class ImageTools:
 
     @staticmethod
     def apply_mask(img, mask):
-        if mask is not None:
+        if mask is not None and img.shape == mask.shape:
             return cv2.bitwise_and(img, img, mask=mask)
         return img
 
@@ -132,7 +132,7 @@ class Motion:
         retval = False
 
         # grab the raw NumPy array representing the image and initialize the timestamp and occupied/unoccupied text
-        frame = pic
+        frame = pic.copy()
 
         # apply motion mask
         frame = ImageTools.apply_mask(frame, mask)
@@ -164,10 +164,10 @@ class Motion:
             if 7500 < cv2.contourArea(c) < 750000:
                 # compute the bounding box for the contour, draw it on the frame, and update the text
                 (x, y, w, h) = cv2.boundingRect(c)
-                cv2.rectangle(pic, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 retval = True
 
-        return retval, pic
+        return retval, frame
 
 
 class DummyCam:
@@ -344,21 +344,23 @@ class Camera(threading.Thread):
         camera_logger.info('started')
         while self.is_running:
             img = self.cam.picture
-            ImageTools.annotate_image(img, 'Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
             if img is not None:
                 if self.timer.twilight_ongoing():
                     self.cam.tune_shutter(img)
 
-                if False:  # temporarily disabled due to usb cam different resolution
-                    (m_det, m_img) = self.motion.feed(img.copy(), self.mask)
-                    m_uuid = self.motion_alarm.update(m_det)
+                # new image is returned and original is left untouched
+                m_det, m_img = self.motion.feed(img, self.mask)
+                m_uuid = self.motion_alarm.update(m_det)
 
-                    if m_det and m_uuid is not None:
-                        success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
-                        if success:
-                            ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
-                            self.local_messaging.send(Messaging.ImageMessageMovement(m_img_tb, m_uuid))
+                text = 'Alho{} {}'.format(config.cam_id, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+                ImageTools.annotate_image(img, text)
+
+                if m_det and m_uuid is not None:
+                    success, m_img_tb = ImageTools.generate_jpeg_thumbnail(m_img)
+                    if success:
+                        ImageTools.store_movement(ImageTools.generate_jpeg(m_img)[1])
+                        self.local_messaging.send(Messaging.ImageMessageMovement(m_img_tb, m_uuid))
 
                 if self.send_pic:
                     success, buf = cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 75])
