@@ -112,7 +112,7 @@ class ImageTools:
         margin = 7
         upper_left = (width // 2 - size[0][0] // 2 - margin, offset_y - margin)
         lower_right = (width // 2 + size[0][0] // 2 + margin, size[0][1] + offset_y + margin)
-        color = (255, 255, 255)
+        color = (0, 0, 0)
         cv2.rectangle(overlay, upper_left, lower_right, color, thickness=-1)
 
         alpha = 0.5
