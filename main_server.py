@@ -71,6 +71,11 @@ def local_on_any(msg):
     server_messaging.send(msg, serialize=False)
 
 
+def local_on_command(msg):
+    if msg['command'] == 'ping':
+        local_messaging.send(Messaging.CommandMessage('pong', msg['parameter']))
+
+
 if __name__ == "__main__":
     server_messaging.start()
     server_messaging.install(Messaging.Message.Image, on_image)
@@ -82,6 +87,7 @@ if __name__ == "__main__":
 
     local_messaging.start()
     local_messaging.install('*', local_on_any)
+    local_messaging.install(Messaging.Message.Command, local_on_command)
 
     try:
         while True:

@@ -43,11 +43,14 @@ class BaseMessaging(threading.Thread):
                         if msg['id'] == Message.Heartbeat:
                             self.logger.debug('heartbeat received')
                             continue
-                        if msg['id'] in self.handlers:
-                            self.logger.info('received %s' % Message.msg_info(msg))
-                            self.handlers[msg['id']](msg)
-                        if '*' in self.handlers:
-                            self.handlers['*'](msg)
+                        try:
+                            if msg['id'] in self.handlers:
+                                self.logger.info('received %s' % Message.msg_info(msg))
+                                self.handlers[msg['id']](msg)
+                            if '*' in self.handlers:
+                                self.handlers['*'](msg)
+                        except:
+                            self.logger.error(traceback.format_exc())
                 else:
                     time.sleep(0.5)
 
