@@ -158,10 +158,14 @@ class Motion:
         thresh = cv2.dilate(thresh, None, iterations=3)
         image, contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+        width, height, chs = frame.shape
+        min_size = width*height // 400
+        max_size = width*height // 3
+
         # loop over the contours
         for c in contours:
             # if the contour is too small or big, ignore it
-            if 7500 < cv2.contourArea(c) < 750000:
+            if min_size < cv2.contourArea(c) < max_size:
                 # compute the bounding box for the contour, draw it on the frame, and update the text
                 (x, y, w, h) = cv2.boundingRect(c)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
