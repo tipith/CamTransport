@@ -92,7 +92,9 @@ def db_store_uplink(timestamp, dbm, ip, up, rat, sig, net):
 
 def test():
     global _insert_vals
-    _insert_vals = lambda sql, vals: print('{}\n -> {}'.format(sql, vals))
+    def dummy(s, v):
+        print('{}\n -> {}'.format(s, v))
+    _insert_vals = dummy
 
     timestamp = datetime.datetime.now()
     db_store_uplink(timestamp, dbm='28', ip='12.23.2.12', up='1:1:1', rat='3G', sig='90%', net='DNA')
