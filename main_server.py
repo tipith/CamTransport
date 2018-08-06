@@ -5,6 +5,7 @@ import Datastore
 import config
 import gmail
 
+import json
 import time
 import calendar
 import datetime
@@ -53,7 +54,12 @@ def on_movement(msg):
 
 
 def on_text(msg):
-    pass
+    try:
+        u = json.loads(msg['text'])
+        if 'dbm' in u:
+            Datastore.db_store_uplink(msg['time'], u['dbm'], u['ip'], u['up'], u['rat'], u['sig'], u['net'])
+    except json.JSONDecodeError:
+        pass
 
 
 def on_light_control(msg):

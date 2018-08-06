@@ -78,7 +78,7 @@ if __name__ == "__main__":
     timer = CamUtilities.Timekeeper()
     timer.add_cron_job(check_rpi, [], '*/10')
     if config.cam_id == 1:
-        timer.add_cron_job(check_uplink, [], '*/10')
+        timer.add_cron_job(check_uplink, [], '*/1')
 
     cam_provider = Imaging.USBCam() if config.cam_type == 'usb' else Imaging.PiCam()
     camera = Imaging.Camera(timer, on_movement, cam_provider)
