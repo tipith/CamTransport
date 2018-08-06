@@ -58,7 +58,7 @@ def on_text(msg):
         u = json.loads(msg['text'])
         if 'dbm' in u:
             Datastore.db_store_uplink(msg['time'], u['dbm'], u['ip'], u['up'], u['rat'], u['sig'], u['net'])
-    except json.JSONDecodeError:
+    except ValueError:
         pass
 
 

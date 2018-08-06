@@ -33,7 +33,8 @@ def _insert_vals(sql, vals):
     with DBConnection() as cur:
         try:
             cur.execute(sql, vals)
-        except MySQLdb.IntegrityError:
+        except:
+            db_logger.error(cur._last_executed)
             db_logger.error(traceback.format_exc())
 
 
@@ -80,13 +81,13 @@ def db_store_uplink(timestamp, dbm, ip, up, rat, sig, net):
     regex = re.compile(r'(?P<h>\d+):(?P<m>\d+):(?P<s>\d+)')
     m = regex.match(up)
     if m:
-        up_secs = int(m['h'])*3600 + int(m['m'])*60 + int(m['s'])
+        up_secs = int(m.group('h'))*3600 + int(m.group('m'))*60 + int(m.group('s'))
     else:
         up_secs = 0
     sql = "INSERT INTO RpiTemperature " \
           "(Timestamp, UptimeSeconds, RadioAccessTechnology, IPAddress, NetworkName, SignalStrength, SignalQualityPercent) " \
-          "VALUES (%s, %s, %s %s, %s %s)"
-    vals = (_dt2str(timestamp), up_secs, rat, ip, net, dbm, sig)
+          "VALUES (%s, %s, %s %s, %s, %s, %s)"
+    vals = (_dt2str(timestamp), up_secs, rat.strip(), ip.strip(), net.strip(), int(dbm), int(sig.strip('%')))
     _insert_vals(sql, vals)
 
 
