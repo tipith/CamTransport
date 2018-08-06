@@ -84,9 +84,9 @@ def db_store_uplink(timestamp, dbm, ip, up, rat, sig, net):
         up_secs = int(m.group('h'))*3600 + int(m.group('m'))*60 + int(m.group('s'))
     else:
         up_secs = 0
-    sql = "INSERT INTO RpiTemperature " \
+    sql = "INSERT INTO Uplink " \
           "(Timestamp, UptimeSeconds, RadioAccessTechnology, IPAddress, NetworkName, SignalStrength, SignalQualityPercent) " \
-          "VALUES (%s, %s, %s %s, %s, %s, %s)"
+          "VALUES (%s, %s, %s, %s, %s, %s, %s)"
     vals = (_dt2str(timestamp), up_secs, rat.strip(), ip.strip(), net.strip(), int(dbm), int(sig.strip('%')))
     _insert_vals(sql, vals)
 
