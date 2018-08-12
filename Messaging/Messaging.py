@@ -91,8 +91,7 @@ class BaseMessaging(threading.Thread):
             return pickle.loads(msg)
         except UnicodeDecodeError:
             msg = pickle.loads(msg, encoding='bytes')
-            print(msg)
-            return msg
+            return Message.py3convert(msg)
         except pickle.UnpicklingError:
             self.logger.error('Error: UnpicklingError')
             return None
@@ -290,4 +289,3 @@ class LocalClient(BaseMessaging):
         super(LocalClient, self).__init__(uplink, downlink, False)
         self.name = self.__class__.__name__
         self.logger = logging.getLogger(self.name)
-        # self.logger.info('connecting to %s' % outgoing)

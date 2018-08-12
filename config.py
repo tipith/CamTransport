@@ -8,6 +8,8 @@ import inspect
 import logging
 import logging.handlers
 import stat
+#from pathlib import Path
+
 
 conf_logger = logging.getLogger('Config')
 
@@ -38,8 +40,12 @@ class LoggerWriter:
             self.logger.log(self.log_level, line.rstrip())
 
 
-def setup_logging():
-    log_file = os.path.join(__location__, 'log.txt')
+def setup_logging(log_subdir):
+    log_file = os.path.join(__location__, log_subdir, 'log.txt')
+    #log_file = Path(__location__, log_subdir, 'log.txt')
+    #if not log_file.parents[0].exists():
+    #    log_file.parents[0].mkdir()
+    
     #numeric_level = getattr(logging, loglevel.upper(), logging.DEBUG)
 
     fmt = logging.Formatter('%(levelname)8s %(asctime)s %(name)14s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
@@ -92,5 +98,5 @@ lights_on_time = config.getint('LIGHTCONTROL', 'lights_on_time')
 
 loglevel = config.get('COMMON', 'loglevel')
 
-setup_logging()
+setup_logging('logs')
 

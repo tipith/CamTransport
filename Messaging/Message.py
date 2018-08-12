@@ -37,6 +37,9 @@ class Message(object):
         except IOError:
             return 0
 
+    def py3convert(self, msg):
+        return {k.decode('utf-8'): v for k, v in msg.items()}
+
     @staticmethod
     def verify(msg):
         if msg is not None:
@@ -46,7 +49,7 @@ class Message(object):
                 else:
                     message_logger.warning('Error: message id is not known: %i' % (msg['id']))
             else:
-                message_logger.warning('Error: invalid header fields')
+                message_logger.warning('Error: invalid header fields' + str(msg))
         return False
 
     @staticmethod
@@ -77,6 +80,9 @@ class ImageMessage(Message):
 
     def __init__(self):
         super(ImageMessage, self).__init__()
+
+    def __str__(self):
+        return self.text
 
     def serialize(self):
         msg = self.header(config.cam_id, Message.Image)
