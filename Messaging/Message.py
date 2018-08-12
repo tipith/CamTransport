@@ -81,9 +81,6 @@ class ImageMessage(Message):
     def __init__(self):
         super(ImageMessage, self).__init__()
 
-    def __str__(self):
-        return self.text
-
     def serialize(self):
         msg = self.header(config.cam_id, Message.Image)
         msg['type'] = self.type
